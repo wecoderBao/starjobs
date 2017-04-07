@@ -57,6 +57,8 @@
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	<!-- 这个的用途是？ -->
+	<!--  
 	<bean id="handlerExceptionResolver" class="com.starjobs.exception.CustomExceptionResolver" />
-
+	-->
 </beans>
