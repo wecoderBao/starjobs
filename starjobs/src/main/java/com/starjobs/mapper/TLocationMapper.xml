@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TLocationMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TLocation" >
+    <id column="c_location_id" property="cLocationId" jdbcType="INTEGER" />
+    <result column="c_location_longitude" property="cLocationLongitude" jdbcType="REAL" />
+    <result column="c_location_latitude" property="cLocationLatitude" jdbcType="REAL" />
+    <result column="c_location_name" property="cLocationName" jdbcType="VARCHAR" />
+    <result column="c_location_type" property="cLocationType" jdbcType="VARCHAR" />
+    <result column="c_location_desc" property="cLocationDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_location_id, c_location_longitude, c_location_latitude, c_location_name, c_location_type, 
+    c_location_desc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TLocationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_location
+    where c_location_id = #{cLocationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_location
+    where c_location_id = #{cLocationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TLocationExample" >
+    delete from t_location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TLocation" >
+    insert into t_location (c_location_id, c_location_longitude, c_location_latitude, 
+      c_location_name, c_location_type, c_location_desc
+      )
+    values (#{cLocationId,jdbcType=INTEGER}, #{cLocationLongitude,jdbcType=REAL}, #{cLocationLatitude,jdbcType=REAL}, 
+      #{cLocationName,jdbcType=VARCHAR}, #{cLocationType,jdbcType=VARCHAR}, #{cLocationDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TLocation" >
+    insert into t_location
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cLocationId != null" >
+        c_location_id,
+      </if>
+      <if test="cLocationLongitude != null" >
+        c_location_longitude,
+      </if>
+      <if test="cLocationLatitude != null" >
+        c_location_latitude,
+      </if>
+      <if test="cLocationName != null" >
+        c_location_name,
+      </if>
+      <if test="cLocationType != null" >
+        c_location_type,
+      </if>
+      <if test="cLocationDesc != null" >
+        c_location_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cLocationId != null" >
+        #{cLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cLocationLongitude != null" >
+        #{cLocationLongitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationLatitude != null" >
+        #{cLocationLatitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationName != null" >
+        #{cLocationName,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationType != null" >
+        #{cLocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationDesc != null" >
+        #{cLocationDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TLocationExample" resultType="java.lang.Integer" >
+    select count(*) from t_location
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_location
+    <set >
+      <if test="record.cLocationId != null" >
+        c_location_id = #{record.cLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cLocationLongitude != null" >
+        c_location_longitude = #{record.cLocationLongitude,jdbcType=REAL},
+      </if>
+      <if test="record.cLocationLatitude != null" >
+        c_location_latitude = #{record.cLocationLatitude,jdbcType=REAL},
+      </if>
+      <if test="record.cLocationName != null" >
+        c_location_name = #{record.cLocationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cLocationType != null" >
+        c_location_type = #{record.cLocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cLocationDesc != null" >
+        c_location_desc = #{record.cLocationDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_location
+    set c_location_id = #{record.cLocationId,jdbcType=INTEGER},
+      c_location_longitude = #{record.cLocationLongitude,jdbcType=REAL},
+      c_location_latitude = #{record.cLocationLatitude,jdbcType=REAL},
+      c_location_name = #{record.cLocationName,jdbcType=VARCHAR},
+      c_location_type = #{record.cLocationType,jdbcType=VARCHAR},
+      c_location_desc = #{record.cLocationDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TLocation" >
+    update t_location
+    <set >
+      <if test="cLocationLongitude != null" >
+        c_location_longitude = #{cLocationLongitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationLatitude != null" >
+        c_location_latitude = #{cLocationLatitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationName != null" >
+        c_location_name = #{cLocationName,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationType != null" >
+        c_location_type = #{cLocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationDesc != null" >
+        c_location_desc = #{cLocationDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_location_id = #{cLocationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TLocation" >
+    update t_location
+    set c_location_longitude = #{cLocationLongitude,jdbcType=REAL},
+      c_location_latitude = #{cLocationLatitude,jdbcType=REAL},
+      c_location_name = #{cLocationName,jdbcType=VARCHAR},
+      c_location_type = #{cLocationType,jdbcType=VARCHAR},
+      c_location_desc = #{cLocationDesc,jdbcType=VARCHAR}
+    where c_location_id = #{cLocationId,jdbcType=INTEGER}
+  </update>
+</mapper>
