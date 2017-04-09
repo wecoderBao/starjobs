@@ -7,6 +7,11 @@
     <result column="c_admin_password" property="cAdminPassword" jdbcType="VARCHAR" />
     <result column="c_admin_desc" property="cAdminDesc" jdbcType="VARCHAR" />
   </resultMap>
+  
+  
+  <select id="findUserByName" resultMap="BaseResultMap">
+		select * from t_admin where c_admin_name = #{cAdminName} 
+	</select>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

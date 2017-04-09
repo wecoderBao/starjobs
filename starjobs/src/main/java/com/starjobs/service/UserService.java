@@ -9,5 +9,5 @@ package com.starjobs.service;
  * @author:bao
  */
 public interface UserService {
-	//
+	
 }

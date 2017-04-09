@@ -1,9 +1,12 @@
 package com.starjobs.mapper;
 
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.starjobs.pojo.TAdmin;
 import com.starjobs.pojo.TAdminExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TAdminMapper {
     int countByExample(TAdminExample example);
@@ -27,4 +30,7 @@ public interface TAdminMapper {
     int updateByPrimaryKeySelective(TAdmin record);
 
     int updateByPrimaryKey(TAdmin record);
+    
+  //根据用户名进行查找
+  	public TAdmin findUserByName(@Param("cAdminName") String cAdminName);
 }

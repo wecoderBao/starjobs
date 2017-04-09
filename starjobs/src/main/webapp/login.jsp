@@ -82,13 +82,15 @@
             <form action="login" method="post">
                 <div class="form-group">
                     <label>用户名</label>
-                    <input type="text" class="form-control span12">
+                    <input type="text" name="cAdminName" class="form-control span12">
+                    
                 </div>
                 <div class="form-group">
                 <label>密码</label>
-                    <input type="password" class="form-controlspan12 form-control">
+                    <input name="cAdminPassword" type="password" class="form-controlspan12 form-control">
                 </div>
-                <a href="login" class="btn btn-primary pull-right">登录</a>
+                <input type="submit">登录</input>
+               <!--  <a href="login" class="btn btn-primary pull-right">登录</a> -->
                 <label class="remember-me"><input type="checkbox"> 记住密码</label>
                 <div class="clearfix"></div>
             </form>
