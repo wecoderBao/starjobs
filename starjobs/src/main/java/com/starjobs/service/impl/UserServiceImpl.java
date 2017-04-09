@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 		result = this.sendVerifyCode(phone, code);
 		System.out.println("---"+result);
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
-		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("error_code", result);
 		modelMap.put("message", "fail");
 		//用户token
 		String token = SystemUtil.generateToken(phone);
