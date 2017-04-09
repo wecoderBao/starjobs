@@ -43,7 +43,7 @@ public class MobClient {
 	// public static String REQ_METHOD_TRACE = "TRACE";
 
 	// 请求地址
-	private String address;
+	private static final String ADDRESS = "https://webapi.sms.mob.com/sms/verify";
 
 	// 请求参数
 	private List<String> params = new ArrayList<String>();
@@ -59,8 +59,7 @@ public class MobClient {
 
 	private HttpURLConnection conn;
 
-	public MobClient(String address) throws KeyManagementException, NoSuchAlgorithmException, IOException {
-		this.address = address;
+	public MobClient() throws KeyManagementException, NoSuchAlgorithmException, IOException {
 		this.conn = build();
 	}
 
@@ -72,7 +71,7 @@ public class MobClient {
 	 * @throws Exception
 	 */
 	public String post(String data) throws Exception {
-		return requestData(address, data);
+		return requestData(ADDRESS, data);
 	}
 
 	/**
@@ -165,7 +164,7 @@ public class MobClient {
 
 		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-		URL url = new URL(address);
+		URL url = new URL(ADDRESS);
 		conn = (HttpURLConnection) url.openConnection();
 
 		conn.setRequestMethod(method);// POST
@@ -207,14 +206,6 @@ public class MobClient {
 			buffer.append(line);
 		}
 		return buffer.toString();
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public MobClient addParam(String key, String val) {
