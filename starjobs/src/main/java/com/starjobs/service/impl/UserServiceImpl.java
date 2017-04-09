@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.pojo.TCompanyInfo;
@@ -64,9 +65,10 @@ public class UserServiceImpl implements UserService {
 		String result = SystemUtil.CODE_FAIL;
 		// 验证输入的验证码
 		result = this.sendVerifyCode(phone, code);
-		System.out.println("---"+result);
+		JSONObject jsonResult = JSONObject.parseObject(result);   
+		
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
-		modelMap.put("error_code", result);
+		modelMap.put("error_code", jsonResult.get("status"));
 		modelMap.put("message", "fail");
 		//用户token
 		String token = SystemUtil.generateToken(phone);
