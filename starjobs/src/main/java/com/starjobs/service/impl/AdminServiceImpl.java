@@ -29,8 +29,7 @@ public class AdminServiceImpl implements AdminService {
 	//用于登录的方法
 	public boolean loginAdmin(String cAdminName,String cAdminPassword ){
 		TAdmin tamin=findUserByName(cAdminName);
-		MD5 md5=new MD5();
-		String cAdminPasswordreverse=md5.getMD5ofStr(cAdminPassword);
+		String cAdminPasswordreverse=MD5.getInstance().getMD5ofStr(cAdminPassword);
 		if((cAdminName.equals(tamin.getcAdminName()))&&(cAdminPasswordreverse.equals(tamin.getcAdminPassword()))){
 			return true;
 		}else
