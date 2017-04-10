@@ -27,4 +27,6 @@ public interface TUserInfoMapper {
     int updateByPrimaryKeySelective(TUserInfo record);
 
     int updateByPrimaryKey(TUserInfo record);
+  //根据手机号更新用户密码
+    int updatePwdByPhoneNum(@Param("cUserPhone") String cUserPhone,@Param("cUserPassword") String cUserPassword);
 }
