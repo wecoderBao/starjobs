@@ -37,4 +37,12 @@ public class MapperTest {
 		int re = tComapanyInfoMapper.insert(tciRecord);
 		System.out.println(re);
 	}
+	@Test
+	public void testUpdateCom() throws Exception {
+		TCompanyInfoMapper tComapanyInfoMapper = (TCompanyInfoMapper) applicationContext.getBean(TCompanyInfoMapper.class);
+		String cComPhone = "18827090366";
+		String cComPwd = "12345";
+		int re = tComapanyInfoMapper.updatePwdByPhoneNum(cComPhone, cComPwd);
+		System.out.println(re);
+	}
 }

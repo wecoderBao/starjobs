@@ -355,4 +355,10 @@
       c_user_state = #{cUserState,jdbcType=VARCHAR}
     where c_com_id = #{cComId,jdbcType=INTEGER}
   </update>
+  <!-- 更据手机号更新用户密码 -->
+  <!--  根据id号更新-->
+	<update id="updatePwdByPhoneNum" parameterType="java.lang.String">
+		update t_company_info set c_com_password = #{cComPassword,jdbcType=VARCHAR} 
+		where c_com_phone = #{cComPhone,jdbcType=VARCHAR}
+	</update>
 </mapper>

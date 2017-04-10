@@ -22,7 +22,7 @@ public class MobTest {
 			client = new MobClient();
 			client.addRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			client.addRequestProperty("Accept", "application/json");
-			client.addParam("appkey", SystemUtil.APP_KEY);
+			client.addParam("appkey", SystemUtil.APP_KEY_IOS);
 			client.addParam("phone", "18827090366");
 			client.addParam("zone", SystemUtil.ZONE);
 			client.addParam("code", "1234");

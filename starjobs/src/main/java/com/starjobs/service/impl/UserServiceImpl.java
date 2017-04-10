@@ -38,14 +38,20 @@ public class UserServiceImpl implements UserService {
 	TUserInfoMapper tUserInfoMapper;
 
 	// 向短信验证平台发送验证请求
-	private String sendVerifyCode(String phone, String code) {
+	private String sendVerifyCode(String phone, String code,String appFlag) {
+		String appKey = "";
+		if(SystemUtil.ANDROID.equals(appFlag.trim())){
+			appKey = SystemUtil.APP_KEY_ANDROID;
+		}else if(SystemUtil.IOS.equals(appFlag.trim())){
+			appKey = SystemUtil.APP_KEY_IOS;
+		}
 
 		MobClient client = null;
 		try {
 			client = new MobClient();
 			client.addRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			client.addRequestProperty("Accept", "application/json");
-			client.addParam("appkey", SystemUtil.APP_KEY);
+			client.addParam("appkey", appKey);
 			client.addParam("phone", phone);
 			client.addParam("zone", SystemUtil.ZONE);
 			client.addParam("code", code);
@@ -60,21 +66,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 验证验证码
-	public Map<String,Object> verifyCode(String phone, String code, String password, String userFlag) {
+	public Map<String,Object> verifyCode(String phone, String code, String password, String userFlag,String appFlag) {
 		
 		String result = SystemUtil.CODE_FAIL;
 		// 验证输入的验证码
-		result = this.sendVerifyCode(phone, code);
+		result = this.sendVerifyCode(phone, code,appFlag);
 		JSONObject jsonResult = JSONObject.parseObject(result);   
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", jsonResult.get("status"));
-		modelMap.put("message", "fail");
-		//用户token
-		String token = SystemUtil.generateToken(phone);
-		System.out.println("token:"+token);
+		
 		//验证码正确，用户为公司
-		if(SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_COM.equals(userFlag)){
+		if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_COM.equals(userFlag.trim())){
 			TCompanyInfo tciRecord = new TCompanyInfo();
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
@@ -83,10 +86,49 @@ public class UserServiceImpl implements UserService {
 			tComapanyInfoMapper.insert(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
-			modelMap.put("token", token);
-			//将token放入数据库中
+			
 			return modelMap;
-		}else if(SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_STU.equals(userFlag)){
+		}else if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_STU.equals(userFlag.trim())){
+			//验证码正确，用户为个人
+			System.out.println("468-----------");
+			TUserInfo tuiRecord = new TUserInfo();
+			tuiRecord.setcUserPhone(phone);
+			tuiRecord.setcUserBalance(0);
+			tuiRecord.setcUsername(phone);
+			tuiRecord.setcUserPassword(password);
+			tUserInfoMapper.insert(tuiRecord);
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			
+			return modelMap;
+		}
+		modelMap.put("message", "fail");
+		return modelMap;
+	}
+	//用户找回密码
+	public Map<String, Object> userRetrievePwd(String phone, String code, String password, String userFlag,
+			String appFlag) {
+		String result = "";
+		// 验证输入的验证码
+		result = this.sendVerifyCode(phone, code,appFlag);
+		JSONObject jsonResult = JSONObject.parseObject(result);   
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", jsonResult.get("status"));
+
+		//验证码正确，用户为公司
+		if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_COM.equals(userFlag.trim())){
+			TCompanyInfo tciRecord = new TCompanyInfo();
+			tciRecord.setcComPhone(phone);
+			tciRecord.setcComPassword(password);
+			tciRecord.setcComName(phone);
+			tciRecord.setcComBalance(50);//账户余额默认为50元
+			tComapanyInfoMapper.insert(tciRecord);
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			
+			return modelMap;
+		}else if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_STU.equals(userFlag.trim())){
 			//验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
@@ -96,15 +138,37 @@ public class UserServiceImpl implements UserService {
 			tUserInfoMapper.insert(tuiRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
-			modelMap.put("token", token);
-			//将token放入数据库中
+			
+			return modelMap;
+		}
+		modelMap.put("message", "fail");
+		return modelMap;
+	}
+	
+	//用户登录
+	public Map<String,Object> userLogin(String phone,String password,String userFlag){
+		String result = SystemUtil.CODE_FAIL;
+		   
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", result);
+		modelMap.put("message", "fail");
+		//用户token
+		String token = SystemUtil.generateToken(phone);
+		
+	
+		if(SystemUtil.USER_COM.equals(userFlag)){
+			//用户为公司，验证登录操作
+			
+			
+			return modelMap;
+		}else if(SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_STU.equals(userFlag)){
+			//用户为个人，验证登录操作
+			
+			
 			return modelMap;
 		}
 		return modelMap;
 	}
-	//用户登录
-	public Map<String,Object> login(){
-		
-		return null;
-	}
+	
 }

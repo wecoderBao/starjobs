@@ -33,4 +33,6 @@ public interface TCompanyInfoMapper {
     int updateByPrimaryKeyWithBLOBs(TCompanyInfo record);
 
     int updateByPrimaryKey(TCompanyInfo record);
+    //根据手机号更新用户密码
+    int updatePwdByPhoneNum(@Param("cComPhone") String cComPhone,@Param("cComPassword") String cComPassword);
 }
