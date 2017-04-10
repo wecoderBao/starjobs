@@ -11,6 +11,7 @@ import java.lang.reflect.*;
  ******************************************************************************/
 
 public class MD5 {
+	private static final MD5 MD5_INSTANCE = new MD5(); 
 	/*
 	 * 下面这些S11-S44实际上是一个4*4的矩阵，在原始的C实现中是用#define 实现的， 这里把它们实现成为static
 	 * final是表示了只读，切能在同一个进程空间内的多个 Instance间共享
@@ -35,6 +36,11 @@ public class MD5 {
 	static final int S43 = 15;
 	static final int S44 = 21;
 
+	
+	public static MD5 getInstance(){
+		return MD5_INSTANCE;
+	}
+	
 	static final byte[] PADDING = { -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -75,7 +81,7 @@ public class MD5 {
 	}
 
 	// 这是MD5这个类的标准构造函数，JavaBean要求有一个public的并且没有参数的构造函数
-	public MD5() {
+	private MD5() {
 		md5Init();
 
 		return;
@@ -362,27 +368,27 @@ public class MD5 {
 		return s;
 	}
 
-	public static void main(String args[]) {
-
-		MD5 m = new MD5();
-		if (Array.getLength(args) == 0) { // 如果没有参数，执行标准的Test Suite
-
-			System.out.println("MD5 Test suite:");
-			System.out.println("MD5(\"\"):" + m.getMD5ofStr(""));
-			System.out.println("MD5(\"a\"):" + m.getMD5ofStr("a"));
-			System.out.println("MD5(\"abc\"):" + m.getMD5ofStr("abc"));
-			System.out.println("MD5(\"message digest\"):"
-					+ m.getMD5ofStr("message digest"));
-			System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):"
-					+ m.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
-			System.out
-					.println("MD5(\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"):"
-							+ m
-									.getMD5ofStr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-		} else
-			System.out
-					.println("MD5(" + args[0] + ")=" + m.getMD5ofStr(args[0]));
-
-	}
+//	public static void main(String args[]) {
+//
+//		MD5 m = new MD5();
+//		if (Array.getLength(args) == 0) { // 如果没有参数，执行标准的Test Suite
+//
+//			System.out.println("MD5 Test suite:");
+//			System.out.println("MD5(\"\"):" + m.getMD5ofStr(""));
+//			System.out.println("MD5(\"a\"):" + m.getMD5ofStr("a"));
+//			System.out.println("MD5(\"abc\"):" + m.getMD5ofStr("abc"));
+//			System.out.println("MD5(\"message digest\"):"
+//					+ m.getMD5ofStr("message digest"));
+//			System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):"
+//					+ m.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
+//			System.out
+//					.println("MD5(\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"):"
+//							+ m
+//									.getMD5ofStr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+//		} else
+//			System.out
+//					.println("MD5(" + args[0] + ")=" + m.getMD5ofStr(args[0]));
+//
+//	}
 
 }
