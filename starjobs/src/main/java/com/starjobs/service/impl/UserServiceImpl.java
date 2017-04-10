@@ -30,19 +30,19 @@ import com.starjobs.sys.SystemUtil;
  */
 @Service
 public class UserServiceImpl implements UserService {
-	//公司信息操作类
+	// 公司信息操作类
 	@Autowired
 	TCompanyInfoMapper tComapanyInfoMapper;
-	//个人用户信息操作类
+	// 个人用户信息操作类
 	@Autowired
 	TUserInfoMapper tUserInfoMapper;
 
 	// 向短信验证平台发送验证请求
-	private String sendVerifyCode(String phone, String code,String appFlag) {
+	private String sendVerifyCode(String phone, String code, String appFlag) {
 		String appKey = "";
-		if(SystemUtil.ANDROID.equals(appFlag.trim())){
+		if (SystemUtil.ANDROID.equals(appFlag.trim())) {
 			appKey = SystemUtil.APP_KEY_ANDROID;
-		}else if(SystemUtil.IOS.equals(appFlag.trim())){
+		} else if (SystemUtil.IOS.equals(appFlag.trim())) {
 			appKey = SystemUtil.APP_KEY_IOS;
 		}
 
@@ -66,31 +66,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 验证验证码
-	public Map<String,Object> verifyCode(String phone, String code, String password, String userFlag,String appFlag) {
-		
+	public Map<String, Object> verifyCode(String phone, String code, String password, String userFlag, String appFlag) {
+
 		String result = SystemUtil.CODE_FAIL;
 		// 验证输入的验证码
-		result = this.sendVerifyCode(phone, code,appFlag);
-		JSONObject jsonResult = JSONObject.parseObject(result);   
-		
+		result = this.sendVerifyCode(phone, code, appFlag);
+		JSONObject jsonResult = JSONObject.parseObject(result);
+
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", jsonResult.get("status"));
-		
-		//验证码正确，用户为公司
-		if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_COM.equals(userFlag.trim())){
+
+		// 验证码正确，用户为公司
+		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
+				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
 			TCompanyInfo tciRecord = new TCompanyInfo();
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
 			tciRecord.setcComName(phone);
-			tciRecord.setcComBalance(50);//账户余额默认为50元
+			tciRecord.setcComBalance(50);// 账户余额默认为50元
 			tComapanyInfoMapper.insert(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
-			
+
 			return modelMap;
-		}else if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_STU.equals(userFlag.trim())){
-			//验证码正确，用户为个人
-			System.out.println("468-----------");
+		} else if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
+				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
+			// 验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
 			tuiRecord.setcUserBalance(0);
@@ -99,76 +100,70 @@ public class UserServiceImpl implements UserService {
 			tUserInfoMapper.insert(tuiRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
-			
+
 			return modelMap;
 		}
 		modelMap.put("message", "fail");
 		return modelMap;
 	}
-	//用户找回密码
+
+	// 用户找回密码
 	public Map<String, Object> userRetrievePwd(String phone, String code, String password, String userFlag,
 			String appFlag) {
 		String result = "";
 		// 验证输入的验证码
-		result = this.sendVerifyCode(phone, code,appFlag);
-		JSONObject jsonResult = JSONObject.parseObject(result);   
-		
+		result = this.sendVerifyCode(phone, code, appFlag);
+		JSONObject jsonResult = JSONObject.parseObject(result);
+
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", jsonResult.get("status"));
 
-		//验证码正确，用户为公司
-		if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_COM.equals(userFlag.trim())){
-			TCompanyInfo tciRecord = new TCompanyInfo();
-			tciRecord.setcComPhone(phone);
-			tciRecord.setcComPassword(password);
-			tciRecord.setcComName(phone);
-			tciRecord.setcComBalance(50);//账户余额默认为50元
-			tComapanyInfoMapper.insert(tciRecord);
-			modelMap.put("error_code", SystemUtil.CODE_SUCC);
-			modelMap.put("message", "success");
-			
-			return modelMap;
-		}else if(SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString()) && SystemUtil.USER_STU.equals(userFlag.trim())){
-			//验证码正确，用户为个人
-			TUserInfo tuiRecord = new TUserInfo();
-			tuiRecord.setcUserPhone(phone);
-			tuiRecord.setcUserBalance(0);
-			tuiRecord.setcUsername(phone);
-			tuiRecord.setcUserPassword(password);
-			tUserInfoMapper.insert(tuiRecord);
-			modelMap.put("error_code", SystemUtil.CODE_SUCC);
-			modelMap.put("message", "success");
-			
-			return modelMap;
+		// 验证码正确，用户为公司
+		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
+				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
+			int re = 0;
+			re = tComapanyInfoMapper.updatePwdByPhoneNum(phone, password);
+			if (re == 1) {
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+				return modelMap;
+			}
+		} else if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
+				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
+			// 验证码正确，用户为个人
+			int re = 0;
+			re = tUserInfoMapper.updatePwdByPhoneNum(phone, password);
+			if (re == 1) {
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+
+				return modelMap;
+			}
 		}
 		modelMap.put("message", "fail");
 		return modelMap;
 	}
-	
-	//用户登录
-	public Map<String,Object> userLogin(String phone,String password,String userFlag){
+
+	// 用户登录
+	public Map<String, Object> userLogin(String phone, String password, String userFlag) {
 		String result = SystemUtil.CODE_FAIL;
-		   
-		
+
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", result);
 		modelMap.put("message", "fail");
-		//用户token
+		// 用户token
 		String token = SystemUtil.generateToken(phone);
-		
-	
-		if(SystemUtil.USER_COM.equals(userFlag)){
-			//用户为公司，验证登录操作
-			
-			
+
+		if (SystemUtil.USER_COM.equals(userFlag)) {
+			// 用户为公司，验证登录操作
+
 			return modelMap;
-		}else if(SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_STU.equals(userFlag)){
-			//用户为个人，验证登录操作
-			
-			
+		} else if (SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_STU.equals(userFlag)) {
+			// 用户为个人，验证登录操作
+
 			return modelMap;
 		}
 		return modelMap;
 	}
-	
+
 }
