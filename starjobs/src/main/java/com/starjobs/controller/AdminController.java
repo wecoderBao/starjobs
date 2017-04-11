@@ -24,4 +24,14 @@ public class AdminController {
 			return "jsp/users";
 		}
 		
+		//修改信息管理的公司信息管理跳转
+		@RequestMapping("editCompanys")
+		public String editCompanys(){
+			return "jsp/company";
+		}
+		//修改信息管理的管理員信息管理跳转
+		@RequestMapping("editManager")
+		public String editManager(){
+		return "jsp/manager";
+		}
 }

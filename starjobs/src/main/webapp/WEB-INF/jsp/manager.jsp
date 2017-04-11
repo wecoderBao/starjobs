@@ -4,7 +4,7 @@
 
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>用户管理</title>
+    <title>管理员管理</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -81,22 +81,21 @@
   <!--[if (gt IE 9)|!(IE)]><!--> 
    
   <!--<![endif]-->
-
   <jsp:include page="header.jsp"></jsp:include>
     <div class="content">
         <div class="header">
             
-            <h1 class="page-title">用户管理</h1>
+            <h1 class="page-title">管理员管理</h1>
                     <ul class="breadcrumb">
             <li><a href="index.html">信息管理</a> </li>
-            <li class="active">用户管理</li>
+            <li class="active">管理员管理</li>
         </ul>
 
         </div>
         <div class="main-content">
             
 <div class="btn-toolbar list-toolbar">
-    <a href="#AddUser" role="button" data-toggle="modal" style="color: #fff;"><button class="btn btn-primary"><i class="fa fa-plus"></i> 添加新用户</button></a>
+    <a href="#AddManager" role="button" data-toggle="modal" style="color: #fff;"><button class="btn btn-primary"><i class="fa fa-plus"></i> 添加新管理员</button></a>
     <button class="btn btn-default">导入</button>
     <button class="btn btn-default">导出</button>
   <div class="btn-group">
@@ -106,9 +105,9 @@
   <thead>
     <tr>
       <th></th>
-      <th>用户名</th>
+      <th>真实姓名</th>
       <th>昵称</th>
-      <th>会员等级</th>
+      <th>权限</th>
       <th style="width: 3.5em;"></th>
     </tr>
   </thead>
@@ -117,9 +116,9 @@
       <td>1</td>
       <td>汤如</td>
       <td>God Tang</td>
-      <td><span class="label label-warning">vip</span></td>
+      <td><span class="label label-danger">超级管理员</span></td>
       <td>
-          <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+          <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -127,9 +126,9 @@
       <td>2</td>
       <td>张玉珠</td>
       <td>章鱼小丸子</td>
-      <td><span class="label label-warning">vip</span></td>
+      <td><span class="label label-danger">超级管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr> 
@@ -137,9 +136,9 @@
       <td>3</td>
       <td>向万鹏</td>
       <td>小帅</td>
-      <td><span class="label label-warning">vip</span></td>
+      <td><span class="label label-danger">超级管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -147,9 +146,9 @@
       <td>4</td>
       <td>黄贤旭</td>
       <td>黄boss</td>
-      <td><span class="label label-warning">vip</span></td>
+      <td><span class="label label-danger">超级管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -157,9 +156,9 @@
       <td>5</td>
       <td>素素</td>
       <td>白浅上神</td>
-      <td><span class="label label-default">普通</span></td>
+      <td><span class="label label-warning">系统管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -167,9 +166,9 @@
       <td>6</td>
       <td>夜华</td>
       <td>太子殿下</td>
-      <td><span class="label label-default">普通</span></td>
+      <td><span class="label label-warning">系统管理员</span></td>
       <td>
-          <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+          <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -177,9 +176,9 @@
       <td>7</td>
       <td>素素</td>
       <td>白浅上神</td>
-      <td><span class="label label-default">普通</span></td>
+      <td><span class="label label-warning">系统管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -187,9 +186,9 @@
       <td>8</td>
       <td>夜华</td>
       <td>太子殿下</td>
-      <td><span class="label label-default">普通</span></td>
+      <td><span class="label label-warning">系统管理员</span></td>
       <td>
-           <a href="#editUser" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
           <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
       </td>
     </tr>
@@ -214,7 +213,7 @@
             <h3 id="myModalLabel">删除提示</h3>
         </div>
         <div class="modal-body">
-            <p class="error-text"><i class="fa fa-warning modal-icon"></i><h3>确定要删除该用户吗?</h3></p>
+            <p class="error-text"><i class="fa fa-warning modal-icon"></i><h3>确定要删除该管理员吗?</h3></p>
         </div>
         <div class="modal-footer">
             <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
@@ -224,18 +223,18 @@
     </div>
 </div>
 
-<div class="modal small fade" id="editUser" tabindex="-2" role="dialog" aria-labelledby="editUser" aria-hidden="true">
+<div class="modal small fade" id="editManager" tabindex="-2" role="dialog" aria-labelledby="editManager" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">修改用户信息</h3>
+            <h3 id="myModalLabel">修改管理员信息</h3>
         </div>
         <div class="modal-body">
             <div class="panel-body">
             <form>
                 <div class="form-group">
-                    <label>用户名</label>
+                    <label>真实姓名</label>
                     <input type="text" class="form-control span12">
                 </div>
                 <div class="form-group">
@@ -243,14 +242,10 @@
                     <input type="text" class="form-control span12">
                 </div>
                 <div class="form-group">
-                    <label>邮箱</label>
-                    <input type="email" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>等级</label>
+                    <label>权限</label>
                     <select class="form-control span12">
-                        <option>普通</option>
-                        <option selected>vip</option>
+                        <option>超级管理员</option>
+                        <option selected>系统管理员</option>
                     </select>
                 </div>
                     <div class="clearfix"></div>
@@ -266,18 +261,18 @@
     </div>
 </div>
 
-<div class="modal small fade" id="AddUser" tabindex="-3" role="dialog" aria-labelledby="AddUser" aria-hidden="true">
+<div class="modal small fade" id="AddManager" tabindex="-3" role="dialog" aria-labelledby="AddManager" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">添加新用户</h3>
+            <h3 id="myModalLabel">添加新管理员</h3>
         </div>
         <div class="modal-body">
             <div class="panel-body">
             <form>
                 <div class="form-group">
-                    <label>用户名</label>
+                    <label>真实姓名</label>
                     <input type="text" class="form-control span12">
                 </div>
                 <div class="form-group">
@@ -288,28 +283,11 @@
                     <label>密码</label>
                     <input type="password" class="form-control span12">
                 </div>
-                <div class="form-group">
-                    <label>邮箱</label>
-                    <input type="email" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>性别</label>&nbsp;&nbsp;&nbsp;
-                    <input type="radio"  name="sex" value="男">男&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女">女
-                </div>
-                <div class="form-group">
-                    <label>电话</label>
-                    <input type="tel" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>生日</label>
-                    <input type="date" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>等级</label>
+                 <div class="form-group">
+                    <label>权限</label>
                     <select class="form-control span12">
-                        <option>普通</option>
-                        <option selected>vip</option>
+                        <option>超级管理员</option>
+                        <option selected>系统管理员</option>
                     </select>
                 </div>
 
@@ -325,14 +303,6 @@
       </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
 
         </div>
     </div>

@@ -88,58 +88,7 @@
    
   <!--<![endif]-->
 
-    <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="" href="index.html"><span class="navbar-brand"><span class="fa fa-paper-plane"></span>StarJobs</span></a></div>
-
-        <div class="navbar-collapse collapse" style="height: 1px;">
-          <ul id="main-menu" class="nav navbar-nav navbar-right">
-            <li class="dropdown hidden-xs">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user padding-right-small" style="position:relative;top: 3px;"></span> 章鱼小丸子
-                    <i class="fa fa-caret-down"></i>
-                </a>
-
-              <ul class="dropdown-menu">
-                <li><a href="editInfo.html">个人设置</a></li>
-                <li class="divider"></li>
-                <li><a tabindex="-1" href="sign-in.html">退出账号</a></li>
-              </ul>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    
-    <div class="sidebar-nav">
-        <ul>
-            <li><a href="courseManage.html" class="nav-header"><i class="fa fa-fw fa-list-alt"></i>公司审核</a></li>
-            <li><a href="wordManage.html" class="nav-header"><i class="fa fa-book"></i>提现审核</a></li>
-            <li><a href="lisenningManage.html" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 招聘信息管理</a></li>
-        
-            <li data-popover="true" data-content="" rel="popover" data-placement="right"><a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-group"></i> 信息管理<i class="fa fa-collapse"></i></a></li>
-                <li><ul class="premium-menu nav nav-list collapse">
-                    <li ><a href="editUsers"><span class="fa fa-caret-right"></span> 用户管理</a></li>
-                    <li ><a href="teacher.html"><span class="fa fa-caret-right"></span> 公司管理</a></li>
-                    <li ><a href="manager.html"><span class="fa fa-caret-right"></span> 管理员管理</a></li>
-            </ul></li>
-
-            <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-wrench"></i> 个人设置<i class="fa fa-collapse"></i></a></li>
-                <li><ul class="accounts-menu nav nav-list collapse">
-                    <li ><a href="login.html"><span class="fa fa-caret-right"></span>切换账号</a></li>
-                    <li ><a href="signUpAdmin"><span class="fa fa-caret-right"></span> 注册新账号</a></li>
-                    <li ><a href="editInfoAdmin"><span class="fa fa-caret-right"></span>修改个人信息</a></li>
-            </ul></li>
-        </ul>
-    </div>
-
-   
+<jsp:include page="header.jsp"></jsp:include>   
             
         <footer>
             <hr>
