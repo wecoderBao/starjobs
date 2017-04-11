@@ -4,7 +4,7 @@
 
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>StarJobs Admin</title>
+    <title>修改个人信息</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -16,13 +16,7 @@
 
     <script src="lib/jquery-1.11.1.min.js" type="text/javascript"></script>
 
-        <script src="lib/jQuery-Knob/js/jquery.knob.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function() {
-            $(".knob").knob();
-        });
-    </script>
-
+    
 
     <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/premium.css">
@@ -96,7 +90,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="" href="index.html"><span class="navbar-brand"><span class="fa fa-paper-plane"></span>StarJobs</span></a></div>
+          <a class="" href="index.html"><span class="navbar-brand"><span class="fa fa-paper-plane"></span>ANG English</span></a></div>
 
         <div class="navbar-collapse collapse" style="height: 1px;">
           <ul id="main-menu" class="nav navbar-nav navbar-right">
@@ -117,34 +111,97 @@
         </div>
       </div>
     
-    <div class="sidebar-nav">
+
+     <div class="sidebar-nav">
         <ul>
-            <li><a href="courseManage.html" class="nav-header"><i class="fa fa-fw fa-list-alt"></i>公司审核</a></li>
-            <li><a href="wordManage.html" class="nav-header"><i class="fa fa-book"></i>提现审核</a></li>
-            <li><a href="lisenningManage.html" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 招聘信息管理</a></li>
-        
+            <li><a href="media.html" class="nav-header"><i class="fa fa-fw fa-list-alt"></i> 课程管理</a></li>
+            <li><a href="faq.html" class="nav-header"><i class="fa fa-book"></i>单词管理</a></li>
+            <li><a href="http://portnine.com/bootstrap-themes/aircraft" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 听力管理</a></li>
+            <li><a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse"><i class="fa fa-fw fa-bar-chart-o"></i> 收益分析<i class="fa fa-collapse"></i></a></li>
+            <li><ul class="dashboard-menu nav nav-list collapse in">
+                    <li><a href="courseIncome.html"><span class="fa fa-caret-right"></span> 课程收益</a></li>
+                    <li ><a href="wordIncome.html"><span class="fa fa-caret-right"></span> 单词收益</a></li>
+                    <li ><a href="teacherIncome.html"><span class="fa fa-caret-right"></span> 教师收益</a></li>
+            </ul></li>
+
             <li data-popover="true" data-content="" rel="popover" data-placement="right"><a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-group"></i> 信息管理<i class="fa fa-collapse"></i></a></li>
                 <li><ul class="premium-menu nav nav-list collapse">
-                    <li ><a href="editUsers"><span class="fa fa-caret-right"></span> 用户管理</a></li>
-                    <li ><a href="teacher.html"><span class="fa fa-caret-right"></span> 公司管理</a></li>
+                    <li ><a href="users.html"><span class="fa fa-caret-right"></span> 用户管理</a></li>
+                    <li ><a href="teacher.html"><span class="fa fa-caret-right"></span> 教师管理</a></li>
                     <li ><a href="manager.html"><span class="fa fa-caret-right"></span> 管理员管理</a></li>
             </ul></li>
 
             <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-wrench"></i> 个人设置<i class="fa fa-collapse"></i></a></li>
                 <li><ul class="accounts-menu nav nav-list collapse">
                     <li ><a href="login.html"><span class="fa fa-caret-right"></span>切换账号</a></li>
-                    <li ><a href="signUpAdmin"><span class="fa fa-caret-right"></span> 注册新账号</a></li>
-                    <li ><a href="editInfoAdmin"><span class="fa fa-caret-right"></span>修改个人信息</a></li>
+                    <li ><a href="sign-up.html"><span class="fa fa-caret-right"></span> 注册新账号</a></li>
+                    <li ><a href="reset-password.html"><span class="fa fa-caret-right"></span>修改个人信息</a></li>
             </ul></li>
         </ul>
     </div>
 
-   
+    <div class="content">
+        <div class="header">
             
-        <footer>
-            <hr>
-        </footer>
+            <h1 class="page-title">修改个人信息</h1>
+                    <ul class="breadcrumb">
+            <li><a href="index.html">主页</a> </li>
+            <li class="active">修改个人信息</li>
+        </ul>
+
         </div>
+        <div class="main-content">
+            
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#home" data-toggle="tab">个人信息</a></li>
+  <li><a href="#profile" data-toggle="tab">密码</a></li>
+</ul>
+
+<div class="row">
+  <div class="col-md-4">
+    <br>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="home">
+      <form id="tab">
+        <div class="form-group">
+        <label>用户名</label>
+        <input type="text" value="汤如" class="form-control">
+        </div>
+        <div class="form-group">
+        <label>昵称</label>
+        <input type="text" value="God Tang" class="form-control">
+        </div>
+        <div class="form-group">
+        <label>权限</label>
+          <select class="form-control">
+              <option>系统管理员</option>
+              <option>超级管理员</option>
+          </select>
+        </div>
+        <div class="form-group">
+              <button class="btn btn-primary">确认修改</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="profile">
+
+        <form id="tab2">
+          <div class="form-group">
+            <label>新密码</label>
+            <input type="password" class="form-control">
+          </div>
+          <div>
+              <button class="btn btn-primary">确认修改</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+        </div>
+    </div>
 
 
     <script src="lib/bootstrap/js/bootstrap.js"></script>
