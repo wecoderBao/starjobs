@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>StarJobs Admin</title>
+    <title>Bootstrap Admin</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -16,13 +15,7 @@
 
     <script src="lib/jquery-1.11.1.min.js" type="text/javascript"></script>
 
-        <script src="lib/jQuery-Knob/js/jquery.knob.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function() {
-            $(".knob").knob();
-        });
-    </script>
-
+    
 
     <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/premium.css">
@@ -88,12 +81,49 @@
    
   <!--<![endif]-->
 
-<jsp:include page="header.jsp"></jsp:include>   
-            
-        <footer>
-            <hr>
-        </footer>
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <a class="" href="index.html"><span class="navbar-brand"><span class="fa fa-paper-plane"></span> ANG English</span></a></div>
+
+        <div class="navbar-collapse collapse" style="height: 1px;">
+
         </div>
+      </div>
+    </div>
+    
+
+
+        <div class="dialog">
+    <div class="panel panel-default">
+        <p class="panel-heading no-collapse">注册</p>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label>真实姓名</label>
+                    <input type="text" class="form-control span12">
+                </div>
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input type="text" class="form-control span12">
+                </div>
+                <div class="form-group">
+                    <label>昵称</label>
+                    <input type="text" class="form-control span12">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" class="form-control span12">
+                </div>
+                <div class="form-group">
+                    <a href="index.html" class="btn btn-primary pull-right">注册!</a>
+                    <label class="remember-me"><input type="checkbox"> 我同意 <a href="terms-and-conditions.html">相关条约</a></label>
+                </div>
+                    <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
     <script src="lib/bootstrap/js/bootstrap.js"></script>
