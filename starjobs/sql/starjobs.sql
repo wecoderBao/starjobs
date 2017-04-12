@@ -188,7 +188,7 @@ CREATE TABLE `t_user_recharge` (
 DROP TABLE IF EXISTS `t_user_token`;
 
 CREATE TABLE `t_user_token` (
-  `c_id` int(8) unsigned NOT NULL COMMENT '主键',
+  `c_id` int(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `c_token_value` varchar(255) DEFAULT NULL,
   `c_phone_num` varchar(255) DEFAULT NULL COMMENT '外键',
   `c_create_time` date DEFAULT NULL,
