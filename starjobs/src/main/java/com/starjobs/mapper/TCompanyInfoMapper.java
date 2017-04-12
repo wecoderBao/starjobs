@@ -35,4 +35,6 @@ public interface TCompanyInfoMapper {
     int updateByPrimaryKey(TCompanyInfo record);
     //根据手机号更新用户密码
     int updatePwdByPhoneNum(@Param("cComPhone") String cComPhone,@Param("cComPassword") String cComPassword);
+    //根据手机号查询用户信息
+    TCompanyInfo selectByPhone(@Param("cComPhone") String cComPhone);
 }

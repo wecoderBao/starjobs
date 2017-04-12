@@ -14,6 +14,7 @@ import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TUserInfo;
+import com.starjobs.service.TokenService;
 import com.starjobs.service.UserService;
 import com.starjobs.sms.util.MobClient;
 import com.starjobs.sys.SystemUtil;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 	// 个人用户信息操作类
 	@Autowired
 	TUserInfoMapper tUserInfoMapper;
+	//token操作
+	@Autowired
+	TokenService tokenService;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -79,6 +83,8 @@ public class UserServiceImpl implements UserService {
 		// 验证码正确，用户为公司
 		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
+			//查询用户是否存在，若存在则不能再注册
+			
 			TCompanyInfo tciRecord = new TCompanyInfo();
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
@@ -91,6 +97,8 @@ public class UserServiceImpl implements UserService {
 			return modelMap;
 		} else if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
+			//查询用户是否存在，若存在则不能再注册
+			
 			// 验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
@@ -156,12 +164,54 @@ public class UserServiceImpl implements UserService {
 
 		if (SystemUtil.USER_COM.equals(userFlag)) {
 			// 用户为公司，验证登录操作
-
-			return modelMap;
-		} else if (SystemUtil.CODE_SUCC.equals(result) && SystemUtil.USER_STU.equals(userFlag)) {
+			TCompanyInfo tciRecord = tComapanyInfoMapper.selectByPhone(phone);
+			if(tciRecord != null && password.equals(tciRecord.getcComPassword())){
+				//验证密码成功
+				Map<String,Object> data = new HashMap<String,Object>();
+				data.put("token", token);
+				data.put("userid", tciRecord.getcComId());
+				data.put("nickname", tciRecord.getcComName());
+				data.put("phone", tciRecord.getcComPhone());
+				data.put("balance", tciRecord.getcComBalance());
+				
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+				modelMap.put("data", data);
+				//将token放入数据库中
+				int re = 0;
+				re = tokenService.save(token, phone);
+				if(re == 1){
+					return modelMap;
+				}
+			}else{
+				modelMap.put("error_code", SystemUtil.NOT_REGISTER);
+				modelMap.put("message", "not register");
+			}
+		} else if (SystemUtil.USER_STU.equals(userFlag)) {
 			// 用户为个人，验证登录操作
-
-			return modelMap;
+			TUserInfo tuiRecord = tUserInfoMapper.selectByPhone(phone);
+			if(tuiRecord != null && password.equals(tuiRecord.getcUserPassword())){
+				//验证密码成功
+				Map<String,Object> data = new HashMap<String,Object>();
+				data.put("token", token);
+				data.put("userid", tuiRecord.getcUserId());
+				data.put("nickname", tuiRecord.getcUserNickname());
+				data.put("phone", tuiRecord.getcUserPhone());
+				data.put("balance", tuiRecord.getcUserBalance());
+				
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+				modelMap.put("data", data);
+				//将token放入数据库中
+				int re = 0;
+				re = tokenService.save(token, phone);
+				if(re == 1){
+					return modelMap;
+				}
+			}else{
+				modelMap.put("error_code", SystemUtil.NOT_REGISTER);
+				modelMap.put("message", "not register");
+			}
 		}
 		return modelMap;
 	}

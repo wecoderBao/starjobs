@@ -369,8 +369,15 @@
     where c_user_id = #{cUserId,jdbcType=INTEGER}
   </update>
   <!-- 根据用户手机号更新密码 -->
-  <update id="updatePwdByPhoneNum" parameterType="java.lang.String">
+  	<update id="updatePwdByPhoneNum" parameterType="java.lang.String">
 		update t_user_info set c_user_password = #{cUserPassword,jdbcType=VARCHAR} 
 		where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
 	</update>
+	<!-- 根据手机号查询用户信息 -->
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
+  </select>
 </mapper>

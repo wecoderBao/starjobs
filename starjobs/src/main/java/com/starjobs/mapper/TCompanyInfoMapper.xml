@@ -361,4 +361,13 @@
 		update t_company_info set c_com_password = #{cComPassword,jdbcType=VARCHAR} 
 		where c_com_phone = #{cComPhone,jdbcType=VARCHAR}
 	</update>
+	<!-- 根据手机号查询用户信息 -->
+	<select id="selectByPhone" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_company_info
+    where c_com_phone = #{cComPhone,jdbcType=VARCHAR}
+  </select>
 </mapper>

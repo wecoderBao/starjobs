@@ -1,9 +1,11 @@
 package com.starjobs.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserInfoExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TUserInfoMapper {
     int countByExample(TUserInfoExample example);
@@ -29,4 +31,6 @@ public interface TUserInfoMapper {
     int updateByPrimaryKey(TUserInfo record);
   //根据手机号更新用户密码
     int updatePwdByPhoneNum(@Param("cUserPhone") String cUserPhone,@Param("cUserPassword") String cUserPassword);
+  //根据手机号查询用户信息
+    TUserInfo selectByPhone(@Param("cUserPhone") String cUserPhone);
 }
