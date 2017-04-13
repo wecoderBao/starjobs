@@ -173,11 +173,12 @@ public class UserServiceImpl implements UserService {
 				data.put("nickname", tciRecord.getcComName());
 				data.put("phone", tciRecord.getcComPhone());
 				data.put("balance", tciRecord.getcComBalance());
+				data.put("userFlag", SystemUtil.USER_COM);
 				
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
-				modelMap.put("userFlag", SystemUtil.USER_COM);
+				
 				//将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
@@ -199,11 +200,12 @@ public class UserServiceImpl implements UserService {
 				data.put("nickname", tuiRecord.getcUserNickname());
 				data.put("phone", tuiRecord.getcUserPhone());
 				data.put("balance", tuiRecord.getcUserBalance());
+				data.put("userFlag", SystemUtil.USER_STU);
 				
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
-				modelMap.put("userFlag", SystemUtil.USER_STU);
+				
 				//将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
