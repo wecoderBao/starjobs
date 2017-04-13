@@ -177,6 +177,7 @@ public class UserServiceImpl implements UserService {
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
+				modelMap.put("userFlag", SystemUtil.USER_COM);
 				//将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
@@ -202,6 +203,7 @@ public class UserServiceImpl implements UserService {
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
+				modelMap.put("userFlag", SystemUtil.USER_STU);
 				//将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
