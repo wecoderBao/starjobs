@@ -1,4 +1,4 @@
-package com.starjobs.controller;
+package com.starjobs.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
