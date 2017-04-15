@@ -5,7 +5,7 @@
     <id column="c_apply_id" property="cApplyId" jdbcType="INTEGER" />
     <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
     <result column="c_job_id" property="cJobId" jdbcType="INTEGER" />
-    <result column="c_apply_time" property="cApplyTime" jdbcType="DATE" />
+    <result column="c_apply_time" property="cApplyTime" jdbcType="TIMESTAMP" />
     <result column="c_apply_state" property="cApplyState" jdbcType="VARCHAR" />
     <result column="c_apply_desc" property="cApplyDesc" jdbcType="VARCHAR" />
   </resultMap>
@@ -105,7 +105,7 @@
       c_apply_time, c_apply_state, c_apply_desc
       )
     values (#{cApplyId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cJobId,jdbcType=INTEGER}, 
-      #{cApplyTime,jdbcType=DATE}, #{cApplyState,jdbcType=VARCHAR}, #{cApplyDesc,jdbcType=VARCHAR}
+      #{cApplyTime,jdbcType=TIMESTAMP}, #{cApplyState,jdbcType=VARCHAR}, #{cApplyDesc,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserJobApply" >
@@ -141,7 +141,7 @@
         #{cJobId,jdbcType=INTEGER},
       </if>
       <if test="cApplyTime != null" >
-        #{cApplyTime,jdbcType=DATE},
+        #{cApplyTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cApplyState != null" >
         #{cApplyState,jdbcType=VARCHAR},
@@ -170,7 +170,7 @@
         c_job_id = #{record.cJobId,jdbcType=INTEGER},
       </if>
       <if test="record.cApplyTime != null" >
-        c_apply_time = #{record.cApplyTime,jdbcType=DATE},
+        c_apply_time = #{record.cApplyTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.cApplyState != null" >
         c_apply_state = #{record.cApplyState,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
     set c_apply_id = #{record.cApplyId,jdbcType=INTEGER},
       c_user_id = #{record.cUserId,jdbcType=INTEGER},
       c_job_id = #{record.cJobId,jdbcType=INTEGER},
-      c_apply_time = #{record.cApplyTime,jdbcType=DATE},
+      c_apply_time = #{record.cApplyTime,jdbcType=TIMESTAMP},
       c_apply_state = #{record.cApplyState,jdbcType=VARCHAR},
       c_apply_desc = #{record.cApplyDesc,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -205,7 +205,7 @@
         c_job_id = #{cJobId,jdbcType=INTEGER},
       </if>
       <if test="cApplyTime != null" >
-        c_apply_time = #{cApplyTime,jdbcType=DATE},
+        c_apply_time = #{cApplyTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cApplyState != null" >
         c_apply_state = #{cApplyState,jdbcType=VARCHAR},
@@ -220,7 +220,7 @@
     update t_user_job_apply
     set c_user_id = #{cUserId,jdbcType=INTEGER},
       c_job_id = #{cJobId,jdbcType=INTEGER},
-      c_apply_time = #{cApplyTime,jdbcType=DATE},
+      c_apply_time = #{cApplyTime,jdbcType=TIMESTAMP},
       c_apply_state = #{cApplyState,jdbcType=VARCHAR},
       c_apply_desc = #{cApplyDesc,jdbcType=VARCHAR}
     where c_apply_id = #{cApplyId,jdbcType=INTEGER}

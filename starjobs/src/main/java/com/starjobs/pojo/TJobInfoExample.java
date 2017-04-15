@@ -2,7 +2,6 @@ package com.starjobs.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TJobInfoExample {
@@ -104,32 +103,6 @@ public class TJobInfoExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andCJobIdIsNull() {
@@ -462,73 +435,63 @@ public class TJobInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeIsNull() {
-            addCriterion("c_job_type is null");
+        public Criteria andCJobTypeIdIsNull() {
+            addCriterion("c_job_type_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeIsNotNull() {
-            addCriterion("c_job_type is not null");
+        public Criteria andCJobTypeIdIsNotNull() {
+            addCriterion("c_job_type_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeEqualTo(String value) {
-            addCriterion("c_job_type =", value, "cJobType");
+        public Criteria andCJobTypeIdEqualTo(Integer value) {
+            addCriterion("c_job_type_id =", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeNotEqualTo(String value) {
-            addCriterion("c_job_type <>", value, "cJobType");
+        public Criteria andCJobTypeIdNotEqualTo(Integer value) {
+            addCriterion("c_job_type_id <>", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeGreaterThan(String value) {
-            addCriterion("c_job_type >", value, "cJobType");
+        public Criteria andCJobTypeIdGreaterThan(Integer value) {
+            addCriterion("c_job_type_id >", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("c_job_type >=", value, "cJobType");
+        public Criteria andCJobTypeIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_job_type_id >=", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeLessThan(String value) {
-            addCriterion("c_job_type <", value, "cJobType");
+        public Criteria andCJobTypeIdLessThan(Integer value) {
+            addCriterion("c_job_type_id <", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeLessThanOrEqualTo(String value) {
-            addCriterion("c_job_type <=", value, "cJobType");
+        public Criteria andCJobTypeIdLessThanOrEqualTo(Integer value) {
+            addCriterion("c_job_type_id <=", value, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeLike(String value) {
-            addCriterion("c_job_type like", value, "cJobType");
+        public Criteria andCJobTypeIdIn(List<Integer> values) {
+            addCriterion("c_job_type_id in", values, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeNotLike(String value) {
-            addCriterion("c_job_type not like", value, "cJobType");
+        public Criteria andCJobTypeIdNotIn(List<Integer> values) {
+            addCriterion("c_job_type_id not in", values, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeIn(List<String> values) {
-            addCriterion("c_job_type in", values, "cJobType");
+        public Criteria andCJobTypeIdBetween(Integer value1, Integer value2) {
+            addCriterion("c_job_type_id between", value1, value2, "cJobTypeId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobTypeNotIn(List<String> values) {
-            addCriterion("c_job_type not in", values, "cJobType");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobTypeBetween(String value1, String value2) {
-            addCriterion("c_job_type between", value1, value2, "cJobType");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobTypeNotBetween(String value1, String value2) {
-            addCriterion("c_job_type not between", value1, value2, "cJobType");
+        public Criteria andCJobTypeIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_job_type_id not between", value1, value2, "cJobTypeId");
             return (Criteria) this;
         }
 
@@ -543,232 +506,192 @@ public class TJobInfoExample {
         }
 
         public Criteria andCJobPublishDateEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date =", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date =", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date <>", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date <>", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date >", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date >", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date >=", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date >=", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateLessThan(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date <", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date <", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_publish_date <=", value, "cJobPublishDate");
+            addCriterion("c_job_publish_date <=", value, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_publish_date in", values, "cJobPublishDate");
+            addCriterion("c_job_publish_date in", values, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_publish_date not in", values, "cJobPublishDate");
+            addCriterion("c_job_publish_date not in", values, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_publish_date between", value1, value2, "cJobPublishDate");
+            addCriterion("c_job_publish_date between", value1, value2, "cJobPublishDate");
             return (Criteria) this;
         }
 
         public Criteria andCJobPublishDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_publish_date not between", value1, value2, "cJobPublishDate");
+            addCriterion("c_job_publish_date not between", value1, value2, "cJobPublishDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateIsNull() {
-            addCriterion("c_job_begin_date is null");
+        public Criteria andCJobWorkDateIsNull() {
+            addCriterion("c_job_work_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateIsNotNull() {
-            addCriterion("c_job_begin_date is not null");
+        public Criteria andCJobWorkDateIsNotNull() {
+            addCriterion("c_job_work_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date =", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateEqualTo(String value) {
+            addCriterion("c_job_work_date =", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date <>", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateNotEqualTo(String value) {
+            addCriterion("c_job_work_date <>", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date >", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateGreaterThan(String value) {
+            addCriterion("c_job_work_date >", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date >=", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateGreaterThanOrEqualTo(String value) {
+            addCriterion("c_job_work_date >=", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateLessThan(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date <", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateLessThan(String value) {
+            addCriterion("c_job_work_date <", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_begin_date <=", value, "cJobBeginDate");
+        public Criteria andCJobWorkDateLessThanOrEqualTo(String value) {
+            addCriterion("c_job_work_date <=", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_begin_date in", values, "cJobBeginDate");
+        public Criteria andCJobWorkDateLike(String value) {
+            addCriterion("c_job_work_date like", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_begin_date not in", values, "cJobBeginDate");
+        public Criteria andCJobWorkDateNotLike(String value) {
+            addCriterion("c_job_work_date not like", value, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_begin_date between", value1, value2, "cJobBeginDate");
+        public Criteria andCJobWorkDateIn(List<String> values) {
+            addCriterion("c_job_work_date in", values, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobBeginDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_begin_date not between", value1, value2, "cJobBeginDate");
+        public Criteria andCJobWorkDateNotIn(List<String> values) {
+            addCriterion("c_job_work_date not in", values, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateIsNull() {
-            addCriterion("c_job_end_date is null");
+        public Criteria andCJobWorkDateBetween(String value1, String value2) {
+            addCriterion("c_job_work_date between", value1, value2, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateIsNotNull() {
-            addCriterion("c_job_end_date is not null");
+        public Criteria andCJobWorkDateNotBetween(String value1, String value2) {
+            addCriterion("c_job_work_date not between", value1, value2, "cJobWorkDate");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_end_date =", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeIsNull() {
+            addCriterion("c_job_work_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_end_date <>", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeIsNotNull() {
+            addCriterion("c_job_work_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_job_end_date >", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeEqualTo(String value) {
+            addCriterion("c_job_work_time =", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_end_date >=", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeNotEqualTo(String value) {
+            addCriterion("c_job_work_time <>", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateLessThan(Date value) {
-            addCriterionForJDBCDate("c_job_end_date <", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeGreaterThan(String value) {
+            addCriterion("c_job_work_time >", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_end_date <=", value, "cJobEndDate");
+        public Criteria andCJobWorkTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("c_job_work_time >=", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_end_date in", values, "cJobEndDate");
+        public Criteria andCJobWorkTimeLessThan(String value) {
+            addCriterion("c_job_work_time <", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_end_date not in", values, "cJobEndDate");
+        public Criteria andCJobWorkTimeLessThanOrEqualTo(String value) {
+            addCriterion("c_job_work_time <=", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_end_date between", value1, value2, "cJobEndDate");
+        public Criteria andCJobWorkTimeLike(String value) {
+            addCriterion("c_job_work_time like", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobEndDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_end_date not between", value1, value2, "cJobEndDate");
+        public Criteria andCJobWorkTimeNotLike(String value) {
+            addCriterion("c_job_work_time not like", value, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobRestTimeIsNull() {
-            addCriterion("c_job_rest_time is null");
+        public Criteria andCJobWorkTimeIn(List<String> values) {
+            addCriterion("c_job_work_time in", values, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobRestTimeIsNotNull() {
-            addCriterion("c_job_rest_time is not null");
+        public Criteria andCJobWorkTimeNotIn(List<String> values) {
+            addCriterion("c_job_work_time not in", values, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobRestTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time =", value, "cJobRestTime");
+        public Criteria andCJobWorkTimeBetween(String value1, String value2) {
+            addCriterion("c_job_work_time between", value1, value2, "cJobWorkTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobRestTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time <>", value, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time >", value, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time >=", value, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeLessThan(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time <", value, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_rest_time <=", value, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_rest_time in", values, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_rest_time not in", values, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_rest_time between", value1, value2, "cJobRestTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobRestTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_rest_time not between", value1, value2, "cJobRestTime");
+        public Criteria andCJobWorkTimeNotBetween(String value1, String value2) {
+            addCriterion("c_job_work_time not between", value1, value2, "cJobWorkTime");
             return (Criteria) this;
         }
 
@@ -782,53 +705,63 @@ public class TJobInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time =", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeEqualTo(String value) {
+            addCriterion("c_job_gather_time =", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time <>", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeNotEqualTo(String value) {
+            addCriterion("c_job_gather_time <>", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time >", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeGreaterThan(String value) {
+            addCriterion("c_job_gather_time >", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time >=", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("c_job_gather_time >=", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeLessThan(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time <", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeLessThan(String value) {
+            addCriterion("c_job_gather_time <", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_job_gather_time <=", value, "cJobGatherTime");
+        public Criteria andCJobGatherTimeLessThanOrEqualTo(String value) {
+            addCriterion("c_job_gather_time <=", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_gather_time in", values, "cJobGatherTime");
+        public Criteria andCJobGatherTimeLike(String value) {
+            addCriterion("c_job_gather_time like", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_job_gather_time not in", values, "cJobGatherTime");
+        public Criteria andCJobGatherTimeNotLike(String value) {
+            addCriterion("c_job_gather_time not like", value, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_gather_time between", value1, value2, "cJobGatherTime");
+        public Criteria andCJobGatherTimeIn(List<String> values) {
+            addCriterion("c_job_gather_time in", values, "cJobGatherTime");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_job_gather_time not between", value1, value2, "cJobGatherTime");
+        public Criteria andCJobGatherTimeNotIn(List<String> values) {
+            addCriterion("c_job_gather_time not in", values, "cJobGatherTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobGatherTimeBetween(String value1, String value2) {
+            addCriterion("c_job_gather_time between", value1, value2, "cJobGatherTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobGatherTimeNotBetween(String value1, String value2) {
+            addCriterion("c_job_gather_time not between", value1, value2, "cJobGatherTime");
             return (Criteria) this;
         }
 
@@ -842,62 +775,52 @@ public class TJobInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdEqualTo(String value) {
+        public Criteria andCJobGatherLocationIdEqualTo(Integer value) {
             addCriterion("c_job_gather_location_id =", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdNotEqualTo(String value) {
+        public Criteria andCJobGatherLocationIdNotEqualTo(Integer value) {
             addCriterion("c_job_gather_location_id <>", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdGreaterThan(String value) {
+        public Criteria andCJobGatherLocationIdGreaterThan(Integer value) {
             addCriterion("c_job_gather_location_id >", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdGreaterThanOrEqualTo(String value) {
+        public Criteria andCJobGatherLocationIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("c_job_gather_location_id >=", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdLessThan(String value) {
+        public Criteria andCJobGatherLocationIdLessThan(Integer value) {
             addCriterion("c_job_gather_location_id <", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdLessThanOrEqualTo(String value) {
+        public Criteria andCJobGatherLocationIdLessThanOrEqualTo(Integer value) {
             addCriterion("c_job_gather_location_id <=", value, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdLike(String value) {
-            addCriterion("c_job_gather_location_id like", value, "cJobGatherLocationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobGatherLocationIdNotLike(String value) {
-            addCriterion("c_job_gather_location_id not like", value, "cJobGatherLocationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobGatherLocationIdIn(List<String> values) {
+        public Criteria andCJobGatherLocationIdIn(List<Integer> values) {
             addCriterion("c_job_gather_location_id in", values, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdNotIn(List<String> values) {
+        public Criteria andCJobGatherLocationIdNotIn(List<Integer> values) {
             addCriterion("c_job_gather_location_id not in", values, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdBetween(String value1, String value2) {
+        public Criteria andCJobGatherLocationIdBetween(Integer value1, Integer value2) {
             addCriterion("c_job_gather_location_id between", value1, value2, "cJobGatherLocationId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobGatherLocationIdNotBetween(String value1, String value2) {
+        public Criteria andCJobGatherLocationIdNotBetween(Integer value1, Integer value2) {
             addCriterion("c_job_gather_location_id not between", value1, value2, "cJobGatherLocationId");
             return (Criteria) this;
         }
@@ -1042,263 +965,193 @@ public class TJobInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryEqualTo(Integer value) {
+        public Criteria andCJobSalaryEqualTo(String value) {
             addCriterion("c_job_salary =", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryNotEqualTo(Integer value) {
+        public Criteria andCJobSalaryNotEqualTo(String value) {
             addCriterion("c_job_salary <>", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryGreaterThan(Integer value) {
+        public Criteria andCJobSalaryGreaterThan(String value) {
             addCriterion("c_job_salary >", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCJobSalaryGreaterThanOrEqualTo(String value) {
             addCriterion("c_job_salary >=", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryLessThan(Integer value) {
+        public Criteria andCJobSalaryLessThan(String value) {
             addCriterion("c_job_salary <", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryLessThanOrEqualTo(Integer value) {
+        public Criteria andCJobSalaryLessThanOrEqualTo(String value) {
             addCriterion("c_job_salary <=", value, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryIn(List<Integer> values) {
+        public Criteria andCJobSalaryLike(String value) {
+            addCriterion("c_job_salary like", value, "cJobSalary");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobSalaryNotLike(String value) {
+            addCriterion("c_job_salary not like", value, "cJobSalary");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobSalaryIn(List<String> values) {
             addCriterion("c_job_salary in", values, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryNotIn(List<Integer> values) {
+        public Criteria andCJobSalaryNotIn(List<String> values) {
             addCriterion("c_job_salary not in", values, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryBetween(Integer value1, Integer value2) {
+        public Criteria andCJobSalaryBetween(String value1, String value2) {
             addCriterion("c_job_salary between", value1, value2, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryNotBetween(Integer value1, Integer value2) {
+        public Criteria andCJobSalaryNotBetween(String value1, String value2) {
             addCriterion("c_job_salary not between", value1, value2, "cJobSalary");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraIsNull() {
-            addCriterion("c_job_salary_extra is null");
+        public Criteria andCJobPayMethodIsNull() {
+            addCriterion("c_job_pay_method is null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraIsNotNull() {
-            addCriterion("c_job_salary_extra is not null");
+        public Criteria andCJobPayMethodIsNotNull() {
+            addCriterion("c_job_pay_method is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraEqualTo(String value) {
-            addCriterion("c_job_salary_extra =", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodEqualTo(String value) {
+            addCriterion("c_job_pay_method =", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraNotEqualTo(String value) {
-            addCriterion("c_job_salary_extra <>", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodNotEqualTo(String value) {
+            addCriterion("c_job_pay_method <>", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraGreaterThan(String value) {
-            addCriterion("c_job_salary_extra >", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodGreaterThan(String value) {
+            addCriterion("c_job_pay_method >", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraGreaterThanOrEqualTo(String value) {
-            addCriterion("c_job_salary_extra >=", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("c_job_pay_method >=", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraLessThan(String value) {
-            addCriterion("c_job_salary_extra <", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodLessThan(String value) {
+            addCriterion("c_job_pay_method <", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraLessThanOrEqualTo(String value) {
-            addCriterion("c_job_salary_extra <=", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodLessThanOrEqualTo(String value) {
+            addCriterion("c_job_pay_method <=", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraLike(String value) {
-            addCriterion("c_job_salary_extra like", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodLike(String value) {
+            addCriterion("c_job_pay_method like", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraNotLike(String value) {
-            addCriterion("c_job_salary_extra not like", value, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodNotLike(String value) {
+            addCriterion("c_job_pay_method not like", value, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraIn(List<String> values) {
-            addCriterion("c_job_salary_extra in", values, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodIn(List<String> values) {
+            addCriterion("c_job_pay_method in", values, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraNotIn(List<String> values) {
-            addCriterion("c_job_salary_extra not in", values, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodNotIn(List<String> values) {
+            addCriterion("c_job_pay_method not in", values, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraBetween(String value1, String value2) {
-            addCriterion("c_job_salary_extra between", value1, value2, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodBetween(String value1, String value2) {
+            addCriterion("c_job_pay_method between", value1, value2, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobSalaryExtraNotBetween(String value1, String value2) {
-            addCriterion("c_job_salary_extra not between", value1, value2, "cJobSalaryExtra");
+        public Criteria andCJobPayMethodNotBetween(String value1, String value2) {
+            addCriterion("c_job_pay_method not between", value1, value2, "cJobPayMethod");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodIsNull() {
-            addCriterion("c_job_close_method is null");
+        public Criteria andCJobChoiceOpIdIsNull() {
+            addCriterion("c_job_choice_op_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodIsNotNull() {
-            addCriterion("c_job_close_method is not null");
+        public Criteria andCJobChoiceOpIdIsNotNull() {
+            addCriterion("c_job_choice_op_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodEqualTo(String value) {
-            addCriterion("c_job_close_method =", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdEqualTo(Integer value) {
+            addCriterion("c_job_choice_op_id =", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodNotEqualTo(String value) {
-            addCriterion("c_job_close_method <>", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdNotEqualTo(Integer value) {
+            addCriterion("c_job_choice_op_id <>", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodGreaterThan(String value) {
-            addCriterion("c_job_close_method >", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdGreaterThan(Integer value) {
+            addCriterion("c_job_choice_op_id >", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodGreaterThanOrEqualTo(String value) {
-            addCriterion("c_job_close_method >=", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_job_choice_op_id >=", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodLessThan(String value) {
-            addCriterion("c_job_close_method <", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdLessThan(Integer value) {
+            addCriterion("c_job_choice_op_id <", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodLessThanOrEqualTo(String value) {
-            addCriterion("c_job_close_method <=", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdLessThanOrEqualTo(Integer value) {
+            addCriterion("c_job_choice_op_id <=", value, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodLike(String value) {
-            addCriterion("c_job_close_method like", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdIn(List<Integer> values) {
+            addCriterion("c_job_choice_op_id in", values, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodNotLike(String value) {
-            addCriterion("c_job_close_method not like", value, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdNotIn(List<Integer> values) {
+            addCriterion("c_job_choice_op_id not in", values, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodIn(List<String> values) {
-            addCriterion("c_job_close_method in", values, "cJobCloseMethod");
+        public Criteria andCJobChoiceOpIdBetween(Integer value1, Integer value2) {
+            addCriterion("c_job_choice_op_id between", value1, value2, "cJobChoiceOpId");
             return (Criteria) this;
         }
 
-        public Criteria andCJobCloseMethodNotIn(List<String> values) {
-            addCriterion("c_job_close_method not in", values, "cJobCloseMethod");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobCloseMethodBetween(String value1, String value2) {
-            addCriterion("c_job_close_method between", value1, value2, "cJobCloseMethod");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobCloseMethodNotBetween(String value1, String value2) {
-            addCriterion("c_job_close_method not between", value1, value2, "cJobCloseMethod");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpIsNull() {
-            addCriterion("c_job_choice_op is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpIsNotNull() {
-            addCriterion("c_job_choice_op is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpEqualTo(String value) {
-            addCriterion("c_job_choice_op =", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpNotEqualTo(String value) {
-            addCriterion("c_job_choice_op <>", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpGreaterThan(String value) {
-            addCriterion("c_job_choice_op >", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpGreaterThanOrEqualTo(String value) {
-            addCriterion("c_job_choice_op >=", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpLessThan(String value) {
-            addCriterion("c_job_choice_op <", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpLessThanOrEqualTo(String value) {
-            addCriterion("c_job_choice_op <=", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpLike(String value) {
-            addCriterion("c_job_choice_op like", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpNotLike(String value) {
-            addCriterion("c_job_choice_op not like", value, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpIn(List<String> values) {
-            addCriterion("c_job_choice_op in", values, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpNotIn(List<String> values) {
-            addCriterion("c_job_choice_op not in", values, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpBetween(String value1, String value2) {
-            addCriterion("c_job_choice_op between", value1, value2, "cJobChoiceOp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCJobChoiceOpNotBetween(String value1, String value2) {
-            addCriterion("c_job_choice_op not between", value1, value2, "cJobChoiceOp");
+        public Criteria andCJobChoiceOpIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_job_choice_op_id not between", value1, value2, "cJobChoiceOpId");
             return (Criteria) this;
         }
 

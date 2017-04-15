@@ -2,7 +2,6 @@ package com.starjobs.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TUserJobApplyExample {
@@ -104,32 +103,6 @@ public class TUserJobApplyExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andCApplyIdIsNull() {
@@ -323,52 +296,52 @@ public class TUserJobApplyExample {
         }
 
         public Criteria andCApplyTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("c_apply_time =", value, "cApplyTime");
+            addCriterion("c_apply_time =", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_apply_time <>", value, "cApplyTime");
+            addCriterion("c_apply_time <>", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_apply_time >", value, "cApplyTime");
+            addCriterion("c_apply_time >", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_apply_time >=", value, "cApplyTime");
+            addCriterion("c_apply_time >=", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeLessThan(Date value) {
-            addCriterionForJDBCDate("c_apply_time <", value, "cApplyTime");
+            addCriterion("c_apply_time <", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_apply_time <=", value, "cApplyTime");
+            addCriterion("c_apply_time <=", value, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("c_apply_time in", values, "cApplyTime");
+            addCriterion("c_apply_time in", values, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_apply_time not in", values, "cApplyTime");
+            addCriterion("c_apply_time not in", values, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_apply_time between", value1, value2, "cApplyTime");
+            addCriterion("c_apply_time between", value1, value2, "cApplyTime");
             return (Criteria) this;
         }
 
         public Criteria andCApplyTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_apply_time not between", value1, value2, "cApplyTime");
+            addCriterion("c_apply_time not between", value1, value2, "cApplyTime");
             return (Criteria) this;
         }
 

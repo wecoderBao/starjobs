@@ -11,7 +11,7 @@ public class TUserToken {
 
     private Date cCreateTime;
 
-    private Date cTokenExpire;
+    private Integer cTokenExpire;
 
     public Integer getcId() {
         return cId;
@@ -45,11 +45,11 @@ public class TUserToken {
         this.cCreateTime = cCreateTime;
     }
 
-    public Date getcTokenExpire() {
+    public Integer getcTokenExpire() {
         return cTokenExpire;
     }
 
-    public void setcTokenExpire(Date cTokenExpire) {
+    public void setcTokenExpire(Integer cTokenExpire) {
         this.cTokenExpire = cTokenExpire;
     }
 }

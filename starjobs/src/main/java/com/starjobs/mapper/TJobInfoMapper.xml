@@ -7,19 +7,17 @@
     <result column="c_job_city" property="cJobCity" jdbcType="VARCHAR" />
     <result column="c_job_area" property="cJobArea" jdbcType="VARCHAR" />
     <result column="c_job_position" property="cJobPosition" jdbcType="VARCHAR" />
-    <result column="c_job_type" property="cJobType" jdbcType="VARCHAR" />
-    <result column="c_job_publish_date" property="cJobPublishDate" jdbcType="DATE" />
-    <result column="c_job_begin_date" property="cJobBeginDate" jdbcType="DATE" />
-    <result column="c_job_end_date" property="cJobEndDate" jdbcType="DATE" />
-    <result column="c_job_rest_time" property="cJobRestTime" jdbcType="DATE" />
-    <result column="c_job_gather_time" property="cJobGatherTime" jdbcType="DATE" />
-    <result column="c_job_gather_location_id" property="cJobGatherLocationId" jdbcType="VARCHAR" />
+    <result column="c_job_type_id" property="cJobTypeId" jdbcType="INTEGER" />
+    <result column="c_job_publish_date" property="cJobPublishDate" jdbcType="TIMESTAMP" />
+    <result column="c_job_work_date" property="cJobWorkDate" jdbcType="VARCHAR" />
+    <result column="c_job_work_time" property="cJobWorkTime" jdbcType="VARCHAR" />
+    <result column="c_job_gather_time" property="cJobGatherTime" jdbcType="VARCHAR" />
+    <result column="c_job_gather_location_id" property="cJobGatherLocationId" jdbcType="INTEGER" />
     <result column="c_job_title" property="cJobTitle" jdbcType="VARCHAR" />
     <result column="c_job_location_id" property="cJobLocationId" jdbcType="INTEGER" />
-    <result column="c_job_salary" property="cJobSalary" jdbcType="INTEGER" />
-    <result column="c_job_salary_extra" property="cJobSalaryExtra" jdbcType="VARCHAR" />
-    <result column="c_job_close_method" property="cJobCloseMethod" jdbcType="VARCHAR" />
-    <result column="c_job_choice_op" property="cJobChoiceOp" jdbcType="VARCHAR" />
+    <result column="c_job_salary" property="cJobSalary" jdbcType="VARCHAR" />
+    <result column="c_job_pay_method" property="cJobPayMethod" jdbcType="VARCHAR" />
+    <result column="c_job_choice_op_id" property="cJobChoiceOpId" jdbcType="INTEGER" />
     <result column="c_job_total_person" property="cJobTotalPerson" jdbcType="INTEGER" />
     <result column="c_job_person_gender" property="cJobPersonGender" jdbcType="VARCHAR" />
     <result column="c_job_state" property="cJobState" jdbcType="VARCHAR" />
@@ -86,10 +84,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_job_id, c_com_id, c_job_city, c_job_area, c_job_position, c_job_type, c_job_publish_date, 
-    c_job_begin_date, c_job_end_date, c_job_rest_time, c_job_gather_time, c_job_gather_location_id, 
-    c_job_title, c_job_location_id, c_job_salary, c_job_salary_extra, c_job_close_method, 
-    c_job_choice_op, c_job_total_person, c_job_person_gender, c_job_state
+    c_job_id, c_com_id, c_job_city, c_job_area, c_job_position, c_job_type_id, c_job_publish_date, 
+    c_job_work_date, c_job_work_time, c_job_gather_time, c_job_gather_location_id, c_job_title, 
+    c_job_location_id, c_job_salary, c_job_pay_method, c_job_choice_op_id, c_job_total_person, 
+    c_job_person_gender, c_job_state
   </sql>
   <sql id="Blob_Column_List" >
     c_job_desc
@@ -144,21 +142,19 @@
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TJobInfo" >
     insert into t_job_info (c_job_id, c_com_id, c_job_city, 
-      c_job_area, c_job_position, c_job_type, 
-      c_job_publish_date, c_job_begin_date, c_job_end_date, 
-      c_job_rest_time, c_job_gather_time, c_job_gather_location_id, 
-      c_job_title, c_job_location_id, c_job_salary, 
-      c_job_salary_extra, c_job_close_method, c_job_choice_op, 
-      c_job_total_person, c_job_person_gender, c_job_state, 
-      c_job_desc)
+      c_job_area, c_job_position, c_job_type_id, 
+      c_job_publish_date, c_job_work_date, c_job_work_time, 
+      c_job_gather_time, c_job_gather_location_id, c_job_title, 
+      c_job_location_id, c_job_salary, c_job_pay_method, 
+      c_job_choice_op_id, c_job_total_person, c_job_person_gender, 
+      c_job_state, c_job_desc)
     values (#{cJobId,jdbcType=INTEGER}, #{cComId,jdbcType=INTEGER}, #{cJobCity,jdbcType=VARCHAR}, 
-      #{cJobArea,jdbcType=VARCHAR}, #{cJobPosition,jdbcType=VARCHAR}, #{cJobType,jdbcType=VARCHAR}, 
-      #{cJobPublishDate,jdbcType=DATE}, #{cJobBeginDate,jdbcType=DATE}, #{cJobEndDate,jdbcType=DATE}, 
-      #{cJobRestTime,jdbcType=DATE}, #{cJobGatherTime,jdbcType=DATE}, #{cJobGatherLocationId,jdbcType=VARCHAR}, 
-      #{cJobTitle,jdbcType=VARCHAR}, #{cJobLocationId,jdbcType=INTEGER}, #{cJobSalary,jdbcType=INTEGER}, 
-      #{cJobSalaryExtra,jdbcType=VARCHAR}, #{cJobCloseMethod,jdbcType=VARCHAR}, #{cJobChoiceOp,jdbcType=VARCHAR}, 
-      #{cJobTotalPerson,jdbcType=INTEGER}, #{cJobPersonGender,jdbcType=VARCHAR}, #{cJobState,jdbcType=VARCHAR}, 
-      #{cJobDesc,jdbcType=LONGVARCHAR})
+      #{cJobArea,jdbcType=VARCHAR}, #{cJobPosition,jdbcType=VARCHAR}, #{cJobTypeId,jdbcType=INTEGER}, 
+      #{cJobPublishDate,jdbcType=TIMESTAMP}, #{cJobWorkDate,jdbcType=VARCHAR}, #{cJobWorkTime,jdbcType=VARCHAR}, 
+      #{cJobGatherTime,jdbcType=VARCHAR}, #{cJobGatherLocationId,jdbcType=INTEGER}, #{cJobTitle,jdbcType=VARCHAR}, 
+      #{cJobLocationId,jdbcType=INTEGER}, #{cJobSalary,jdbcType=VARCHAR}, #{cJobPayMethod,jdbcType=VARCHAR}, 
+      #{cJobChoiceOpId,jdbcType=INTEGER}, #{cJobTotalPerson,jdbcType=INTEGER}, #{cJobPersonGender,jdbcType=VARCHAR}, 
+      #{cJobState,jdbcType=VARCHAR}, #{cJobDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TJobInfo" >
     insert into t_job_info
@@ -178,20 +174,17 @@
       <if test="cJobPosition != null" >
         c_job_position,
       </if>
-      <if test="cJobType != null" >
-        c_job_type,
+      <if test="cJobTypeId != null" >
+        c_job_type_id,
       </if>
       <if test="cJobPublishDate != null" >
         c_job_publish_date,
       </if>
-      <if test="cJobBeginDate != null" >
-        c_job_begin_date,
+      <if test="cJobWorkDate != null" >
+        c_job_work_date,
       </if>
-      <if test="cJobEndDate != null" >
-        c_job_end_date,
-      </if>
-      <if test="cJobRestTime != null" >
-        c_job_rest_time,
+      <if test="cJobWorkTime != null" >
+        c_job_work_time,
       </if>
       <if test="cJobGatherTime != null" >
         c_job_gather_time,
@@ -208,14 +201,11 @@
       <if test="cJobSalary != null" >
         c_job_salary,
       </if>
-      <if test="cJobSalaryExtra != null" >
-        c_job_salary_extra,
+      <if test="cJobPayMethod != null" >
+        c_job_pay_method,
       </if>
-      <if test="cJobCloseMethod != null" >
-        c_job_close_method,
-      </if>
-      <if test="cJobChoiceOp != null" >
-        c_job_choice_op,
+      <if test="cJobChoiceOpId != null" >
+        c_job_choice_op_id,
       </if>
       <if test="cJobTotalPerson != null" >
         c_job_total_person,
@@ -246,26 +236,23 @@
       <if test="cJobPosition != null" >
         #{cJobPosition,jdbcType=VARCHAR},
       </if>
-      <if test="cJobType != null" >
-        #{cJobType,jdbcType=VARCHAR},
+      <if test="cJobTypeId != null" >
+        #{cJobTypeId,jdbcType=INTEGER},
       </if>
       <if test="cJobPublishDate != null" >
-        #{cJobPublishDate,jdbcType=DATE},
+        #{cJobPublishDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="cJobBeginDate != null" >
-        #{cJobBeginDate,jdbcType=DATE},
+      <if test="cJobWorkDate != null" >
+        #{cJobWorkDate,jdbcType=VARCHAR},
       </if>
-      <if test="cJobEndDate != null" >
-        #{cJobEndDate,jdbcType=DATE},
-      </if>
-      <if test="cJobRestTime != null" >
-        #{cJobRestTime,jdbcType=DATE},
+      <if test="cJobWorkTime != null" >
+        #{cJobWorkTime,jdbcType=VARCHAR},
       </if>
       <if test="cJobGatherTime != null" >
-        #{cJobGatherTime,jdbcType=DATE},
+        #{cJobGatherTime,jdbcType=VARCHAR},
       </if>
       <if test="cJobGatherLocationId != null" >
-        #{cJobGatherLocationId,jdbcType=VARCHAR},
+        #{cJobGatherLocationId,jdbcType=INTEGER},
       </if>
       <if test="cJobTitle != null" >
         #{cJobTitle,jdbcType=VARCHAR},
@@ -274,16 +261,13 @@
         #{cJobLocationId,jdbcType=INTEGER},
       </if>
       <if test="cJobSalary != null" >
-        #{cJobSalary,jdbcType=INTEGER},
+        #{cJobSalary,jdbcType=VARCHAR},
       </if>
-      <if test="cJobSalaryExtra != null" >
-        #{cJobSalaryExtra,jdbcType=VARCHAR},
+      <if test="cJobPayMethod != null" >
+        #{cJobPayMethod,jdbcType=VARCHAR},
       </if>
-      <if test="cJobCloseMethod != null" >
-        #{cJobCloseMethod,jdbcType=VARCHAR},
-      </if>
-      <if test="cJobChoiceOp != null" >
-        #{cJobChoiceOp,jdbcType=VARCHAR},
+      <if test="cJobChoiceOpId != null" >
+        #{cJobChoiceOpId,jdbcType=INTEGER},
       </if>
       <if test="cJobTotalPerson != null" >
         #{cJobTotalPerson,jdbcType=INTEGER},
@@ -323,26 +307,23 @@
       <if test="record.cJobPosition != null" >
         c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
       </if>
-      <if test="record.cJobType != null" >
-        c_job_type = #{record.cJobType,jdbcType=VARCHAR},
+      <if test="record.cJobTypeId != null" >
+        c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
       </if>
       <if test="record.cJobPublishDate != null" >
-        c_job_publish_date = #{record.cJobPublishDate,jdbcType=DATE},
+        c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.cJobBeginDate != null" >
-        c_job_begin_date = #{record.cJobBeginDate,jdbcType=DATE},
+      <if test="record.cJobWorkDate != null" >
+        c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
       </if>
-      <if test="record.cJobEndDate != null" >
-        c_job_end_date = #{record.cJobEndDate,jdbcType=DATE},
-      </if>
-      <if test="record.cJobRestTime != null" >
-        c_job_rest_time = #{record.cJobRestTime,jdbcType=DATE},
+      <if test="record.cJobWorkTime != null" >
+        c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
       </if>
       <if test="record.cJobGatherTime != null" >
-        c_job_gather_time = #{record.cJobGatherTime,jdbcType=DATE},
+        c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
       </if>
       <if test="record.cJobGatherLocationId != null" >
-        c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=VARCHAR},
+        c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
       </if>
       <if test="record.cJobTitle != null" >
         c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
@@ -351,16 +332,13 @@
         c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
       </if>
       <if test="record.cJobSalary != null" >
-        c_job_salary = #{record.cJobSalary,jdbcType=INTEGER},
+        c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
       </if>
-      <if test="record.cJobSalaryExtra != null" >
-        c_job_salary_extra = #{record.cJobSalaryExtra,jdbcType=VARCHAR},
+      <if test="record.cJobPayMethod != null" >
+        c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
       </if>
-      <if test="record.cJobCloseMethod != null" >
-        c_job_close_method = #{record.cJobCloseMethod,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cJobChoiceOp != null" >
-        c_job_choice_op = #{record.cJobChoiceOp,jdbcType=VARCHAR},
+      <if test="record.cJobChoiceOpId != null" >
+        c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
       </if>
       <if test="record.cJobTotalPerson != null" >
         c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
@@ -386,19 +364,17 @@
       c_job_city = #{record.cJobCity,jdbcType=VARCHAR},
       c_job_area = #{record.cJobArea,jdbcType=VARCHAR},
       c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
-      c_job_type = #{record.cJobType,jdbcType=VARCHAR},
-      c_job_publish_date = #{record.cJobPublishDate,jdbcType=DATE},
-      c_job_begin_date = #{record.cJobBeginDate,jdbcType=DATE},
-      c_job_end_date = #{record.cJobEndDate,jdbcType=DATE},
-      c_job_rest_time = #{record.cJobRestTime,jdbcType=DATE},
-      c_job_gather_time = #{record.cJobGatherTime,jdbcType=DATE},
-      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=VARCHAR},
+      c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
       c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
       c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
-      c_job_salary = #{record.cJobSalary,jdbcType=INTEGER},
-      c_job_salary_extra = #{record.cJobSalaryExtra,jdbcType=VARCHAR},
-      c_job_close_method = #{record.cJobCloseMethod,jdbcType=VARCHAR},
-      c_job_choice_op = #{record.cJobChoiceOp,jdbcType=VARCHAR},
+      c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
       c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
       c_job_person_gender = #{record.cJobPersonGender,jdbcType=VARCHAR},
       c_job_state = #{record.cJobState,jdbcType=VARCHAR},
@@ -414,19 +390,17 @@
       c_job_city = #{record.cJobCity,jdbcType=VARCHAR},
       c_job_area = #{record.cJobArea,jdbcType=VARCHAR},
       c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
-      c_job_type = #{record.cJobType,jdbcType=VARCHAR},
-      c_job_publish_date = #{record.cJobPublishDate,jdbcType=DATE},
-      c_job_begin_date = #{record.cJobBeginDate,jdbcType=DATE},
-      c_job_end_date = #{record.cJobEndDate,jdbcType=DATE},
-      c_job_rest_time = #{record.cJobRestTime,jdbcType=DATE},
-      c_job_gather_time = #{record.cJobGatherTime,jdbcType=DATE},
-      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=VARCHAR},
+      c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
       c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
       c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
-      c_job_salary = #{record.cJobSalary,jdbcType=INTEGER},
-      c_job_salary_extra = #{record.cJobSalaryExtra,jdbcType=VARCHAR},
-      c_job_close_method = #{record.cJobCloseMethod,jdbcType=VARCHAR},
-      c_job_choice_op = #{record.cJobChoiceOp,jdbcType=VARCHAR},
+      c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
       c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
       c_job_person_gender = #{record.cJobPersonGender,jdbcType=VARCHAR},
       c_job_state = #{record.cJobState,jdbcType=VARCHAR}
@@ -449,26 +423,23 @@
       <if test="cJobPosition != null" >
         c_job_position = #{cJobPosition,jdbcType=VARCHAR},
       </if>
-      <if test="cJobType != null" >
-        c_job_type = #{cJobType,jdbcType=VARCHAR},
+      <if test="cJobTypeId != null" >
+        c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
       </if>
       <if test="cJobPublishDate != null" >
-        c_job_publish_date = #{cJobPublishDate,jdbcType=DATE},
+        c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="cJobBeginDate != null" >
-        c_job_begin_date = #{cJobBeginDate,jdbcType=DATE},
+      <if test="cJobWorkDate != null" >
+        c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
       </if>
-      <if test="cJobEndDate != null" >
-        c_job_end_date = #{cJobEndDate,jdbcType=DATE},
-      </if>
-      <if test="cJobRestTime != null" >
-        c_job_rest_time = #{cJobRestTime,jdbcType=DATE},
+      <if test="cJobWorkTime != null" >
+        c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
       </if>
       <if test="cJobGatherTime != null" >
-        c_job_gather_time = #{cJobGatherTime,jdbcType=DATE},
+        c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
       </if>
       <if test="cJobGatherLocationId != null" >
-        c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=VARCHAR},
+        c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
       </if>
       <if test="cJobTitle != null" >
         c_job_title = #{cJobTitle,jdbcType=VARCHAR},
@@ -477,16 +448,13 @@
         c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
       </if>
       <if test="cJobSalary != null" >
-        c_job_salary = #{cJobSalary,jdbcType=INTEGER},
+        c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
       </if>
-      <if test="cJobSalaryExtra != null" >
-        c_job_salary_extra = #{cJobSalaryExtra,jdbcType=VARCHAR},
+      <if test="cJobPayMethod != null" >
+        c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
       </if>
-      <if test="cJobCloseMethod != null" >
-        c_job_close_method = #{cJobCloseMethod,jdbcType=VARCHAR},
-      </if>
-      <if test="cJobChoiceOp != null" >
-        c_job_choice_op = #{cJobChoiceOp,jdbcType=VARCHAR},
+      <if test="cJobChoiceOpId != null" >
+        c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
       </if>
       <if test="cJobTotalPerson != null" >
         c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
@@ -509,19 +477,17 @@
       c_job_city = #{cJobCity,jdbcType=VARCHAR},
       c_job_area = #{cJobArea,jdbcType=VARCHAR},
       c_job_position = #{cJobPosition,jdbcType=VARCHAR},
-      c_job_type = #{cJobType,jdbcType=VARCHAR},
-      c_job_publish_date = #{cJobPublishDate,jdbcType=DATE},
-      c_job_begin_date = #{cJobBeginDate,jdbcType=DATE},
-      c_job_end_date = #{cJobEndDate,jdbcType=DATE},
-      c_job_rest_time = #{cJobRestTime,jdbcType=DATE},
-      c_job_gather_time = #{cJobGatherTime,jdbcType=DATE},
-      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=VARCHAR},
+      c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
       c_job_title = #{cJobTitle,jdbcType=VARCHAR},
       c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
-      c_job_salary = #{cJobSalary,jdbcType=INTEGER},
-      c_job_salary_extra = #{cJobSalaryExtra,jdbcType=VARCHAR},
-      c_job_close_method = #{cJobCloseMethod,jdbcType=VARCHAR},
-      c_job_choice_op = #{cJobChoiceOp,jdbcType=VARCHAR},
+      c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
       c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
       c_job_person_gender = #{cJobPersonGender,jdbcType=VARCHAR},
       c_job_state = #{cJobState,jdbcType=VARCHAR},
@@ -534,19 +500,17 @@
       c_job_city = #{cJobCity,jdbcType=VARCHAR},
       c_job_area = #{cJobArea,jdbcType=VARCHAR},
       c_job_position = #{cJobPosition,jdbcType=VARCHAR},
-      c_job_type = #{cJobType,jdbcType=VARCHAR},
-      c_job_publish_date = #{cJobPublishDate,jdbcType=DATE},
-      c_job_begin_date = #{cJobBeginDate,jdbcType=DATE},
-      c_job_end_date = #{cJobEndDate,jdbcType=DATE},
-      c_job_rest_time = #{cJobRestTime,jdbcType=DATE},
-      c_job_gather_time = #{cJobGatherTime,jdbcType=DATE},
-      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=VARCHAR},
+      c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
       c_job_title = #{cJobTitle,jdbcType=VARCHAR},
       c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
-      c_job_salary = #{cJobSalary,jdbcType=INTEGER},
-      c_job_salary_extra = #{cJobSalaryExtra,jdbcType=VARCHAR},
-      c_job_close_method = #{cJobCloseMethod,jdbcType=VARCHAR},
-      c_job_choice_op = #{cJobChoiceOp,jdbcType=VARCHAR},
+      c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
       c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
       c_job_person_gender = #{cJobPersonGender,jdbcType=VARCHAR},
       c_job_state = #{cJobState,jdbcType=VARCHAR}

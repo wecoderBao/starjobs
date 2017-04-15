@@ -5,7 +5,7 @@
     <id column="c_user_recharge_id" property="cUserRechargeId" jdbcType="INTEGER" />
     <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
     <result column="c_user_recharge_money" property="cUserRechargeMoney" jdbcType="INTEGER" />
-    <result column="c_user_recharge_date" property="cUserRechargeDate" jdbcType="DATE" />
+    <result column="c_user_recharge_date" property="cUserRechargeDate" jdbcType="TIMESTAMP" />
     <result column="c_user_balance_after" property="cUserBalanceAfter" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -103,7 +103,7 @@
     insert into t_user_recharge (c_user_recharge_id, c_user_id, c_user_recharge_money, 
       c_user_recharge_date, c_user_balance_after)
     values (#{cUserRechargeId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cUserRechargeMoney,jdbcType=INTEGER}, 
-      #{cUserRechargeDate,jdbcType=DATE}, #{cUserBalanceAfter,jdbcType=INTEGER})
+      #{cUserRechargeDate,jdbcType=TIMESTAMP}, #{cUserBalanceAfter,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserRecharge" >
     insert into t_user_recharge
@@ -135,7 +135,7 @@
         #{cUserRechargeMoney,jdbcType=INTEGER},
       </if>
       <if test="cUserRechargeDate != null" >
-        #{cUserRechargeDate,jdbcType=DATE},
+        #{cUserRechargeDate,jdbcType=TIMESTAMP},
       </if>
       <if test="cUserBalanceAfter != null" >
         #{cUserBalanceAfter,jdbcType=INTEGER},
@@ -161,7 +161,7 @@
         c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
       </if>
       <if test="record.cUserRechargeDate != null" >
-        c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=DATE},
+        c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.cUserBalanceAfter != null" >
         c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     set c_user_recharge_id = #{record.cUserRechargeId,jdbcType=INTEGER},
       c_user_id = #{record.cUserId,jdbcType=INTEGER},
       c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
-      c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=DATE},
+      c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
       c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -192,7 +192,7 @@
         c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
       </if>
       <if test="cUserRechargeDate != null" >
-        c_user_recharge_date = #{cUserRechargeDate,jdbcType=DATE},
+        c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
       </if>
       <if test="cUserBalanceAfter != null" >
         c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER},
@@ -204,7 +204,7 @@
     update t_user_recharge
     set c_user_id = #{cUserId,jdbcType=INTEGER},
       c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
-      c_user_recharge_date = #{cUserRechargeDate,jdbcType=DATE},
+      c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
       c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER}
     where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
   </update>

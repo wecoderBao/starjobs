@@ -2,7 +2,6 @@ package com.starjobs.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TUserRechargeExample {
@@ -104,32 +103,6 @@ public class TUserRechargeExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andCUserRechargeIdIsNull() {
@@ -323,52 +296,52 @@ public class TUserRechargeExample {
         }
 
         public Criteria andCUserRechargeDateEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date =", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date =", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date <>", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date <>", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date >", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date >", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date >=", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date >=", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateLessThan(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date <", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date <", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_recharge_date <=", value, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date <=", value, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateIn(List<Date> values) {
-            addCriterionForJDBCDate("c_user_recharge_date in", values, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date in", values, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_user_recharge_date not in", values, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date not in", values, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_user_recharge_date between", value1, value2, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date between", value1, value2, "cUserRechargeDate");
             return (Criteria) this;
         }
 
         public Criteria andCUserRechargeDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_user_recharge_date not between", value1, value2, "cUserRechargeDate");
+            addCriterion("c_user_recharge_date not between", value1, value2, "cUserRechargeDate");
             return (Criteria) this;
         }
 

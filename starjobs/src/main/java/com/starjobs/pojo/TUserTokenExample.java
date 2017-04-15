@@ -2,7 +2,6 @@ package com.starjobs.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TUserTokenExample {
@@ -104,32 +103,6 @@ public class TUserTokenExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andCIdIsNull() {
@@ -343,52 +316,52 @@ public class TUserTokenExample {
         }
 
         public Criteria andCCreateTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("c_create_time =", value, "cCreateTime");
+            addCriterion("c_create_time =", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_create_time <>", value, "cCreateTime");
+            addCriterion("c_create_time <>", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_create_time >", value, "cCreateTime");
+            addCriterion("c_create_time >", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_create_time >=", value, "cCreateTime");
+            addCriterion("c_create_time >=", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeLessThan(Date value) {
-            addCriterionForJDBCDate("c_create_time <", value, "cCreateTime");
+            addCriterion("c_create_time <", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_create_time <=", value, "cCreateTime");
+            addCriterion("c_create_time <=", value, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("c_create_time in", values, "cCreateTime");
+            addCriterion("c_create_time in", values, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_create_time not in", values, "cCreateTime");
+            addCriterion("c_create_time not in", values, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_create_time between", value1, value2, "cCreateTime");
+            addCriterion("c_create_time between", value1, value2, "cCreateTime");
             return (Criteria) this;
         }
 
         public Criteria andCCreateTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_create_time not between", value1, value2, "cCreateTime");
+            addCriterion("c_create_time not between", value1, value2, "cCreateTime");
             return (Criteria) this;
         }
 
@@ -402,53 +375,53 @@ public class TUserTokenExample {
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireEqualTo(Date value) {
-            addCriterionForJDBCDate("c_token_expire =", value, "cTokenExpire");
+        public Criteria andCTokenExpireEqualTo(Integer value) {
+            addCriterion("c_token_expire =", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_token_expire <>", value, "cTokenExpire");
+        public Criteria andCTokenExpireNotEqualTo(Integer value) {
+            addCriterion("c_token_expire <>", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_token_expire >", value, "cTokenExpire");
+        public Criteria andCTokenExpireGreaterThan(Integer value) {
+            addCriterion("c_token_expire >", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_token_expire >=", value, "cTokenExpire");
+        public Criteria andCTokenExpireGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_token_expire >=", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireLessThan(Date value) {
-            addCriterionForJDBCDate("c_token_expire <", value, "cTokenExpire");
+        public Criteria andCTokenExpireLessThan(Integer value) {
+            addCriterion("c_token_expire <", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_token_expire <=", value, "cTokenExpire");
+        public Criteria andCTokenExpireLessThanOrEqualTo(Integer value) {
+            addCriterion("c_token_expire <=", value, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireIn(List<Date> values) {
-            addCriterionForJDBCDate("c_token_expire in", values, "cTokenExpire");
+        public Criteria andCTokenExpireIn(List<Integer> values) {
+            addCriterion("c_token_expire in", values, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_token_expire not in", values, "cTokenExpire");
+        public Criteria andCTokenExpireNotIn(List<Integer> values) {
+            addCriterion("c_token_expire not in", values, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_token_expire between", value1, value2, "cTokenExpire");
+        public Criteria andCTokenExpireBetween(Integer value1, Integer value2) {
+            addCriterion("c_token_expire between", value1, value2, "cTokenExpire");
             return (Criteria) this;
         }
 
-        public Criteria andCTokenExpireNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_token_expire not between", value1, value2, "cTokenExpire");
+        public Criteria andCTokenExpireNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_token_expire not between", value1, value2, "cTokenExpire");
             return (Criteria) this;
         }
     }

@@ -13,31 +13,27 @@ public class TJobInfo {
 
     private String cJobPosition;
 
-    private String cJobType;
+    private Integer cJobTypeId;
 
     private Date cJobPublishDate;
 
-    private Date cJobBeginDate;
+    private String cJobWorkDate;
 
-    private Date cJobEndDate;
+    private String cJobWorkTime;
 
-    private Date cJobRestTime;
+    private String cJobGatherTime;
 
-    private Date cJobGatherTime;
-
-    private String cJobGatherLocationId;
+    private Integer cJobGatherLocationId;
 
     private String cJobTitle;
 
     private Integer cJobLocationId;
 
-    private Integer cJobSalary;
+    private String cJobSalary;
 
-    private String cJobSalaryExtra;
+    private String cJobPayMethod;
 
-    private String cJobCloseMethod;
-
-    private String cJobChoiceOp;
+    private Integer cJobChoiceOpId;
 
     private Integer cJobTotalPerson;
 
@@ -87,12 +83,12 @@ public class TJobInfo {
         this.cJobPosition = cJobPosition == null ? null : cJobPosition.trim();
     }
 
-    public String getcJobType() {
-        return cJobType;
+    public Integer getcJobTypeId() {
+        return cJobTypeId;
     }
 
-    public void setcJobType(String cJobType) {
-        this.cJobType = cJobType == null ? null : cJobType.trim();
+    public void setcJobTypeId(Integer cJobTypeId) {
+        this.cJobTypeId = cJobTypeId;
     }
 
     public Date getcJobPublishDate() {
@@ -103,44 +99,36 @@ public class TJobInfo {
         this.cJobPublishDate = cJobPublishDate;
     }
 
-    public Date getcJobBeginDate() {
-        return cJobBeginDate;
+    public String getcJobWorkDate() {
+        return cJobWorkDate;
     }
 
-    public void setcJobBeginDate(Date cJobBeginDate) {
-        this.cJobBeginDate = cJobBeginDate;
+    public void setcJobWorkDate(String cJobWorkDate) {
+        this.cJobWorkDate = cJobWorkDate == null ? null : cJobWorkDate.trim();
     }
 
-    public Date getcJobEndDate() {
-        return cJobEndDate;
+    public String getcJobWorkTime() {
+        return cJobWorkTime;
     }
 
-    public void setcJobEndDate(Date cJobEndDate) {
-        this.cJobEndDate = cJobEndDate;
+    public void setcJobWorkTime(String cJobWorkTime) {
+        this.cJobWorkTime = cJobWorkTime == null ? null : cJobWorkTime.trim();
     }
 
-    public Date getcJobRestTime() {
-        return cJobRestTime;
-    }
-
-    public void setcJobRestTime(Date cJobRestTime) {
-        this.cJobRestTime = cJobRestTime;
-    }
-
-    public Date getcJobGatherTime() {
+    public String getcJobGatherTime() {
         return cJobGatherTime;
     }
 
-    public void setcJobGatherTime(Date cJobGatherTime) {
-        this.cJobGatherTime = cJobGatherTime;
+    public void setcJobGatherTime(String cJobGatherTime) {
+        this.cJobGatherTime = cJobGatherTime == null ? null : cJobGatherTime.trim();
     }
 
-    public String getcJobGatherLocationId() {
+    public Integer getcJobGatherLocationId() {
         return cJobGatherLocationId;
     }
 
-    public void setcJobGatherLocationId(String cJobGatherLocationId) {
-        this.cJobGatherLocationId = cJobGatherLocationId == null ? null : cJobGatherLocationId.trim();
+    public void setcJobGatherLocationId(Integer cJobGatherLocationId) {
+        this.cJobGatherLocationId = cJobGatherLocationId;
     }
 
     public String getcJobTitle() {
@@ -159,36 +147,28 @@ public class TJobInfo {
         this.cJobLocationId = cJobLocationId;
     }
 
-    public Integer getcJobSalary() {
+    public String getcJobSalary() {
         return cJobSalary;
     }
 
-    public void setcJobSalary(Integer cJobSalary) {
-        this.cJobSalary = cJobSalary;
+    public void setcJobSalary(String cJobSalary) {
+        this.cJobSalary = cJobSalary == null ? null : cJobSalary.trim();
     }
 
-    public String getcJobSalaryExtra() {
-        return cJobSalaryExtra;
+    public String getcJobPayMethod() {
+        return cJobPayMethod;
     }
 
-    public void setcJobSalaryExtra(String cJobSalaryExtra) {
-        this.cJobSalaryExtra = cJobSalaryExtra == null ? null : cJobSalaryExtra.trim();
+    public void setcJobPayMethod(String cJobPayMethod) {
+        this.cJobPayMethod = cJobPayMethod == null ? null : cJobPayMethod.trim();
     }
 
-    public String getcJobCloseMethod() {
-        return cJobCloseMethod;
+    public Integer getcJobChoiceOpId() {
+        return cJobChoiceOpId;
     }
 
-    public void setcJobCloseMethod(String cJobCloseMethod) {
-        this.cJobCloseMethod = cJobCloseMethod == null ? null : cJobCloseMethod.trim();
-    }
-
-    public String getcJobChoiceOp() {
-        return cJobChoiceOp;
-    }
-
-    public void setcJobChoiceOp(String cJobChoiceOp) {
-        this.cJobChoiceOp = cJobChoiceOp == null ? null : cJobChoiceOp.trim();
+    public void setcJobChoiceOpId(Integer cJobChoiceOpId) {
+        this.cJobChoiceOpId = cJobChoiceOpId;
     }
 
     public Integer getcJobTotalPerson() {

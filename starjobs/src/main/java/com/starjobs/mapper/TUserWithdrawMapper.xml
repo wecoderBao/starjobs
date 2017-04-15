@@ -5,7 +5,7 @@
     <id column="c_user_ withdraw _id" property="cUserWithdrawId" jdbcType="INTEGER" />
     <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
     <result column="c_user_ withdraw _money" property="cUserWithdrawMoney" jdbcType="INTEGER" />
-    <result column="c_user_ withdraw _date" property="cUserWithdrawDate" jdbcType="DATE" />
+    <result column="c_user_ withdraw _date" property="cUserWithdrawDate" jdbcType="TIMESTAMP" />
     <result column="c_user_ withdraw _after" property="cUserWithdrawAfter" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -102,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TUserWithdraw" >
     insert into t_user_withdraw ("c_user_ withdraw _id", c_user_id, "c_user_ withdraw _money", 
-      "c_user_ withdraw _date", "c_user_ withdraw _after")
+      "c_user_ withdraw _date", "c_user_ withdraw _after"
+      )
     values (#{cUserWithdrawId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cUserWithdrawMoney,jdbcType=INTEGER}, 
-      #{cUserWithdrawDate,jdbcType=DATE}, #{cUserWithdrawAfter,jdbcType=INTEGER})
+      #{cUserWithdrawDate,jdbcType=TIMESTAMP}, #{cUserWithdrawAfter,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserWithdraw" >
     insert into t_user_withdraw
@@ -136,7 +138,7 @@
         #{cUserWithdrawMoney,jdbcType=INTEGER},
       </if>
       <if test="cUserWithdrawDate != null" >
-        #{cUserWithdrawDate,jdbcType=DATE},
+        #{cUserWithdrawDate,jdbcType=TIMESTAMP},
       </if>
       <if test="cUserWithdrawAfter != null" >
         #{cUserWithdrawAfter,jdbcType=INTEGER},
@@ -162,7 +164,7 @@
         "c_user_ withdraw _money" = #{record.cUserWithdrawMoney,jdbcType=INTEGER},
       </if>
       <if test="record.cUserWithdrawDate != null" >
-        "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=DATE},
+        "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.cUserWithdrawAfter != null" >
         "c_user_ withdraw _after" = #{record.cUserWithdrawAfter,jdbcType=INTEGER},
@@ -177,7 +179,7 @@
     set "c_user_ withdraw _id" = #{record.cUserWithdrawId,jdbcType=INTEGER},
       c_user_id = #{record.cUserId,jdbcType=INTEGER},
       "c_user_ withdraw _money" = #{record.cUserWithdrawMoney,jdbcType=INTEGER},
-      "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=DATE},
+      "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=TIMESTAMP},
       "c_user_ withdraw _after" = #{record.cUserWithdrawAfter,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -193,7 +195,7 @@
         "c_user_ withdraw _money" = #{cUserWithdrawMoney,jdbcType=INTEGER},
       </if>
       <if test="cUserWithdrawDate != null" >
-        "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=DATE},
+        "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=TIMESTAMP},
       </if>
       <if test="cUserWithdrawAfter != null" >
         "c_user_ withdraw _after" = #{cUserWithdrawAfter,jdbcType=INTEGER},
@@ -205,7 +207,7 @@
     update t_user_withdraw
     set c_user_id = #{cUserId,jdbcType=INTEGER},
       "c_user_ withdraw _money" = #{cUserWithdrawMoney,jdbcType=INTEGER},
-      "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=DATE},
+      "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=TIMESTAMP},
       "c_user_ withdraw _after" = #{cUserWithdrawAfter,jdbcType=INTEGER}
     where "c_user_ withdraw _id" = #{cUserWithdrawId,jdbcType=INTEGER}
   </update>

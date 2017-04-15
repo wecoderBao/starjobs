@@ -78,6 +78,10 @@ public class UserServiceImpl implements UserService {
 		JSONObject jsonResult = JSONObject.parseObject(result);
 
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		if(jsonResult == null){
+			modelMap.put("error_code", SystemUtil.CODE_FAIL);
+			return modelMap;
+		}
 		modelMap.put("error_code", jsonResult.get("status"));
 
 		// 验证码正确，用户为公司
