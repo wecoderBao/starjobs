@@ -516,4 +516,25 @@
       c_job_state = #{cJobState,jdbcType=VARCHAR}
     where c_job_id = #{cJobId,jdbcType=INTEGER}
   </update>
+  <!-- 根据条件查询兼职信息 -->
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_job_info
+    <if test="city != null" >
+      <where>
+      	c_job_city= #{city,jdbcType=VARCHAR}
+      	<if test="area != null">
+      		and c_job_area = #{area,jdbcType=VARCHAR}
+      	</if>
+      	<if test="typeId != -1">
+      		and c_job_type_id = #{typeId,jdbcType=INTEGER}
+      	</if>
+      	<if test="choiceId != -1">
+      		and c_job_choice_op_id = #{choiceId,jdbcType=INTEGER}
+      	</if>
+      </where>
+    </if>
+      order by c_job_publish_date
+  </select>
 </mapper>

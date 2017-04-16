@@ -27,4 +27,6 @@ public interface TUserTokenMapper {
     int updateByPrimaryKeySelective(TUserToken record);
 
     int updateByPrimaryKey(TUserToken record);
+    //根据token值查询token
+    TUserToken selectByTokenValue(@Param("cTokenValue")String cTokenValue);
 }

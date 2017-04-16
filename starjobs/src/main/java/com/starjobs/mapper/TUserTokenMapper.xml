@@ -208,4 +208,11 @@
       c_token_expire = #{cTokenExpire,jdbcType=INTEGER}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
+  <!-- 根据token值查询token -->
+  <select id="selectByTokenValue" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_token
+    where c_token_value = #{cTokenValue,jdbcType=VARCHAR}
+  </select>
 </mapper>

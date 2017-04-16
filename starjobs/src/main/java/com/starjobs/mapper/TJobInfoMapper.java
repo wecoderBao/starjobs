@@ -33,4 +33,6 @@ public interface TJobInfoMapper {
     int updateByPrimaryKeyWithBLOBs(TJobInfo record);
 
     int updateByPrimaryKey(TJobInfo record);
+    //更据查询条件查询兼职信息
+    List<TJobInfo> selectByUser(@Param("city")String city,@Param("area")String area,@Param("typeId") Integer typeId,@Param("choiceId") Integer choiceId);
 }
