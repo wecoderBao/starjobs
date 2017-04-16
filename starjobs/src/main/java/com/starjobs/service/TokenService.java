@@ -12,4 +12,6 @@ package com.starjobs.service;
 public interface TokenService {
 	//保存token
 	public int save(String token,String phone);
+	//检验token是否有效
+	public boolean checkToken(String token);
 }

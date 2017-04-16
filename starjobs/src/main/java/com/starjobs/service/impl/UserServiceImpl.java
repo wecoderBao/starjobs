@@ -3,16 +3,23 @@
  */
 package com.starjobs.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.starjobs.mapper.TCompanyInfoMapper;
+import com.starjobs.mapper.TJobInfoMapper;
+import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.pojo.TCompanyInfo;
+import com.starjobs.pojo.TJobInfo;
+import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.service.TokenService;
 import com.starjobs.service.UserService;
@@ -24,7 +31,7 @@ import com.starjobs.sys.SystemUtil;
  * Title:SignInServiceImpl
  * </p>
  * <p>
- * Description:
+ * Description:app用户服务类
  * </p>
  * 
  * @author:bao
@@ -37,9 +44,15 @@ public class UserServiceImpl implements UserService {
 	// 个人用户信息操作类
 	@Autowired
 	TUserInfoMapper tUserInfoMapper;
-	//token操作
+	// token操作
 	@Autowired
 	TokenService tokenService;
+	//兼职信息操作
+	@Autowired
+	TJobInfoMapper tJobInfoMapper;
+	//地点操作类
+	@Autowired
+	TLocationMapper tLocationMapper;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -78,7 +91,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject jsonResult = JSONObject.parseObject(result);
 
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
-		if(jsonResult == null){
+		if (jsonResult == null) {
 			modelMap.put("error_code", SystemUtil.CODE_FAIL);
 			return modelMap;
 		}
@@ -87,8 +100,8 @@ public class UserServiceImpl implements UserService {
 		// 验证码正确，用户为公司
 		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
-			//查询用户是否存在，若存在则不能再注册
-			
+			// 查询用户是否存在，若存在则不能再注册
+
 			TCompanyInfo tciRecord = new TCompanyInfo();
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
@@ -101,8 +114,8 @@ public class UserServiceImpl implements UserService {
 			return modelMap;
 		} else if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
-			//查询用户是否存在，若存在则不能再注册
-			
+			// 查询用户是否存在，若存在则不能再注册
+
 			// 验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
@@ -169,54 +182,54 @@ public class UserServiceImpl implements UserService {
 		if (SystemUtil.USER_COM.equals(userFlag)) {
 			// 用户为公司，验证登录操作
 			TCompanyInfo tciRecord = tComapanyInfoMapper.selectByPhone(phone);
-			if(tciRecord != null && password.equals(tciRecord.getcComPassword())){
-				//验证密码成功
-				Map<String,Object> data = new HashMap<String,Object>();
+			if (tciRecord != null && password.equals(tciRecord.getcComPassword())) {
+				// 验证密码成功
+				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("token", token);
 				data.put("userid", tciRecord.getcComId());
 				data.put("nickname", tciRecord.getcComName());
 				data.put("phone", tciRecord.getcComPhone());
 				data.put("balance", tciRecord.getcComBalance());
 				data.put("userFlag", SystemUtil.USER_COM);
-				
+
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
-				
-				//将token放入数据库中
+
+				// 将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
-				if(re == 1){
+				if (re == 1) {
 					return modelMap;
 				}
-			}else{
+			} else {
 				modelMap.put("error_code", SystemUtil.NOT_REGISTER);
 				modelMap.put("message", "not register");
 			}
 		} else if (SystemUtil.USER_STU.equals(userFlag)) {
 			// 用户为个人，验证登录操作
 			TUserInfo tuiRecord = tUserInfoMapper.selectByPhone(phone);
-			if(tuiRecord != null && password.equals(tuiRecord.getcUserPassword())){
-				//验证密码成功
-				Map<String,Object> data = new HashMap<String,Object>();
+			if (tuiRecord != null && password.equals(tuiRecord.getcUserPassword())) {
+				// 验证密码成功
+				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("token", token);
 				data.put("userid", tuiRecord.getcUserId());
 				data.put("nickname", tuiRecord.getcUserNickname());
 				data.put("phone", tuiRecord.getcUserPhone());
 				data.put("balance", tuiRecord.getcUserBalance());
 				data.put("userFlag", SystemUtil.USER_STU);
-				
+
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);
-				
-				//将token放入数据库中
+
+				// 将token放入数据库中
 				int re = 0;
 				re = tokenService.save(token, phone);
-				if(re == 1){
+				if (re == 1) {
 					return modelMap;
 				}
-			}else{
+			} else {
 				modelMap.put("error_code", SystemUtil.NOT_REGISTER);
 				modelMap.put("message", "not register");
 			}
@@ -224,4 +237,43 @@ public class UserServiceImpl implements UserService {
 		return modelMap;
 	}
 
+	// 用户查询兼职信息
+	public Map<String, Object> userGetJobInfo(String city, String area, String typeId, String choiceId) {
+		if(StringUtils.isEmpty(city)){
+			city = "武汉";
+		}
+		int jobTypeId = -1,jobChoiceId = -1;
+		if(!StringUtils.isEmpty(typeId)){
+			jobTypeId = Integer.parseInt(typeId);
+		}
+		if(!StringUtils.isEmpty(choiceId)){
+			jobChoiceId = Integer.parseInt(choiceId);
+		}
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		ArrayList<Map<String,Object>> infos = new ArrayList<Map<String,Object>>();
+		
+		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, area, jobTypeId, jobChoiceId);
+		if( null == jobList){
+			return modelMap;
+		}
+		for(TJobInfo jobInfo : jobList){
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("comId", jobInfo.getcComId());
+			TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
+			data.put("comImg", company.getcComHeadImg());
+			data.put("publishTime", jobInfo.getcJobPublishDate());
+			data.put("jobId",jobInfo.getcJobId());
+			data.put("jobName", jobInfo.getcJobTitle());
+			TLocation locRecord = tLocationMapper.selectByPrimaryKey(jobInfo.getcJobLocationId());
+			data.put("locationX", locRecord.getcLocationLatitude());
+			data.put("locationY", locRecord.getcLocationLongitude());
+			data.put("locationName", locRecord.getcLocationName());
+			data.put("workDate", jobInfo.getcJobWorkDate());
+			data.put("workTime", jobInfo.getcJobWorkTime());
+			data.put("salary", jobInfo.getcJobSalary());
+			infos.add(data);
+		}
+		modelMap.put("jobList", infos);
+		return modelMap;
+	}
 }
