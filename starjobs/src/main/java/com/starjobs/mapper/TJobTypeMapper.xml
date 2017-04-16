@@ -193,4 +193,8 @@
       desc = #{desc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 获取所有兼职类型信息 -->
+  <select id="selectAllType" resultMap="BaseResultMap" >
+    select id,code,name from t_job_type order by id
+  </select>
 </mapper>

@@ -27,4 +27,6 @@ public interface TJobTypeMapper {
     int updateByPrimaryKeySelective(TJobType record);
 
     int updateByPrimaryKey(TJobType record);
+    //获取所有兼职类型信息
+    List<TJobType> selectAllType();
 }

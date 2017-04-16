@@ -193,4 +193,8 @@
       desc = #{desc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 获取所有筛选条件信息 -->
+  <select id="selectAllChoice" resultMap="BaseResultMap" >
+    select id,code,name from t_job_choice order by id
+  </select>
 </mapper>

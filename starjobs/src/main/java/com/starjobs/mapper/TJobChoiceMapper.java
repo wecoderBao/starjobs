@@ -27,4 +27,6 @@ public interface TJobChoiceMapper {
     int updateByPrimaryKeySelective(TJobChoice record);
 
     int updateByPrimaryKey(TJobChoice record);
+    //获取获取筛选条件信息
+    List<TJobChoice> selectAllChoice();
 }
