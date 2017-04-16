@@ -30,9 +30,7 @@ CREATE TABLE `city` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `city` */
 
-/*Table structure for table `t_admin` */
 
 DROP TABLE IF EXISTS `t_admin`;
 
@@ -44,11 +42,11 @@ CREATE TABLE `t_admin` (
   PRIMARY KEY (`c_admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_admin` */
+
 
 insert  into `t_admin`(`c_admin_id`,`c_admin_name`,`c_admin_password`,`c_admin_desc`) values (1,'nihao','202cb962ac59075b964b07152d234b70',NULL);
 
-/*Table structure for table `t_com_address` */
+
 
 DROP TABLE IF EXISTS `t_com_address`;
 
@@ -61,9 +59,7 @@ CREATE TABLE `t_com_address` (
   PRIMARY KEY (`c_com_address_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_com_address` */
 
-/*Table structure for table `t_company_info` */
 
 DROP TABLE IF EXISTS `t_company_info`;
 
@@ -84,9 +80,7 @@ CREATE TABLE `t_company_info` (
   CONSTRAINT `FK_c_com_address_id` FOREIGN KEY (`c_com_address_id`) REFERENCES `t_com_address` (`c_com_address_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_company_info` */
 
-/*Table structure for table `t_job_choice` */
 
 DROP TABLE IF EXISTS `t_job_choice`;
 
@@ -98,9 +92,28 @@ CREATE TABLE `t_job_choice` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_job_choice` */
 
-/*Table structure for table `t_job_info` */
+DROP TABLE IF EXISTS `t_job_type`;
+
+CREATE TABLE `t_job_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) DEFAULT NULL COMMENT '类型代码	varchar(255)，唯一约束',
+  `name` varchar(255) DEFAULT NULL COMMENT '类型名称',
+  `desc` varchar(255) DEFAULT NULL COMMENT '描述信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `t_location`;
+
+CREATE TABLE `t_location` (
+  `c_location_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_location_longitude` float(10,2) DEFAULT NULL,
+  `c_location_latitude` float(10,2) DEFAULT NULL,
+  `c_location_name` varchar(255) DEFAULT NULL,
+  `c_location_type` varchar(2) DEFAULT NULL,
+  `c_location_desc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`c_location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_job_info`;
 
@@ -138,39 +151,12 @@ CREATE TABLE `t_job_info` (
   CONSTRAINT `fkc_job_type_id` FOREIGN KEY (`c_job_type_id`) REFERENCES `t_job_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_job_info` */
 
-/*Table structure for table `t_job_type` */
 
-DROP TABLE IF EXISTS `t_job_type`;
 
-CREATE TABLE `t_job_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) DEFAULT NULL COMMENT '类型代码	varchar(255)，唯一约束',
-  `name` varchar(255) DEFAULT NULL COMMENT '类型名称',
-  `desc` varchar(255) DEFAULT NULL COMMENT '描述信息',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_job_type` */
 
-/*Table structure for table `t_location` */
 
-DROP TABLE IF EXISTS `t_location`;
-
-CREATE TABLE `t_location` (
-  `c_location_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_location_longitude` float(10,2) DEFAULT NULL,
-  `c_location_latitude` float(10,2) DEFAULT NULL,
-  `c_location_name` varchar(255) DEFAULT NULL,
-  `c_location_type` varchar(2) DEFAULT NULL,
-  `c_location_desc` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`c_location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `t_location` */
-
-/*Table structure for table `t_user_info` */
 
 DROP TABLE IF EXISTS `t_user_info`;
 
@@ -193,9 +179,7 @@ CREATE TABLE `t_user_info` (
   PRIMARY KEY (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_user_info` */
 
-/*Table structure for table `t_user_job_apply` */
 
 DROP TABLE IF EXISTS `t_user_job_apply`;
 
@@ -213,9 +197,7 @@ CREATE TABLE `t_user_job_apply` (
   CONSTRAINT `fk_c_user_id` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_user_job_apply` */
 
-/*Table structure for table `t_user_recharge` */
 
 DROP TABLE IF EXISTS `t_user_recharge`;
 
@@ -230,9 +212,7 @@ CREATE TABLE `t_user_recharge` (
   CONSTRAINT `fk_c_user_i` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_user_recharge` */
 
-/*Table structure for table `t_user_token` */
 
 DROP TABLE IF EXISTS `t_user_token`;
 
@@ -245,9 +225,7 @@ CREATE TABLE `t_user_token` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_user_token` */
 
-/*Table structure for table `t_user_withdraw` */
 
 DROP TABLE IF EXISTS `t_user_withdraw`;
 
@@ -262,9 +240,7 @@ CREATE TABLE `t_user_withdraw` (
   CONSTRAINT `fk_user` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_user_withdraw` */
 
-/*Table structure for table `t_withdraw_verify` */
 
 DROP TABLE IF EXISTS `t_withdraw_verify`;
 
