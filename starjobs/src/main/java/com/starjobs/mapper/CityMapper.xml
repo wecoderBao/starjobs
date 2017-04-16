@@ -225,4 +225,20 @@
       level = #{level,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 根据行政级别level查询城市 -->
+  <select id="selectByLevel" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from city where level = #{level,jdbcType=INTEGER} order by id
+  </select>
+  <!-- 根据城市代码获取对应id -->
+  <select id="selectIdByCode" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select id from city where code = #{parentCode,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据父级id获取下属一级的城市 -->
+  <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from city where parent_id = #{parentId,jdbcType=INTEGER} order by id
+  </select>
 </mapper>

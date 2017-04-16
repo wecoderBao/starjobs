@@ -27,4 +27,10 @@ public interface CityMapper {
     int updateByPrimaryKeySelective(City record);
 
     int updateByPrimaryKey(City record);
+    //根据行政级别level查询城市
+    List<City> selectByLevel(@Param("level") int level);
+    //根据城市代码获取对应id
+    int selectIdByCode(@Param("parentCode") String parentCode);
+    //根据父级id获取下属一级的城市
+    List<City> selectByParentId(@Param("parentId") int parentId);
 }
