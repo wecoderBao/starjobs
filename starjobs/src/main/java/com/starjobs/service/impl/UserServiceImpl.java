@@ -238,21 +238,44 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 用户查询兼职信息
-	public Map<String, Object> userGetJobInfo(String city, String area, String typeId, String choiceId) {
+	public Map<String, Object> userGetJobInfo(String city, String area, String typeId, String choiceId,String page) {
 		if(StringUtils.isEmpty(city)){
-			city = "武汉";
+			city = SystemUtil.DEFAULT_CITY_CODE;
 		}
-		int jobTypeId = -1,jobChoiceId = -1;
+		List<String> areas = null;
+		if(StringUtils.isEmpty(area)){
+			areas = new ArrayList<String>();
+			for(String s: typeId.split(";")){
+				areas.add(s);
+			}
+		}
+		
+		ArrayList<Integer> typeIds = null;
+		ArrayList<Integer> choiceIds = null;
+		//typeid
 		if(!StringUtils.isEmpty(typeId)){
-			jobTypeId = Integer.parseInt(typeId);
+			typeIds = new ArrayList<Integer>();
+			for(String s: typeId.split(";")){
+				typeIds.add(Integer.parseInt(s));
+			}
 		}
+		//choiceid
 		if(!StringUtils.isEmpty(choiceId)){
-			jobChoiceId = Integer.parseInt(choiceId);
+			choiceIds = new ArrayList<Integer>();
+			for(String s: choiceId.split(";")){
+				choiceIds.add(Integer.parseInt(s));
+			}
+		}
+		int start = 0,offset = SystemUtil.PAGE_OFFSET;
+		//page
+		if(!StringUtils.isEmpty(page) && Integer.parseInt(page) > 0){
+			start = Integer.parseInt(page)-1;
+			start = start * 10;
 		}
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		ArrayList<Map<String,Object>> infos = new ArrayList<Map<String,Object>>();
 		
-		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, area, jobTypeId, jobChoiceId);
+		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, areas, typeIds, choiceIds,start ,offset);
 		if( null == jobList){
 			return modelMap;
 		}

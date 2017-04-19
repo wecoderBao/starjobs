@@ -52,11 +52,13 @@ public class AppUserController {
 		String typeId = request.getParameter("typeId");
 		// choice
 		String choiceId = request.getParameter("choiceId");
+		//page
+		String page = request.getParameter("page");
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)||StringUtils.isEmpty(page)) {
 			return modelMap;
 		}
 		//验证token是否有效
@@ -64,15 +66,21 @@ public class AppUserController {
 		if(!isPermitted){
 			return modelMap;
 		}
-		// 验证输入的验证码
-		Map<String, Object> jobMap = userService.userGetJobInfo(city, area, typeId, choiceId);
+		// 返回兼职信息
+		Map<String, Object> jobMap = userService.userGetJobInfo(city, area, typeId, choiceId,page);
 		if(jobMap == null){
 			return modelMap;
 		}
 		jobMap.put("token", token);
 		jobMap.put("userFlag",userFlag);
-		modelMap.put("error_code", SystemUtil.CODE_SUCC);
-		modelMap.put("message", "success");
+		//查询结果为空
+		if(null == jobMap.get("jobList")){
+			modelMap.put("error_code", SystemUtil.CODE_EMPTY);
+			modelMap.put("message", "jobList empty");
+		}else{
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+		}
 		modelMap.put("data", jobMap);
 		
 		return modelMap;

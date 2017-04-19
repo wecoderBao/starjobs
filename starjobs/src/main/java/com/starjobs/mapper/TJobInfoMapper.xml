@@ -517,24 +517,33 @@
     where c_job_id = #{cJobId,jdbcType=INTEGER}
   </update>
   <!-- 根据条件查询兼职信息 -->
-  <select id="selectByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByUser" resultMap="BaseResultMap"  parameterType="map">
     select
     <include refid="Base_Column_List" />
     from t_job_info
     <if test="city != null" >
       <where>
-      	c_job_city= #{city,jdbcType=VARCHAR}
-      	<if test="area != null">
-      		and c_job_area = #{area,jdbcType=VARCHAR}
+      	c_job_city = #{city,jdbcType=VARCHAR}
+      	<if test="area != null ">
+      		and c_job_area in 
+      		 <foreach collection="area" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
       	</if>
-      	<if test="typeId != -1">
-      		and c_job_type_id = #{typeId,jdbcType=INTEGER}
+      	<if test="typeId != null">
+      		and c_job_type_id in 
+      		 <foreach collection="typeId" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
       	</if>
-      	<if test="choiceId != -1">
-      		and c_job_choice_op_id = #{choiceId,jdbcType=INTEGER}
+      	<if test="choiceId != null ">
+      		and c_job_choice_op_id in
+      		<foreach collection="typeId" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
       	</if>
       </where>
     </if>
-      order by c_job_publish_date
+      order by c_job_publish_date limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
   </select>
 </mapper>

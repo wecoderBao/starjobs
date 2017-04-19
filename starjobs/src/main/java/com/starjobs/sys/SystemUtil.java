@@ -27,6 +27,8 @@ public class SystemUtil {
 	public static final String CODE_SUCC = "200";
 	// 验证失败状态码 400
 	public static final String CODE_FAIL = "400";
+	//查询信息为空状态码
+	public static final String CODE_EMPTY = "900";
 	// 用户登录时没有注册
 	public static final String NOT_REGISTER = "300";
 	// 用户类别标识
@@ -38,6 +40,10 @@ public class SystemUtil {
 	public static final String ANDROID = "android";
 	// ios机标识
 	public static final String IOS = "ios";
+	//默认城市代码，武汉
+	public static final String DEFAULT_CITY_CODE = "420100";
+	//首页分页显示数据个数
+	public static final int PAGE_OFFSET = 10;
 
 	// 生成token
 	public static String generateToken(String phone) {

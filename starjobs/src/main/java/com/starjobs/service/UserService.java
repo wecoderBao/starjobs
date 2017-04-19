@@ -18,5 +18,5 @@ public interface UserService {
 	//用户找回密码
 	public Map<String,Object> userRetrievePwd(String phone,String code,String password,String userFlag,String appFlag);
 	//用户查询兼职信息
-	public Map<String,Object> userGetJobInfo(String city,String area,String type,String choice);
+	public Map<String,Object> userGetJobInfo(String city,String area,String type,String choice,String page);
 }
