@@ -36,10 +36,10 @@ public class AppUserController {
 	TokenService tokenService;
 	@Autowired
 	UserService userService;
-	// 用户注册
+	// 用户获取兼职信息列表
 	@RequestMapping(value = "/user/get/job_info", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> verifyCode(HttpServletRequest request) {
+	public Map<String, Object> getJobInfo(HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
 		// 用户类别标记
@@ -77,6 +77,48 @@ public class AppUserController {
 		if(null == jobMap.get("jobList")){
 			modelMap.put("error_code", SystemUtil.CODE_EMPTY);
 			modelMap.put("message", "jobList empty");
+		}else{
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+		}
+		modelMap.put("data", jobMap);
+		
+		return modelMap;
+	}
+	//用户获取单个兼职信息信息
+	@RequestMapping(value = "/user/get/job_detail", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getJobDetail(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// job id
+		String jobId = request.getParameter("jobId");
+		
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)||StringUtils.isEmpty(jobId)) {
+			return modelMap;
+		}
+		//验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if(!isPermitted){
+			return modelMap;
+		}
+		// 返回兼职信息
+		Map<String, Object> jobMap = userService.userGetJobDetail(jobId);
+		if(jobMap == null){
+			return modelMap;
+		}
+		jobMap.put("token", token);
+		jobMap.put("userFlag",userFlag);
+		//查询结果为空
+		if(null == jobMap.get("jobDetail")){
+			modelMap.put("error_code", SystemUtil.CODE_EMPTY);
+			modelMap.put("message", "jobDetail empty");
 		}else{
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");

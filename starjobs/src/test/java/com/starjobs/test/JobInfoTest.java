@@ -52,4 +52,12 @@ public class JobInfoTest {
 
 		}
 	}
+	@Test
+	public void testJobDetail() throws Exception {
+		TJobInfoMapper tJobInfoMapper = (TJobInfoMapper) applicationContext.getBean(TJobInfoMapper.class);
+		
+		TJobInfo job = tJobInfoMapper.selectByPrimaryKey(1);
+		
+		System.out.println(job.getcComId());
+	}
 }

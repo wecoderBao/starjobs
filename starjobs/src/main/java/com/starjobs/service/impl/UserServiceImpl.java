@@ -47,10 +47,10 @@ public class UserServiceImpl implements UserService {
 	// token操作
 	@Autowired
 	TokenService tokenService;
-	//兼职信息操作
+	// 兼职信息操作
 	@Autowired
 	TJobInfoMapper tJobInfoMapper;
-	//地点操作类
+	// 地点操作类
 	@Autowired
 	TLocationMapper tLocationMapper;
 
@@ -237,55 +237,56 @@ public class UserServiceImpl implements UserService {
 		return modelMap;
 	}
 
-	// 用户查询兼职信息
-	public Map<String, Object> userGetJobInfo(String city, String area, String typeId, String choiceId,String page) {
-		if(StringUtils.isEmpty(city)){
+	// 用户查询兼职信息列表
+	public Map<String, Object> userGetJobInfo(String city, String area, String typeId, String choiceId, String page) {
+		if (StringUtils.isEmpty(city)) {
 			city = SystemUtil.DEFAULT_CITY_CODE;
 		}
+
 		List<String> areas = null;
-		if(StringUtils.isEmpty(area)){
+		if (!StringUtils.isEmpty(area)) {
 			areas = new ArrayList<String>();
-			for(String s: typeId.split(";")){
+			for (String s : area.split(";")) {
 				areas.add(s);
 			}
 		}
-		
+
 		ArrayList<Integer> typeIds = null;
 		ArrayList<Integer> choiceIds = null;
-		//typeid
-		if(!StringUtils.isEmpty(typeId)){
+		// typeid
+		if (!StringUtils.isEmpty(typeId)) {
 			typeIds = new ArrayList<Integer>();
-			for(String s: typeId.split(";")){
+			for (String s : typeId.split(";")) {
 				typeIds.add(Integer.parseInt(s));
 			}
 		}
-		//choiceid
-		if(!StringUtils.isEmpty(choiceId)){
+		// choiceid
+		if (!StringUtils.isEmpty(choiceId)) {
 			choiceIds = new ArrayList<Integer>();
-			for(String s: choiceId.split(";")){
+			for (String s : choiceId.split(";")) {
 				choiceIds.add(Integer.parseInt(s));
 			}
 		}
-		int start = 0,offset = SystemUtil.PAGE_OFFSET;
-		//page
-		if(!StringUtils.isEmpty(page) && Integer.parseInt(page) > 0){
-			start = Integer.parseInt(page)-1;
+		int start = 0, offset = SystemUtil.PAGE_OFFSET;
+		// page
+		if (!StringUtils.isEmpty(page) && Integer.parseInt(page) > 0) {
+			start = Integer.parseInt(page) - 1;
 			start = start * 10;
 		}
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		ArrayList<Map<String,Object>> infos = new ArrayList<Map<String,Object>>();
-		
-		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, areas, typeIds, choiceIds,start ,offset);
-		if( null == jobList){
+		ArrayList<Map<String, Object>> infos = new ArrayList<Map<String, Object>>();
+
+		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, areas, typeIds, choiceIds, start, offset);
+		if (null == jobList) {
 			return modelMap;
 		}
-		for(TJobInfo jobInfo : jobList){
+		for (TJobInfo jobInfo : jobList) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("comId", jobInfo.getcComId());
 			TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
 			data.put("comImg", company.getcComHeadImg());
 			data.put("publishTime", jobInfo.getcJobPublishDate());
-			data.put("jobId",jobInfo.getcJobId());
+			data.put("jobId", jobInfo.getcJobId());
 			data.put("jobName", jobInfo.getcJobTitle());
 			TLocation locRecord = tLocationMapper.selectByPrimaryKey(jobInfo.getcJobLocationId());
 			data.put("locationX", locRecord.getcLocationLatitude());
@@ -297,6 +298,40 @@ public class UserServiceImpl implements UserService {
 			infos.add(data);
 		}
 		modelMap.put("jobList", infos);
+		return modelMap;
+	}
+
+	// 用户查询兼职详细信息
+	public Map<String, Object> userGetJobDetail(String jobId) {
+		int id = 0;
+		id = Integer.parseInt(jobId);
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+
+		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(id);
+		if (null == jobInfo) {
+			return modelMap;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("comId", jobInfo.getcComId());
+		TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
+		data.put("comImg", company.getcComHeadImg());
+		data.put("comName", company.getcComName());
+		data.put("publishTime", jobInfo.getcJobPublishDate());
+		data.put("jobId", jobInfo.getcJobId());
+		data.put("jobName", jobInfo.getcJobTitle());
+		data.put("jobDesc", jobInfo.getcJobDesc());
+		data.put("payMethod", jobInfo.getcJobPayMethod());
+		data.put("gender", jobInfo.getcJobPersonGender());
+		data.put("totalPerson", jobInfo.getcJobTotalPerson());
+		TLocation locRecord = tLocationMapper.selectByPrimaryKey(jobInfo.getcJobLocationId());
+		data.put("locationX", locRecord.getcLocationLatitude());
+		data.put("locationY", locRecord.getcLocationLongitude());
+		data.put("locationName", locRecord.getcLocationName());
+		data.put("workDate", jobInfo.getcJobWorkDate());
+		data.put("workTime", jobInfo.getcJobWorkTime());
+		data.put("salary", jobInfo.getcJobSalary());
+		modelMap.put("jobDetail", data);
 		return modelMap;
 	}
 }
