@@ -44,6 +44,12 @@ public class SystemUtil {
 	public static final String DEFAULT_CITY_CODE = "420100";
 	//首页分页显示数据个数
 	public static final int PAGE_OFFSET = 10;
+	//用户权限
+	public static final String COM_STATE_ZERO = "0";//待审核
+	public static final String COM_STATE_ONE = "1";//有发布权限
+	public static final String COM_STATE_TOW = "2";//取消发布权限
+	//响应码700，用户没有发布权限
+	public static final String NO_PUBLISH = "700";
 
 	// 生成token
 	public static String generateToken(String phone) {

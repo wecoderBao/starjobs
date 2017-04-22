@@ -14,4 +14,6 @@ public interface TokenService {
 	public int save(String token,String phone);
 	//检验token是否有效
 	public boolean checkToken(String token);
+	//获取用户手机号
+	public String getPhoneNum(String token);
 }

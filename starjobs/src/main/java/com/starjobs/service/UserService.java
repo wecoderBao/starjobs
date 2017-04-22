@@ -31,4 +31,7 @@ public interface UserService {
 
 	// 用户查询兼职信息
 	public Map<String, Object> userGetJobDetail(String jobId);
+	
+	//发布兼职信息
+	public boolean publishJobInfo(Map<String,String> params);
 }

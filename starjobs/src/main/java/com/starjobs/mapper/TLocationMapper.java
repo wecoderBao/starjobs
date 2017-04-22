@@ -27,4 +27,6 @@ public interface TLocationMapper {
     int updateByPrimaryKeySelective(TLocation record);
 
     int updateByPrimaryKey(TLocation record);
+    //插入一条位置信息，返回主键
+    int insertSelectiveReId(TLocation record);
 }

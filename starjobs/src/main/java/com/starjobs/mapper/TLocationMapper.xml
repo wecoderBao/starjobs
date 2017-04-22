@@ -101,6 +101,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <!-- 插入一条兼职信息，返回插入的iD -->
   <insert id="insert" parameterType="com.starjobs.pojo.TLocation" >
     insert into t_location (c_location_id, c_location_longitude, c_location_latitude, 
       c_location_name, c_location_type, c_location_desc
@@ -226,4 +227,52 @@
       c_location_desc = #{cLocationDesc,jdbcType=VARCHAR}
     where c_location_id = #{cLocationId,jdbcType=INTEGER}
   </update>
+  <!-- 插入一条位置信息，返回主键 -->
+  <insert id="insertSelectiveReId" parameterType="com.starjobs.pojo.TLocation">
+  	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cLocationId">
+          SELECT LAST_INSERT_ID()
+    </selectKey>
+  
+    insert into t_location
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cLocationId != null" >
+        c_location_id,
+      </if>
+      <if test="cLocationLongitude != null" >
+        c_location_longitude,
+      </if>
+      <if test="cLocationLatitude != null" >
+        c_location_latitude,
+      </if>
+      <if test="cLocationName != null" >
+        c_location_name,
+      </if>
+      <if test="cLocationType != null" >
+        c_location_type,
+      </if>
+      <if test="cLocationDesc != null" >
+        c_location_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cLocationId != null" >
+        #{cLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cLocationLongitude != null" >
+        #{cLocationLongitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationLatitude != null" >
+        #{cLocationLatitude,jdbcType=REAL},
+      </if>
+      <if test="cLocationName != null" >
+        #{cLocationName,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationType != null" >
+        #{cLocationType,jdbcType=VARCHAR},
+      </if>
+      <if test="cLocationDesc != null" >
+        #{cLocationDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

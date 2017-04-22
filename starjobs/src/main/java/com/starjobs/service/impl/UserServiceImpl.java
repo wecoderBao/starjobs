@@ -4,6 +4,7 @@
 package com.starjobs.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -333,5 +334,43 @@ public class UserServiceImpl implements UserService {
 		data.put("salary", jobInfo.getcJobSalary());
 		modelMap.put("jobDetail", data);
 		return modelMap;
+	}
+	//发布兼职信息
+	public boolean publishJobInfo(Map<String,String> params){
+		TJobInfo jobInfo = new TJobInfo();
+		//兼职地址信息
+		TLocation location = new TLocation();
+		//维度
+		float latitude = Float.parseFloat(params.get("locationX"));
+		location.setcLocationLatitude(latitude);
+		//经度
+		float longitude = Float.parseFloat(params.get("locationY"));
+		location.setcLocationLongitude(longitude);
+		//位置名字
+		location.setcLocationName(params.get("locationName"));
+		
+		int locId =0;
+		tLocationMapper.insertSelectiveReId(location);
+		//获取插入后的主键
+		locId = location.getcLocationId();
+		jobInfo.setcJobLocationId(locId);
+		jobInfo.setcComId(Integer.parseInt(params.get("comId")));
+		jobInfo.setcJobTitle(params.get("jobName"));
+		jobInfo.setcJobDesc(params.get("jobDesc"));
+		jobInfo.setcJobPayMethod(params.get("payMethod"));
+		jobInfo.setcJobPersonGender(params.get("gender"));
+		jobInfo.setcJobTotalPerson(Integer.parseInt(params.get("totalPerson")));
+		jobInfo.setcJobChoiceOpId(Integer.parseInt(params.get("jobChoice")));
+		jobInfo.setcJobTypeId(Integer.parseInt(params.get("jobType")));
+		jobInfo.setcJobCity(params.get("city"));
+		jobInfo.setcJobArea(params.get("area"));
+		jobInfo.setcJobPosition(params.get("address"));
+		//发布时间
+		jobInfo.setcJobPublishDate(new Date());
+		jobInfo.setcJobWorkDate(params.get("workDate"));
+		jobInfo.setcJobWorkTime(params.get("workTime"));
+		jobInfo.setcJobSalary(params.get("salary"));
+		tJobInfoMapper.insertSelective(jobInfo);
+		return true;
 	}
 }
