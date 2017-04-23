@@ -538,7 +538,7 @@
       	</if>
       	<if test="choiceId != null ">
       		and c_job_choice_op_id in
-      		<foreach collection="typeId" index="index" item="item" open="(" separator="," close=")">  
+      		<foreach collection="choiceId" index="index" item="item" open="(" separator="," close=")">  
       		 	#{item}
       		 </foreach>
       	</if>
