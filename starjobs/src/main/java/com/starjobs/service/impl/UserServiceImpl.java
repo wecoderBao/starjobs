@@ -278,7 +278,7 @@ public class UserServiceImpl implements UserService {
 		ArrayList<Map<String, Object>> infos = new ArrayList<Map<String, Object>>();
 
 		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, areas, typeIds, choiceIds, start, offset);
-		if (null == jobList) {
+		if (null == jobList || jobList.size()==0) {
 			return modelMap;
 		}
 		for (TJobInfo jobInfo : jobList) {
