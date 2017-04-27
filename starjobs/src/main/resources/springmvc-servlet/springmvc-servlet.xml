@@ -35,6 +35,7 @@
 	<!--<mvc:default-servlet-handler/> -->
 	<mvc:resources location="/assets/" mapping="/assets/**" />
 	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/photo/" mapping="/photo/**" />
 	<mvc:resources location="/lib/" mapping="/lib/**" />
 	<mvc:resources location="/stylesheets/" mapping="/stylesheets/**" />
 

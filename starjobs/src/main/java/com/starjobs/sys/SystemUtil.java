@@ -50,6 +50,8 @@ public class SystemUtil {
 	public static final String COM_STATE_TOW = "2";//取消发布权限
 	//响应码700，用户没有发布权限
 	public static final String NO_PUBLISH = "700";
+	//项目url
+	public static final String APP_SERVER_URL = "http://starjobs.duapp.com";
 
 	// 生成token
 	public static String generateToken(String phone) {

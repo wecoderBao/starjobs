@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.starjobs.common.ImageUtil;
+import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserTokenMapper;
+import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserToken;
 import com.starjobs.service.InfoCenterService;
 import com.starjobs.service.TokenService;
+import com.starjobs.sys.SystemUtil;
 
 /**
  * <p>
@@ -39,6 +42,8 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	TUserInfoMapper tUserInfoMapper;
 	@Autowired
 	TUserTokenMapper tUserTokenMapper;
+	@Autowired
+	TCompanyInfoMapper tCompanyInfoMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -57,7 +62,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", tUserInfo.getcUserImg());// 图片url
+		data.put("headImgUrl", SystemUtil.APP_SERVER_URL+"/photo/user/"+tUserInfo.getcUserImg());// 图片url
 		data.put("nickName", tUserInfo.getcUserNickname());
 		data.put("username", tUserInfo.getcUsername());
 		data.put("gender", tUserInfo.getcUserGender());
@@ -75,7 +80,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	 * 
 	 * @see com.starjobs.service.InfoCenterService#updateUserInfo(java.util.Map)
 	 */
-	public Map<String, Object> updateUserInfo(String token, Map<String, String> params,String path) {
+	public Map<String, Object> updateUserInfo(String token, Map<String, String> params, String path) {
 		// 获取手机号
 		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
@@ -100,10 +105,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		// 修改头像
 		String headImg = params.get("headImg");
-		headImg=headImg.replaceAll(" ", "+");//base64字符串中加号被替换成空格，这里替换回来
-		
+		headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
+
 		String imgFormat = params.get("imgFormat");
-		
+
 		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
 			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
 			if (!StringUtils.isEmpty(resp)) {
@@ -133,6 +138,99 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 
 		int re = tUserInfoMapper.updateByPrimaryKeySelective(tUserInfo);
+		if (re == 1) {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("token", token);
+			return data;
+		}
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.starjobs.service.InfoCenterService#getComInfo(java.lang.String,
+	 * java.lang.String)
+	 */
+	public Map<String, Object> getComInfo(String token, String userFlag) {
+
+		// 获取手机号
+		String phoneNum = tokenService.getPhoneNum(token);
+		// 根据手机号获取个人信息
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
+		if (tComInfo == null) {
+			return null;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("token", token);
+		data.put("userFlag", userFlag);
+		data.put("headImgUrl", SystemUtil.APP_SERVER_URL+"/photo/com/"+tComInfo.getcComHeadImg());// 图片url
+		data.put("comName", tComInfo.getcComName());
+
+		data.put("address", tComInfo.getcComAddressId());// 公司地址
+
+		data.put("certificateImgUrl", tComInfo.getcComLicenseImg());
+		data.put("comDesc", tComInfo.getcComDesc());// 公司简介
+		data.put("score", tComInfo.getcComScore());
+		data.put("phoneNum", tComInfo.getcComPhone());
+		data.put("balance", tComInfo.getcComBalance());
+		data.put("extraBalance", "100");// 招聘余额
+		return data;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.starjobs.service.InfoCenterService#updateComInfo(java.lang.String,
+	 * java.util.Map, java.lang.String)
+	 */
+	public Map<String, Object> updateComInfo(String token, Map<String, String> params, String path) {
+		// 获取手机号
+		String phoneNum = tokenService.getPhoneNum(token);
+		// 根据手机号获取个人信息
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
+		if (tComInfo == null) {
+			return null;
+		}
+		// 若修改手机号
+		String newPhone = params.get("phoneNum");
+		if (!StringUtils.isEmpty(newPhone)) {
+			// 根据token修改手机号
+			TUserToken tokenRecord = tUserTokenMapper.selectByTokenValue(token);
+			if (tokenRecord == null) {
+				return null;
+			}
+			tokenRecord.setcPhoneNum(newPhone);
+			int re = tUserTokenMapper.updateByPrimaryKeySelective(tokenRecord);
+			if (re != 1) {
+				return null;
+			}
+			tComInfo.setcComPhone(newPhone);// 修改手机号
+		}
+		// 修改头像
+		String headImg = params.get("headImg");
+		headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
+
+		String imgFormat = params.get("imgFormat");
+
+		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
+			if (!StringUtils.isEmpty(resp)) {
+				tComInfo.setcComHeadImg(resp);
+			}
+		}
+		if (!StringUtils.isEmpty(params.get("comName"))) {// 修改公司名称
+			tComInfo.setcComName(params.get("comName"));
+		}
+		if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
+			tComInfo.setcComAddressId(1);
+		}
+		if (!StringUtils.isEmpty(params.get("comDesc"))) {// 修改性别
+			tComInfo.setcComDesc(params.get("comDesc"));
+		}
+
+		int re = tCompanyInfoMapper.updateByPrimaryKeySelective(tComInfo);
 		if (re == 1) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("token", token);
