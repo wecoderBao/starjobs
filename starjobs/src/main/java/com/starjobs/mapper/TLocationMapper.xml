@@ -3,8 +3,8 @@
 <mapper namespace="com.starjobs.mapper.TLocationMapper" >
   <resultMap id="BaseResultMap" type="com.starjobs.pojo.TLocation" >
     <id column="c_location_id" property="cLocationId" jdbcType="INTEGER" />
-    <result column="c_location_longitude" property="cLocationLongitude" jdbcType="REAL" />
-    <result column="c_location_latitude" property="cLocationLatitude" jdbcType="REAL" />
+    <result column="c_location_longitude" property="cLocationLongitude" jdbcType="VARCHAR" />
+    <result column="c_location_latitude" property="cLocationLatitude" jdbcType="VARCHAR" />
     <result column="c_location_name" property="cLocationName" jdbcType="VARCHAR" />
     <result column="c_location_type" property="cLocationType" jdbcType="VARCHAR" />
     <result column="c_location_desc" property="cLocationDesc" jdbcType="VARCHAR" />
@@ -101,14 +101,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <!-- 插入一条兼职信息，返回插入的iD -->
   <insert id="insert" parameterType="com.starjobs.pojo.TLocation" >
-    insert into t_location (c_location_id, c_location_longitude, c_location_latitude, 
-      c_location_name, c_location_type, c_location_desc
-      )
-    values (#{cLocationId,jdbcType=INTEGER}, #{cLocationLongitude,jdbcType=REAL}, #{cLocationLatitude,jdbcType=REAL}, 
-      #{cLocationName,jdbcType=VARCHAR}, #{cLocationType,jdbcType=VARCHAR}, #{cLocationDesc,jdbcType=VARCHAR}
-      )
+    insert into t_location (c_location_id, c_location_longitude, 
+      c_location_latitude, c_location_name, c_location_type, 
+      c_location_desc)
+    values (#{cLocationId,jdbcType=INTEGER}, #{cLocationLongitude,jdbcType=VARCHAR}, 
+      #{cLocationLatitude,jdbcType=VARCHAR}, #{cLocationName,jdbcType=VARCHAR}, #{cLocationType,jdbcType=VARCHAR}, 
+      #{cLocationDesc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TLocation" >
     insert into t_location
@@ -137,10 +136,10 @@
         #{cLocationId,jdbcType=INTEGER},
       </if>
       <if test="cLocationLongitude != null" >
-        #{cLocationLongitude,jdbcType=REAL},
+        #{cLocationLongitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationLatitude != null" >
-        #{cLocationLatitude,jdbcType=REAL},
+        #{cLocationLatitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationName != null" >
         #{cLocationName,jdbcType=VARCHAR},
@@ -166,10 +165,10 @@
         c_location_id = #{record.cLocationId,jdbcType=INTEGER},
       </if>
       <if test="record.cLocationLongitude != null" >
-        c_location_longitude = #{record.cLocationLongitude,jdbcType=REAL},
+        c_location_longitude = #{record.cLocationLongitude,jdbcType=VARCHAR},
       </if>
       <if test="record.cLocationLatitude != null" >
-        c_location_latitude = #{record.cLocationLatitude,jdbcType=REAL},
+        c_location_latitude = #{record.cLocationLatitude,jdbcType=VARCHAR},
       </if>
       <if test="record.cLocationName != null" >
         c_location_name = #{record.cLocationName,jdbcType=VARCHAR},
@@ -188,8 +187,8 @@
   <update id="updateByExample" parameterType="map" >
     update t_location
     set c_location_id = #{record.cLocationId,jdbcType=INTEGER},
-      c_location_longitude = #{record.cLocationLongitude,jdbcType=REAL},
-      c_location_latitude = #{record.cLocationLatitude,jdbcType=REAL},
+      c_location_longitude = #{record.cLocationLongitude,jdbcType=VARCHAR},
+      c_location_latitude = #{record.cLocationLatitude,jdbcType=VARCHAR},
       c_location_name = #{record.cLocationName,jdbcType=VARCHAR},
       c_location_type = #{record.cLocationType,jdbcType=VARCHAR},
       c_location_desc = #{record.cLocationDesc,jdbcType=VARCHAR}
@@ -201,10 +200,10 @@
     update t_location
     <set >
       <if test="cLocationLongitude != null" >
-        c_location_longitude = #{cLocationLongitude,jdbcType=REAL},
+        c_location_longitude = #{cLocationLongitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationLatitude != null" >
-        c_location_latitude = #{cLocationLatitude,jdbcType=REAL},
+        c_location_latitude = #{cLocationLatitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationName != null" >
         c_location_name = #{cLocationName,jdbcType=VARCHAR},
@@ -220,8 +219,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TLocation" >
     update t_location
-    set c_location_longitude = #{cLocationLongitude,jdbcType=REAL},
-      c_location_latitude = #{cLocationLatitude,jdbcType=REAL},
+    set c_location_longitude = #{cLocationLongitude,jdbcType=VARCHAR},
+      c_location_latitude = #{cLocationLatitude,jdbcType=VARCHAR},
       c_location_name = #{cLocationName,jdbcType=VARCHAR},
       c_location_type = #{cLocationType,jdbcType=VARCHAR},
       c_location_desc = #{cLocationDesc,jdbcType=VARCHAR}
@@ -259,10 +258,10 @@
         #{cLocationId,jdbcType=INTEGER},
       </if>
       <if test="cLocationLongitude != null" >
-        #{cLocationLongitude,jdbcType=REAL},
+        #{cLocationLongitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationLatitude != null" >
-        #{cLocationLatitude,jdbcType=REAL},
+        #{cLocationLatitude,jdbcType=VARCHAR},
       </if>
       <if test="cLocationName != null" >
         #{cLocationName,jdbcType=VARCHAR},

@@ -174,52 +174,62 @@ public class TLocationExample {
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeEqualTo(Float value) {
+        public Criteria andCLocationLongitudeEqualTo(String value) {
             addCriterion("c_location_longitude =", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeNotEqualTo(Float value) {
+        public Criteria andCLocationLongitudeNotEqualTo(String value) {
             addCriterion("c_location_longitude <>", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeGreaterThan(Float value) {
+        public Criteria andCLocationLongitudeGreaterThan(String value) {
             addCriterion("c_location_longitude >", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeGreaterThanOrEqualTo(Float value) {
+        public Criteria andCLocationLongitudeGreaterThanOrEqualTo(String value) {
             addCriterion("c_location_longitude >=", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeLessThan(Float value) {
+        public Criteria andCLocationLongitudeLessThan(String value) {
             addCriterion("c_location_longitude <", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeLessThanOrEqualTo(Float value) {
+        public Criteria andCLocationLongitudeLessThanOrEqualTo(String value) {
             addCriterion("c_location_longitude <=", value, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeIn(List<Float> values) {
+        public Criteria andCLocationLongitudeLike(String value) {
+            addCriterion("c_location_longitude like", value, "cLocationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andCLocationLongitudeNotLike(String value) {
+            addCriterion("c_location_longitude not like", value, "cLocationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andCLocationLongitudeIn(List<String> values) {
             addCriterion("c_location_longitude in", values, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeNotIn(List<Float> values) {
+        public Criteria andCLocationLongitudeNotIn(List<String> values) {
             addCriterion("c_location_longitude not in", values, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeBetween(Float value1, Float value2) {
+        public Criteria andCLocationLongitudeBetween(String value1, String value2) {
             addCriterion("c_location_longitude between", value1, value2, "cLocationLongitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLongitudeNotBetween(Float value1, Float value2) {
+        public Criteria andCLocationLongitudeNotBetween(String value1, String value2) {
             addCriterion("c_location_longitude not between", value1, value2, "cLocationLongitude");
             return (Criteria) this;
         }
@@ -234,52 +244,62 @@ public class TLocationExample {
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeEqualTo(Float value) {
+        public Criteria andCLocationLatitudeEqualTo(String value) {
             addCriterion("c_location_latitude =", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeNotEqualTo(Float value) {
+        public Criteria andCLocationLatitudeNotEqualTo(String value) {
             addCriterion("c_location_latitude <>", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeGreaterThan(Float value) {
+        public Criteria andCLocationLatitudeGreaterThan(String value) {
             addCriterion("c_location_latitude >", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeGreaterThanOrEqualTo(Float value) {
+        public Criteria andCLocationLatitudeGreaterThanOrEqualTo(String value) {
             addCriterion("c_location_latitude >=", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeLessThan(Float value) {
+        public Criteria andCLocationLatitudeLessThan(String value) {
             addCriterion("c_location_latitude <", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeLessThanOrEqualTo(Float value) {
+        public Criteria andCLocationLatitudeLessThanOrEqualTo(String value) {
             addCriterion("c_location_latitude <=", value, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeIn(List<Float> values) {
+        public Criteria andCLocationLatitudeLike(String value) {
+            addCriterion("c_location_latitude like", value, "cLocationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andCLocationLatitudeNotLike(String value) {
+            addCriterion("c_location_latitude not like", value, "cLocationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andCLocationLatitudeIn(List<String> values) {
             addCriterion("c_location_latitude in", values, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeNotIn(List<Float> values) {
+        public Criteria andCLocationLatitudeNotIn(List<String> values) {
             addCriterion("c_location_latitude not in", values, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeBetween(Float value1, Float value2) {
+        public Criteria andCLocationLatitudeBetween(String value1, String value2) {
             addCriterion("c_location_latitude between", value1, value2, "cLocationLatitude");
             return (Criteria) this;
         }
 
-        public Criteria andCLocationLatitudeNotBetween(Float value1, Float value2) {
+        public Criteria andCLocationLatitudeNotBetween(String value1, String value2) {
             addCriterion("c_location_latitude not between", value1, value2, "cLocationLatitude");
             return (Criteria) this;
         }

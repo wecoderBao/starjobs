@@ -107,8 +107,8 @@ DROP TABLE IF EXISTS `t_location`;
 
 CREATE TABLE `t_location` (
   `c_location_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_location_longitude` float(10,2) DEFAULT NULL,
-  `c_location_latitude` float(10,2) DEFAULT NULL,
+  `c_location_longitude` varchar(255) DEFAULT NULL,
+  `c_location_latitude` varchar(255) DEFAULT NULL,
   `c_location_name` varchar(255) DEFAULT NULL,
   `c_location_type` varchar(2) DEFAULT NULL,
   `c_location_desc` varchar(255) DEFAULT NULL,

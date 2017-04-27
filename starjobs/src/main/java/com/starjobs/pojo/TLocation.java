@@ -3,9 +3,9 @@ package com.starjobs.pojo;
 public class TLocation {
     private Integer cLocationId;
 
-    private Float cLocationLongitude;
+    private String cLocationLongitude;
 
-    private Float cLocationLatitude;
+    private String cLocationLatitude;
 
     private String cLocationName;
 
@@ -21,20 +21,20 @@ public class TLocation {
         this.cLocationId = cLocationId;
     }
 
-    public Float getcLocationLongitude() {
+    public String getcLocationLongitude() {
         return cLocationLongitude;
     }
 
-    public void setcLocationLongitude(Float cLocationLongitude) {
-        this.cLocationLongitude = cLocationLongitude;
+    public void setcLocationLongitude(String cLocationLongitude) {
+        this.cLocationLongitude = cLocationLongitude == null ? null : cLocationLongitude.trim();
     }
 
-    public Float getcLocationLatitude() {
+    public String getcLocationLatitude() {
         return cLocationLatitude;
     }
 
-    public void setcLocationLatitude(Float cLocationLatitude) {
-        this.cLocationLatitude = cLocationLatitude;
+    public void setcLocationLatitude(String cLocationLatitude) {
+        this.cLocationLatitude = cLocationLatitude == null ? null : cLocationLatitude.trim();
     }
 
     public String getcLocationName() {

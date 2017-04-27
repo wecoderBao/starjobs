@@ -30,8 +30,8 @@ public class LocationTest {
 	public void testSelect() throws Exception {
 		TLocationMapper tLocationMapper = (TLocationMapper) applicationContext.getBean(TLocationMapper.class);
 		TLocation location = new TLocation();
-		location.setcLocationLatitude(22f);
-		location.setcLocationLongitude(33f);
+		location.setcLocationLatitude("22.2");
+		location.setcLocationLongitude("33.33");
 		int id = tLocationMapper.insertSelectiveReId(location);
 		System.out.println(id+""+location.getcLocationId());
 	}

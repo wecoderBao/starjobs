@@ -347,10 +347,10 @@ public class UserServiceImpl implements UserService {
 		//兼职地址信息
 		TLocation location = new TLocation();
 		//维度
-		float latitude = Float.parseFloat(params.get("locationX"));
+		String latitude = params.get("locationX");
 		location.setcLocationLatitude(latitude);
 		//经度
-		float longitude = Float.parseFloat(params.get("locationY"));
+		String longitude = params.get("locationY");
 		location.setcLocationLongitude(longitude);
 		//位置名字
 		location.setcLocationName(params.get("locationName"));
