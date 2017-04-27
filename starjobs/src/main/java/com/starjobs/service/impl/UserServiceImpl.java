@@ -332,6 +332,10 @@ public class UserServiceImpl implements UserService {
 		data.put("workDate", jobInfo.getcJobWorkDate());
 		data.put("workTime", jobInfo.getcJobWorkTime());
 		data.put("salary", jobInfo.getcJobSalary());
+		//查看次数
+		data.put("like", jobInfo.getcUserLike());
+		//更新查看次数
+		tJobInfoMapper.updateUserLike(id, jobInfo.getcUserLike()+1);
 		modelMap.put("jobDetail", data);
 		return modelMap;
 	}

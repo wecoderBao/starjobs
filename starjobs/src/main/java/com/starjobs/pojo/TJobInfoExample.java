@@ -1354,6 +1354,66 @@ public class TJobInfoExample {
             addCriterion("c_job_state not between", value1, value2, "cJobState");
             return (Criteria) this;
         }
+
+        public Criteria andCUserLikeIsNull() {
+            addCriterion("c_user_like is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeIsNotNull() {
+            addCriterion("c_user_like is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeEqualTo(Integer value) {
+            addCriterion("c_user_like =", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeNotEqualTo(Integer value) {
+            addCriterion("c_user_like <>", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeGreaterThan(Integer value) {
+            addCriterion("c_user_like >", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_user_like >=", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeLessThan(Integer value) {
+            addCriterion("c_user_like <", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeLessThanOrEqualTo(Integer value) {
+            addCriterion("c_user_like <=", value, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeIn(List<Integer> values) {
+            addCriterion("c_user_like in", values, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeNotIn(List<Integer> values) {
+            addCriterion("c_user_like not in", values, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeBetween(Integer value1, Integer value2) {
+            addCriterion("c_user_like between", value1, value2, "cUserLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserLikeNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_user_like not between", value1, value2, "cUserLike");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

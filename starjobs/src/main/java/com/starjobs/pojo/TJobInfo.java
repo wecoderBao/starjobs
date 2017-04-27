@@ -41,6 +41,8 @@ public class TJobInfo {
 
     private String cJobState;
 
+    private Integer cUserLike;
+
     private String cJobDesc;
 
     public Integer getcJobId() {
@@ -193,6 +195,14 @@ public class TJobInfo {
 
     public void setcJobState(String cJobState) {
         this.cJobState = cJobState == null ? null : cJobState.trim();
+    }
+
+    public Integer getcUserLike() {
+        return cUserLike;
+    }
+
+    public void setcUserLike(Integer cUserLike) {
+        this.cUserLike = cUserLike;
     }
 
     public String getcJobDesc() {

@@ -138,6 +138,7 @@ CREATE TABLE `t_job_info` (
   `c_job_person_gender` varchar(255) DEFAULT NULL COMMENT '性别要求	男女、或不限',
   `c_job_desc` text COMMENT '职位描述',
   `c_job_state` varchar(255) DEFAULT NULL COMMENT '信息状态	0：进行中；1、结束，2，待审核',
+  ‘c_user_like' int(11) default 0 comment '查看次数',
   PRIMARY KEY (`c_job_id`),
   KEY `fk_c_com_id` (`c_com_id`),
   KEY `fk_c_job_location_id` (`c_job_location_id`),

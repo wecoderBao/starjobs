@@ -45,19 +45,29 @@ public class JobInfoTest {
 		int start = 0;
 		int offset = 10;
 		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, area, typeId, choiceId, start, offset);
-		
+
 		System.out.println(jobList.size());
 		for (TJobInfo jobInfo : jobList) {
 			System.out.println(jobInfo.getcJobCity());
 
 		}
 	}
+
 	@Test
 	public void testJobDetail() throws Exception {
 		TJobInfoMapper tJobInfoMapper = (TJobInfoMapper) applicationContext.getBean(TJobInfoMapper.class);
-		
+
 		TJobInfo job = tJobInfoMapper.selectByPrimaryKey(1);
-		
+
 		System.out.println(job.getcComId());
+	}
+
+	@Test
+	public void testUpdateLike() throws Exception {
+		TJobInfoMapper tJobInfoMapper = (TJobInfoMapper) applicationContext.getBean(TJobInfoMapper.class);
+
+		int re= tJobInfoMapper.updateUserLike(1, 1);
+
+		System.out.println(re);
 	}
 }
