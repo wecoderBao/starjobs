@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 			TCompanyInfo record=tComapanyInfoMapper.selectByPhone(phone);
 			if(record != null){
 				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
-				modelMap.put("message", "success");
+				modelMap.put("message", "phone registered");
 				return modelMap;
 			}
 			TCompanyInfo tciRecord = new TCompanyInfo();
