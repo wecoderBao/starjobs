@@ -74,6 +74,7 @@ CREATE TABLE `t_company_info` (
   `c_com_address_id` int(255) DEFAULT NULL COMMENT '公司地址id分开省市区，详细地址',
   `c_com_desc` text COMMENT '公司简介',
   `c_com_license_img` varchar(255) DEFAULT NULL COMMENT '营业执照图片图片链接',
+  `c_extra_balance` int(20) default 0 comment '招聘专用余额',
   `c_user_state` varchar(2) DEFAULT NULL COMMENT '公司状态0，活的，1，注销，2，待审核',
   PRIMARY KEY (`c_com_id`),
   KEY `FK_c_com_address_id` (`c_com_address_id`),

@@ -12,6 +12,7 @@
     <result column="c_com_address_id" property="cComAddressId" jdbcType="INTEGER" />
     <result column="c_com_license_img" property="cComLicenseImg" jdbcType="VARCHAR" />
     <result column="c_user_state" property="cUserState" jdbcType="VARCHAR" />
+    <result column="c_extra_balance" property="cExtraBalance" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.starjobs.pojo.TCompanyInfo" extends="BaseResultMap" >
     <result column="c_com_desc" property="cComDesc" jdbcType="LONGVARCHAR" />
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     c_com_id, c_com_phone, c_com_password, c_com_name, c_com_balance, c_com_score, c_com_head_img, 
-    c_com_address_id, c_com_license_img, c_user_state
+    c_com_address_id, c_com_license_img, c_user_state, c_extra_balance
   </sql>
   <sql id="Blob_Column_List" >
     c_com_desc
@@ -133,11 +134,13 @@
     insert into t_company_info (c_com_id, c_com_phone, c_com_password, 
       c_com_name, c_com_balance, c_com_score, 
       c_com_head_img, c_com_address_id, c_com_license_img, 
-      c_user_state, c_com_desc)
+      c_user_state, c_extra_balance, c_com_desc
+      )
     values (#{cComId,jdbcType=INTEGER}, #{cComPhone,jdbcType=VARCHAR}, #{cComPassword,jdbcType=VARCHAR}, 
       #{cComName,jdbcType=VARCHAR}, #{cComBalance,jdbcType=INTEGER}, #{cComScore,jdbcType=INTEGER}, 
       #{cComHeadImg,jdbcType=VARCHAR}, #{cComAddressId,jdbcType=INTEGER}, #{cComLicenseImg,jdbcType=VARCHAR}, 
-      #{cUserState,jdbcType=VARCHAR}, #{cComDesc,jdbcType=LONGVARCHAR})
+      #{cUserState,jdbcType=VARCHAR}, #{cExtraBalance,jdbcType=INTEGER}, #{cComDesc,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TCompanyInfo" >
     insert into t_company_info
@@ -171,6 +174,9 @@
       </if>
       <if test="cUserState != null" >
         c_user_state,
+      </if>
+      <if test="cExtraBalance != null" >
+        c_extra_balance,
       </if>
       <if test="cComDesc != null" >
         c_com_desc,
@@ -206,6 +212,9 @@
       </if>
       <if test="cUserState != null" >
         #{cUserState,jdbcType=VARCHAR},
+      </if>
+      <if test="cExtraBalance != null" >
+        #{cExtraBalance,jdbcType=INTEGER},
       </if>
       <if test="cComDesc != null" >
         #{cComDesc,jdbcType=LONGVARCHAR},
@@ -251,6 +260,9 @@
       <if test="record.cUserState != null" >
         c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       </if>
+      <if test="record.cExtraBalance != null" >
+        c_extra_balance = #{record.cExtraBalance,jdbcType=INTEGER},
+      </if>
       <if test="record.cComDesc != null" >
         c_com_desc = #{record.cComDesc,jdbcType=LONGVARCHAR},
       </if>
@@ -271,6 +283,7 @@
       c_com_address_id = #{record.cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{record.cComLicenseImg,jdbcType=VARCHAR},
       c_user_state = #{record.cUserState,jdbcType=VARCHAR},
+      c_extra_balance = #{record.cExtraBalance,jdbcType=INTEGER},
       c_com_desc = #{record.cComDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -287,7 +300,8 @@
       c_com_head_img = #{record.cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{record.cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{record.cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{record.cUserState,jdbcType=VARCHAR}
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
+      c_extra_balance = #{record.cExtraBalance,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,6 +336,9 @@
       <if test="cUserState != null" >
         c_user_state = #{cUserState,jdbcType=VARCHAR},
       </if>
+      <if test="cExtraBalance != null" >
+        c_extra_balance = #{cExtraBalance,jdbcType=INTEGER},
+      </if>
       <if test="cComDesc != null" >
         c_com_desc = #{cComDesc,jdbcType=LONGVARCHAR},
       </if>
@@ -339,6 +356,7 @@
       c_com_address_id = #{cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{cComLicenseImg,jdbcType=VARCHAR},
       c_user_state = #{cUserState,jdbcType=VARCHAR},
+      c_extra_balance = #{cExtraBalance,jdbcType=INTEGER},
       c_com_desc = #{cComDesc,jdbcType=LONGVARCHAR}
     where c_com_id = #{cComId,jdbcType=INTEGER}
   </update>
@@ -352,7 +370,8 @@
       c_com_head_img = #{cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{cUserState,jdbcType=VARCHAR}
+      c_user_state = #{cUserState,jdbcType=VARCHAR},
+      c_extra_balance = #{cExtraBalance,jdbcType=INTEGER}
     where c_com_id = #{cComId,jdbcType=INTEGER}
   </update>
   <!-- 更据手机号更新用户密码 -->

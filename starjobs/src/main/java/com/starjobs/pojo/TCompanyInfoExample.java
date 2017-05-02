@@ -763,6 +763,66 @@ public class TCompanyInfoExample {
             addCriterion("c_user_state not between", value1, value2, "cUserState");
             return (Criteria) this;
         }
+
+        public Criteria andCExtraBalanceIsNull() {
+            addCriterion("c_extra_balance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceIsNotNull() {
+            addCriterion("c_extra_balance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceEqualTo(Integer value) {
+            addCriterion("c_extra_balance =", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceNotEqualTo(Integer value) {
+            addCriterion("c_extra_balance <>", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceGreaterThan(Integer value) {
+            addCriterion("c_extra_balance >", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_extra_balance >=", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceLessThan(Integer value) {
+            addCriterion("c_extra_balance <", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceLessThanOrEqualTo(Integer value) {
+            addCriterion("c_extra_balance <=", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceIn(List<Integer> values) {
+            addCriterion("c_extra_balance in", values, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceNotIn(List<Integer> values) {
+            addCriterion("c_extra_balance not in", values, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceBetween(Integer value1, Integer value2) {
+            addCriterion("c_extra_balance between", value1, value2, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_extra_balance not between", value1, value2, "cExtraBalance");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -21,6 +21,8 @@ public class TCompanyInfo {
 
     private String cUserState;
 
+    private Integer cExtraBalance;
+
     private String cComDesc;
 
     public Integer getcComId() {
@@ -101,6 +103,14 @@ public class TCompanyInfo {
 
     public void setcUserState(String cUserState) {
         this.cUserState = cUserState == null ? null : cUserState.trim();
+    }
+
+    public Integer getcExtraBalance() {
+        return cExtraBalance;
+    }
+
+    public void setcExtraBalance(Integer cExtraBalance) {
+        this.cExtraBalance = cExtraBalance;
     }
 
     public String getcComDesc() {

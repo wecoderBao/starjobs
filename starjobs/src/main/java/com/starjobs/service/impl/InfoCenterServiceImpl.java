@@ -174,7 +174,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("score", tComInfo.getcComScore());
 		data.put("phoneNum", tComInfo.getcComPhone());
 		data.put("balance", tComInfo.getcComBalance());
-		data.put("extraBalance", "100");// 招聘余额
+		data.put("extraBalance", tComInfo.getcExtraBalance());// 招聘余额
 		return data;
 	}
 

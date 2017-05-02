@@ -132,6 +132,7 @@ public class UserServiceImpl implements UserService {
 			tuiRecord.setcUserPhone(phone);
 			tuiRecord.setcUserBalance(0);
 			tuiRecord.setcUsername(phone);
+			tuiRecord.setcUserNickname(phone);
 			tuiRecord.setcUserPassword(password);
 			tUserInfoMapper.insert(tuiRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
