@@ -31,6 +31,8 @@ public class SystemUtil {
 	public static final String CODE_EMPTY = "900";
 	// 用户登录时没有注册
 	public static final String NOT_REGISTER = "300";
+	//手机号已经注册
+	public static final String PHONE_REGISTERED = "305";
 	// 用户类别标识
 	// 公司用户
 	public static final String USER_COM = "0";

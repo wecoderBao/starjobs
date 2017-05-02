@@ -102,7 +102,12 @@ public class UserServiceImpl implements UserService {
 		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
 			// 查询用户是否存在，若存在则不能再注册
-
+			TCompanyInfo record=tComapanyInfoMapper.selectByPhone(phone);
+			if(record != null){
+				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
+				modelMap.put("message", "success");
+				return modelMap;
+			}
 			TCompanyInfo tciRecord = new TCompanyInfo();
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
@@ -116,7 +121,12 @@ public class UserServiceImpl implements UserService {
 		} else if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
 			// 查询用户是否存在，若存在则不能再注册
-
+			TUserInfo record=tUserInfoMapper.selectByPhone(phone);
+			if(record != null){
+				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
+				modelMap.put("message", "success");
+				return modelMap;
+			}
 			// 验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
