@@ -62,7 +62,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", SystemUtil.APP_SERVER_URL+"/photo/user/"+tUserInfo.getcUserImg());// 图片url
+		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/user/" + tUserInfo.getcUserImg());// 图片url
 		data.put("nickName", tUserInfo.getcUserNickname());
 		data.put("username", tUserInfo.getcUsername());
 		data.put("gender", tUserInfo.getcUserGender());
@@ -164,7 +164,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", SystemUtil.APP_SERVER_URL+"/photo/com/"+tComInfo.getcComHeadImg());// 图片url
+		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
 		data.put("comName", tComInfo.getcComName());
 
 		data.put("address", tComInfo.getcComAddressId());// 公司地址
@@ -234,6 +234,45 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		if (re == 1) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("token", token);
+			return data;
+		}
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.starjobs.service.InfoCenterService#uploadComCertificate(java.lang.
+	 * String, java.util.Map, java.lang.String)
+	 */
+	public Map<String, Object> uploadComCertificate(String token, Map<String, String> params, String path) {
+		// 获取手机号
+		String phoneNum = tokenService.getPhoneNum(token);
+		// 根据手机号获取个人信息
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
+		if (tComInfo == null) {
+			return null;
+		}
+		
+		// 修改头像
+		String certificateImg = params.get("certificateImg");
+		certificateImg = certificateImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
+
+		String imgFormat = params.get("imgFormat");
+
+		if (!StringUtils.isEmpty(certificateImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			String resp = ImageUtil.saveStr2Photo(path, certificateImg, imgFormat);
+			if (!StringUtils.isEmpty(resp)) {
+				tComInfo.setcComLicenseImg(resp);
+			}
+		}
+
+		int re = tCompanyInfoMapper.updateByPrimaryKeySelective(tComInfo);
+		if (re == 1) {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("token", token);
+			data.put("certificateImgUrl", SystemUtil.APP_SERVER_URL+"/photo/certificate/"+tComInfo.getcComLicenseImg());
 			return data;
 		}
 		return null;

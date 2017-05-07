@@ -563,7 +563,7 @@
       	</if>
       </where>
     </if>
-      order by c_job_publish_date limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+      order by c_job_publish_date desc limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
   </select>
   <!-- 更新用户查看次数 -->
   <update id="updateUserLike" parameterType="java.lang.Integer" >

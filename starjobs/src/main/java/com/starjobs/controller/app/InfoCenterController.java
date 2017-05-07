@@ -182,4 +182,40 @@ public class InfoCenterController {
 		}
 		return modelMap;
 	}
+	// 公司用户上传营业证图片
+	@RequestMapping(value = "/com/upload/certificate", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> uploadComCertificate(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		String realPath = request.getSession().getServletContext().getRealPath("/photo/certificate");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("certificateImg", request.getParameter("certificateImg"));
+		params.put("imgFormat", request.getParameter("imgFormat"));
+
+		Map<String, Object> data = infoCenterService.uploadComCertificate(token, params, realPath);
+		if (data != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			data.put("token", token);
+			data.put("userFlag", userFlag);
+			modelMap.put("data", data);
+		}
+		return modelMap;
+	}
 }

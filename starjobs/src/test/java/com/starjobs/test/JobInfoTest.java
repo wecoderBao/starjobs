@@ -38,8 +38,8 @@ public class JobInfoTest {
 	public void testSelectJobInfo() throws Exception {
 		TJobInfoMapper tJobInfoMapper = (TJobInfoMapper) applicationContext.getBean(TJobInfoMapper.class);
 		String city = "420100";
-		List<String> area = new ArrayList<String>();
-		area.add("420115");
+		List<String> area = null;//new ArrayList<String>();
+//		area.add("420115");
 		List<Integer> typeId = null;
 		List<Integer> choiceId = null;
 		int start = 0;
@@ -48,7 +48,7 @@ public class JobInfoTest {
 
 		System.out.println(jobList.size());
 		for (TJobInfo jobInfo : jobList) {
-			System.out.println(jobInfo.getcJobCity());
+			System.out.println(jobInfo.getcJobPublishDate());
 
 		}
 	}
