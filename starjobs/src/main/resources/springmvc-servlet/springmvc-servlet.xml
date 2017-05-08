@@ -23,6 +23,16 @@
 	<mvc:annotation-driven />
 
 
+<!--拦截器 -->
+<mvc:interceptors>
+	<!--多个拦截器,顺序执行 -->
+	<mvc:interceptor>
+		<mvc:mapping path="/**"/>
+		<bean class="com.starjobs.interceptor.LoginIntercetor"></bean>
+	</mvc:interceptor>
+	
+</mvc:interceptors>
+
 	<!-- <bean id="mappingJacksonHttpMessageConverter" class=" org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> 
 		<property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> 
 		</list> </property> </bean> -->

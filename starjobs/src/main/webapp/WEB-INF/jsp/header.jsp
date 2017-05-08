@@ -96,15 +96,11 @@
           <ul id="main-menu" class="nav navbar-nav navbar-right">
             <li class="dropdown hidden-xs">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user padding-right-small" style="position:relative;top: 3px;"></span> 章鱼小丸子
+                    <span class="glyphicon glyphicon-user padding-right-small" style="position:relative;top: 3px;"></span> ${cAdminName}
                     <i class="fa fa-caret-down"></i>
                 </a>
 
-              <ul class="dropdown-menu">
-                <li><a href="editInfo.html">个人设置</a></li>
-                <li class="divider"></li>
-                <li><a tabindex="-1" href="sign-in.html">退出账号</a></li>
-              </ul>
+             
             </li>
           </ul>
 
@@ -130,8 +126,8 @@
                     <li ><a href="editManager"><span class="fa fa-caret-right"></span> 管理员管理</a></li>
                     <li ><a href="editInfoAdmin"><span class="fa fa-caret-right"></span>修改个人信息</a></li>
             </ul></li>
-            
-                  <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-wrench"></i> 退出系统<i class="fa fa-collapse"></i></a></li>
+            <li><a href="logout" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 退出系统</a></li>
+             
         </ul>
     </div>
    <script src="lib/bootstrap/js/bootstrap.js"></script>
