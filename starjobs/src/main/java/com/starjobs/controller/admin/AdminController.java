@@ -2,6 +2,9 @@ package com.starjobs.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +29,24 @@ public class AdminController {
 		return "jsp/signUp";
 	}
 	
-	//修改个人信息
+	/**
+	 * 根据用户名来显示到修改个人信息页面上
+	 */
 	@RequestMapping("editInfoAdmin")
-	public String editInfoAdmin(){
-		return "jsp/editInfo";
+	public ModelAndView editInfoAdmin(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		//从session中取出用户身份信息
+		String username = (String) session.getAttribute("cAdminName");
+	
+		TAdmin tadmin=adminservice.findUserByName(username);
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("tadmin", tadmin);
+		mv.setViewName("jsp/editInfo");
+		return mv;
 	}
+	
+	
+	
 	//修改信息管理的用户信息管理跳转
 		@RequestMapping("editUsers")
 		public String editUsers(){
@@ -57,4 +73,9 @@ public class AdminController {
 			mv.setViewName("jsp/manager");			
 		    return mv;
 		}
+		
+
+		
+		
+		
 }

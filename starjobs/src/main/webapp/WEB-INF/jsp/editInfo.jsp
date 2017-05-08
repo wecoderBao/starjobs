@@ -108,18 +108,15 @@
       <form id="tab">
         <div class="form-group">
         <label>用户名</label>
-        <input type="text" value="汤如" class="form-control">
+        <input type="text" value="${tadmin.cAdminName}" class="form-control">
         </div>
         <div class="form-group">
-        <label>昵称</label>
-        <input type="text" value="God Tang" class="form-control">
+        <label>密码</label>
+        <input type="password" value="${tadmin.cAdminPassword}" class="form-control">
         </div>
         <div class="form-group">
-        <label>权限</label>
-          <select class="form-control">
-              <option>系统管理员</option>
-              <option>超级管理员</option>
-          </select>
+        <label>描述</label>
+         <input type="text" value="${tadmin.cAdminDesc}" class="form-control">
         </div>
         <div class="form-group">
               <button class="btn btn-primary">确认修改</button>
