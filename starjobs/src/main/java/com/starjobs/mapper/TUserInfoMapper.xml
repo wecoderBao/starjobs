@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TUserInfo" >
+    <id column="c_user_id" property="cUserId" jdbcType="INTEGER" />
+    <result column="c_user_phone" property="cUserPhone" jdbcType="VARCHAR" />
+    <result column="c_user_password" property="cUserPassword" jdbcType="VARCHAR" />
+    <result column="c_user_nickname" property="cUserNickname" jdbcType="VARCHAR" />
+    <result column="c_username" property="cUsername" jdbcType="VARCHAR" />
+    <result column="c_user_ali_account" property="cUserAliAccount" jdbcType="VARCHAR" />
+    <result column="c_user_gender" property="cUserGender" jdbcType="VARCHAR" />
+    <result column="c_user_birth_date" property="cUserBirthDate" jdbcType="DATE" />
+    <result column="c_user_height" property="cUserHeight" jdbcType="VARCHAR" />
+    <result column="c_user_edu_state" property="cUserEduState" jdbcType="VARCHAR" />
+    <result column="c_user_school_name" property="cUserSchoolName" jdbcType="VARCHAR" />
+    <result column="c_user_balance" property="cUserBalance" jdbcType="INTEGER" />
+    <result column="c_user_score" property="cUserScore" jdbcType="INTEGER" />
+    <result column="c_user_img" property="cUserImg" jdbcType="VARCHAR" />
+    <result column="c_user_state" property="cUserState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_user_id, c_user_phone, c_user_password, c_user_nickname, c_username, c_user_ali_account, 
+    c_user_gender, c_user_birth_date, c_user_height, c_user_edu_state, c_user_school_name, 
+    c_user_balance, c_user_score, c_user_img, c_user_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where c_user_id = #{cUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user_info
+    where c_user_id = #{cUserId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TUserInfoExample" >
+    delete from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TUserInfo" >
+    insert into t_user_info (c_user_id, c_user_phone, c_user_password, 
+      c_user_nickname, c_username, c_user_ali_account, 
+      c_user_gender, c_user_birth_date, c_user_height, 
+      c_user_edu_state, c_user_school_name, c_user_balance, 
+      c_user_score, c_user_img, c_user_state
+      )
+    values (#{cUserId,jdbcType=INTEGER}, #{cUserPhone,jdbcType=VARCHAR}, #{cUserPassword,jdbcType=VARCHAR}, 
+      #{cUserNickname,jdbcType=VARCHAR}, #{cUsername,jdbcType=VARCHAR}, #{cUserAliAccount,jdbcType=VARCHAR}, 
+      #{cUserGender,jdbcType=VARCHAR}, #{cUserBirthDate,jdbcType=DATE}, #{cUserHeight,jdbcType=VARCHAR}, 
+      #{cUserEduState,jdbcType=VARCHAR}, #{cUserSchoolName,jdbcType=VARCHAR}, #{cUserBalance,jdbcType=INTEGER}, 
+      #{cUserScore,jdbcType=INTEGER}, #{cUserImg,jdbcType=VARCHAR}, #{cUserState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserInfo" >
+    insert into t_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cUserId != null" >
+        c_user_id,
+      </if>
+      <if test="cUserPhone != null" >
+        c_user_phone,
+      </if>
+      <if test="cUserPassword != null" >
+        c_user_password,
+      </if>
+      <if test="cUserNickname != null" >
+        c_user_nickname,
+      </if>
+      <if test="cUsername != null" >
+        c_username,
+      </if>
+      <if test="cUserAliAccount != null" >
+        c_user_ali_account,
+      </if>
+      <if test="cUserGender != null" >
+        c_user_gender,
+      </if>
+      <if test="cUserBirthDate != null" >
+        c_user_birth_date,
+      </if>
+      <if test="cUserHeight != null" >
+        c_user_height,
+      </if>
+      <if test="cUserEduState != null" >
+        c_user_edu_state,
+      </if>
+      <if test="cUserSchoolName != null" >
+        c_user_school_name,
+      </if>
+      <if test="cUserBalance != null" >
+        c_user_balance,
+      </if>
+      <if test="cUserScore != null" >
+        c_user_score,
+      </if>
+      <if test="cUserImg != null" >
+        c_user_img,
+      </if>
+      <if test="cUserState != null" >
+        c_user_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cUserId != null" >
+        #{cUserId,jdbcType=INTEGER},
+      </if>
+      <if test="cUserPhone != null" >
+        #{cUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserPassword != null" >
+        #{cUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserNickname != null" >
+        #{cUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="cUsername != null" >
+        #{cUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserAliAccount != null" >
+        #{cUserAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserGender != null" >
+        #{cUserGender,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserBirthDate != null" >
+        #{cUserBirthDate,jdbcType=DATE},
+      </if>
+      <if test="cUserHeight != null" >
+        #{cUserHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserEduState != null" >
+        #{cUserEduState,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserSchoolName != null" >
+        #{cUserSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserBalance != null" >
+        #{cUserBalance,jdbcType=INTEGER},
+      </if>
+      <if test="cUserScore != null" >
+        #{cUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="cUserImg != null" >
+        #{cUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserState != null" >
+        #{cUserState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TUserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user_info
+    <set >
+      <if test="record.cUserId != null" >
+        c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserPhone != null" >
+        c_user_phone = #{record.cUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserPassword != null" >
+        c_user_password = #{record.cUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserNickname != null" >
+        c_user_nickname = #{record.cUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUsername != null" >
+        c_username = #{record.cUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserAliAccount != null" >
+        c_user_ali_account = #{record.cUserAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserGender != null" >
+        c_user_gender = #{record.cUserGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserBirthDate != null" >
+        c_user_birth_date = #{record.cUserBirthDate,jdbcType=DATE},
+      </if>
+      <if test="record.cUserHeight != null" >
+        c_user_height = #{record.cUserHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserEduState != null" >
+        c_user_edu_state = #{record.cUserEduState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserSchoolName != null" >
+        c_user_school_name = #{record.cUserSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserBalance != null" >
+        c_user_balance = #{record.cUserBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserScore != null" >
+        c_user_score = #{record.cUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserImg != null" >
+        c_user_img = #{record.cUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserState != null" >
+        c_user_state = #{record.cUserState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user_info
+    set c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      c_user_phone = #{record.cUserPhone,jdbcType=VARCHAR},
+      c_user_password = #{record.cUserPassword,jdbcType=VARCHAR},
+      c_user_nickname = #{record.cUserNickname,jdbcType=VARCHAR},
+      c_username = #{record.cUsername,jdbcType=VARCHAR},
+      c_user_ali_account = #{record.cUserAliAccount,jdbcType=VARCHAR},
+      c_user_gender = #{record.cUserGender,jdbcType=VARCHAR},
+      c_user_birth_date = #{record.cUserBirthDate,jdbcType=DATE},
+      c_user_height = #{record.cUserHeight,jdbcType=VARCHAR},
+      c_user_edu_state = #{record.cUserEduState,jdbcType=VARCHAR},
+      c_user_school_name = #{record.cUserSchoolName,jdbcType=VARCHAR},
+      c_user_balance = #{record.cUserBalance,jdbcType=INTEGER},
+      c_user_score = #{record.cUserScore,jdbcType=INTEGER},
+      c_user_img = #{record.cUserImg,jdbcType=VARCHAR},
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TUserInfo" >
+    update t_user_info
+    <set >
+      <if test="cUserPhone != null" >
+        c_user_phone = #{cUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserPassword != null" >
+        c_user_password = #{cUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserNickname != null" >
+        c_user_nickname = #{cUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="cUsername != null" >
+        c_username = #{cUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserAliAccount != null" >
+        c_user_ali_account = #{cUserAliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserGender != null" >
+        c_user_gender = #{cUserGender,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserBirthDate != null" >
+        c_user_birth_date = #{cUserBirthDate,jdbcType=DATE},
+      </if>
+      <if test="cUserHeight != null" >
+        c_user_height = #{cUserHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserEduState != null" >
+        c_user_edu_state = #{cUserEduState,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserSchoolName != null" >
+        c_user_school_name = #{cUserSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserBalance != null" >
+        c_user_balance = #{cUserBalance,jdbcType=INTEGER},
+      </if>
+      <if test="cUserScore != null" >
+        c_user_score = #{cUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="cUserImg != null" >
+        c_user_img = #{cUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserState != null" >
+        c_user_state = #{cUserState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_user_id = #{cUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TUserInfo" >
+    update t_user_info
+    set c_user_phone = #{cUserPhone,jdbcType=VARCHAR},
+      c_user_password = #{cUserPassword,jdbcType=VARCHAR},
+      c_user_nickname = #{cUserNickname,jdbcType=VARCHAR},
+      c_username = #{cUsername,jdbcType=VARCHAR},
+      c_user_ali_account = #{cUserAliAccount,jdbcType=VARCHAR},
+      c_user_gender = #{cUserGender,jdbcType=VARCHAR},
+      c_user_birth_date = #{cUserBirthDate,jdbcType=DATE},
+      c_user_height = #{cUserHeight,jdbcType=VARCHAR},
+      c_user_edu_state = #{cUserEduState,jdbcType=VARCHAR},
+      c_user_school_name = #{cUserSchoolName,jdbcType=VARCHAR},
+      c_user_balance = #{cUserBalance,jdbcType=INTEGER},
+      c_user_score = #{cUserScore,jdbcType=INTEGER},
+      c_user_img = #{cUserImg,jdbcType=VARCHAR},
+      c_user_state = #{cUserState,jdbcType=VARCHAR}
+    where c_user_id = #{cUserId,jdbcType=INTEGER}
+  </update>
+  <!-- 根据用户手机号更新密码 -->
+  	<update id="updatePwdByPhoneNum" parameterType="java.lang.String">
+		update t_user_info set c_user_password = #{cUserPassword,jdbcType=VARCHAR} 
+		where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
+	</update>
+	<!-- 根据手机号查询用户信息 -->
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
+  </select>
+</mapper>

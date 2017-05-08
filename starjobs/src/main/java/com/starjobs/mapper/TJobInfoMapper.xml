@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TJobInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TJobInfo" >
+    <id column="c_job_id" property="cJobId" jdbcType="INTEGER" />
+    <result column="c_com_id" property="cComId" jdbcType="INTEGER" />
+    <result column="c_job_city" property="cJobCity" jdbcType="VARCHAR" />
+    <result column="c_job_area" property="cJobArea" jdbcType="VARCHAR" />
+    <result column="c_job_position" property="cJobPosition" jdbcType="VARCHAR" />
+    <result column="c_job_type_id" property="cJobTypeId" jdbcType="INTEGER" />
+    <result column="c_job_publish_date" property="cJobPublishDate" jdbcType="TIMESTAMP" />
+    <result column="c_job_work_date" property="cJobWorkDate" jdbcType="VARCHAR" />
+    <result column="c_job_work_time" property="cJobWorkTime" jdbcType="VARCHAR" />
+    <result column="c_job_gather_time" property="cJobGatherTime" jdbcType="VARCHAR" />
+    <result column="c_job_gather_location_id" property="cJobGatherLocationId" jdbcType="INTEGER" />
+    <result column="c_job_title" property="cJobTitle" jdbcType="VARCHAR" />
+    <result column="c_job_location_id" property="cJobLocationId" jdbcType="INTEGER" />
+    <result column="c_job_salary" property="cJobSalary" jdbcType="VARCHAR" />
+    <result column="c_job_pay_method" property="cJobPayMethod" jdbcType="VARCHAR" />
+    <result column="c_job_choice_op_id" property="cJobChoiceOpId" jdbcType="INTEGER" />
+    <result column="c_job_total_person" property="cJobTotalPerson" jdbcType="INTEGER" />
+    <result column="c_job_person_gender" property="cJobPersonGender" jdbcType="VARCHAR" />
+    <result column="c_job_state" property="cJobState" jdbcType="VARCHAR" />
+    <result column="c_user_like" property="cUserLike" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.starjobs.pojo.TJobInfo" extends="BaseResultMap" >
+    <result column="c_job_desc" property="cJobDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_job_id, c_com_id, c_job_city, c_job_area, c_job_position, c_job_type_id, c_job_publish_date, 
+    c_job_work_date, c_job_work_time, c_job_gather_time, c_job_gather_location_id, c_job_title, 
+    c_job_location_id, c_job_salary, c_job_pay_method, c_job_choice_op_id, c_job_total_person, 
+    c_job_person_gender, c_job_state, c_user_like
+  </sql>
+  <sql id="Blob_Column_List" >
+    c_job_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.starjobs.pojo.TJobInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_job_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TJobInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_job_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_job_info
+    where c_job_id = #{cJobId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_job_info
+    where c_job_id = #{cJobId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TJobInfoExample" >
+    delete from t_job_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TJobInfo" >
+    insert into t_job_info (c_job_id, c_com_id, c_job_city, 
+      c_job_area, c_job_position, c_job_type_id, 
+      c_job_publish_date, c_job_work_date, c_job_work_time, 
+      c_job_gather_time, c_job_gather_location_id, c_job_title, 
+      c_job_location_id, c_job_salary, c_job_pay_method, 
+      c_job_choice_op_id, c_job_total_person, c_job_person_gender, 
+      c_job_state, c_user_like, c_job_desc
+      )
+    values (#{cJobId,jdbcType=INTEGER}, #{cComId,jdbcType=INTEGER}, #{cJobCity,jdbcType=VARCHAR}, 
+      #{cJobArea,jdbcType=VARCHAR}, #{cJobPosition,jdbcType=VARCHAR}, #{cJobTypeId,jdbcType=INTEGER}, 
+      #{cJobPublishDate,jdbcType=TIMESTAMP}, #{cJobWorkDate,jdbcType=VARCHAR}, #{cJobWorkTime,jdbcType=VARCHAR}, 
+      #{cJobGatherTime,jdbcType=VARCHAR}, #{cJobGatherLocationId,jdbcType=INTEGER}, #{cJobTitle,jdbcType=VARCHAR}, 
+      #{cJobLocationId,jdbcType=INTEGER}, #{cJobSalary,jdbcType=VARCHAR}, #{cJobPayMethod,jdbcType=VARCHAR}, 
+      #{cJobChoiceOpId,jdbcType=INTEGER}, #{cJobTotalPerson,jdbcType=INTEGER}, #{cJobPersonGender,jdbcType=VARCHAR}, 
+      #{cJobState,jdbcType=VARCHAR}, #{cUserLike,jdbcType=INTEGER}, #{cJobDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TJobInfo" >
+    insert into t_job_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cJobId != null" >
+        c_job_id,
+      </if>
+      <if test="cComId != null" >
+        c_com_id,
+      </if>
+      <if test="cJobCity != null" >
+        c_job_city,
+      </if>
+      <if test="cJobArea != null" >
+        c_job_area,
+      </if>
+      <if test="cJobPosition != null" >
+        c_job_position,
+      </if>
+      <if test="cJobTypeId != null" >
+        c_job_type_id,
+      </if>
+      <if test="cJobPublishDate != null" >
+        c_job_publish_date,
+      </if>
+      <if test="cJobWorkDate != null" >
+        c_job_work_date,
+      </if>
+      <if test="cJobWorkTime != null" >
+        c_job_work_time,
+      </if>
+      <if test="cJobGatherTime != null" >
+        c_job_gather_time,
+      </if>
+      <if test="cJobGatherLocationId != null" >
+        c_job_gather_location_id,
+      </if>
+      <if test="cJobTitle != null" >
+        c_job_title,
+      </if>
+      <if test="cJobLocationId != null" >
+        c_job_location_id,
+      </if>
+      <if test="cJobSalary != null" >
+        c_job_salary,
+      </if>
+      <if test="cJobPayMethod != null" >
+        c_job_pay_method,
+      </if>
+      <if test="cJobChoiceOpId != null" >
+        c_job_choice_op_id,
+      </if>
+      <if test="cJobTotalPerson != null" >
+        c_job_total_person,
+      </if>
+      <if test="cJobPersonGender != null" >
+        c_job_person_gender,
+      </if>
+      <if test="cJobState != null" >
+        c_job_state,
+      </if>
+      <if test="cUserLike != null" >
+        c_user_like,
+      </if>
+      <if test="cJobDesc != null" >
+        c_job_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cJobId != null" >
+        #{cJobId,jdbcType=INTEGER},
+      </if>
+      <if test="cComId != null" >
+        #{cComId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobCity != null" >
+        #{cJobCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobArea != null" >
+        #{cJobArea,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobPosition != null" >
+        #{cJobPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobTypeId != null" >
+        #{cJobTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobPublishDate != null" >
+        #{cJobPublishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cJobWorkDate != null" >
+        #{cJobWorkDate,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobWorkTime != null" >
+        #{cJobWorkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobGatherTime != null" >
+        #{cJobGatherTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobGatherLocationId != null" >
+        #{cJobGatherLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobTitle != null" >
+        #{cJobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobLocationId != null" >
+        #{cJobLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobSalary != null" >
+        #{cJobSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobPayMethod != null" >
+        #{cJobPayMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobChoiceOpId != null" >
+        #{cJobChoiceOpId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobTotalPerson != null" >
+        #{cJobTotalPerson,jdbcType=INTEGER},
+      </if>
+      <if test="cJobPersonGender != null" >
+        #{cJobPersonGender,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobState != null" >
+        #{cJobState,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserLike != null" >
+        #{cUserLike,jdbcType=INTEGER},
+      </if>
+      <if test="cJobDesc != null" >
+        #{cJobDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TJobInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_job_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_job_info
+    <set >
+      <if test="record.cJobId != null" >
+        c_job_id = #{record.cJobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cComId != null" >
+        c_com_id = #{record.cComId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobCity != null" >
+        c_job_city = #{record.cJobCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobArea != null" >
+        c_job_area = #{record.cJobArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobPosition != null" >
+        c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobTypeId != null" >
+        c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobPublishDate != null" >
+        c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cJobWorkDate != null" >
+        c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobWorkTime != null" >
+        c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobGatherTime != null" >
+        c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobGatherLocationId != null" >
+        c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobTitle != null" >
+        c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobLocationId != null" >
+        c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobSalary != null" >
+        c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobPayMethod != null" >
+        c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobChoiceOpId != null" >
+        c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobTotalPerson != null" >
+        c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobPersonGender != null" >
+        c_job_person_gender = #{record.cJobPersonGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobState != null" >
+        c_job_state = #{record.cJobState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserLike != null" >
+        c_user_like = #{record.cUserLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.cJobDesc != null" >
+        c_job_desc = #{record.cJobDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_job_info
+    set c_job_id = #{record.cJobId,jdbcType=INTEGER},
+      c_com_id = #{record.cComId,jdbcType=INTEGER},
+      c_job_city = #{record.cJobCity,jdbcType=VARCHAR},
+      c_job_area = #{record.cJobArea,jdbcType=VARCHAR},
+      c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
+      c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
+      c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
+      c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
+      c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
+      c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
+      c_job_person_gender = #{record.cJobPersonGender,jdbcType=VARCHAR},
+      c_job_state = #{record.cJobState,jdbcType=VARCHAR},
+      c_user_like = #{record.cUserLike,jdbcType=INTEGER},
+      c_job_desc = #{record.cJobDesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_job_info
+    set c_job_id = #{record.cJobId,jdbcType=INTEGER},
+      c_com_id = #{record.cComId,jdbcType=INTEGER},
+      c_job_city = #{record.cJobCity,jdbcType=VARCHAR},
+      c_job_area = #{record.cJobArea,jdbcType=VARCHAR},
+      c_job_position = #{record.cJobPosition,jdbcType=VARCHAR},
+      c_job_type_id = #{record.cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{record.cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{record.cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{record.cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{record.cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{record.cJobGatherLocationId,jdbcType=INTEGER},
+      c_job_title = #{record.cJobTitle,jdbcType=VARCHAR},
+      c_job_location_id = #{record.cJobLocationId,jdbcType=INTEGER},
+      c_job_salary = #{record.cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{record.cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{record.cJobChoiceOpId,jdbcType=INTEGER},
+      c_job_total_person = #{record.cJobTotalPerson,jdbcType=INTEGER},
+      c_job_person_gender = #{record.cJobPersonGender,jdbcType=VARCHAR},
+      c_job_state = #{record.cJobState,jdbcType=VARCHAR},
+      c_user_like = #{record.cUserLike,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TJobInfo" >
+    update t_job_info
+    <set >
+      <if test="cComId != null" >
+        c_com_id = #{cComId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobCity != null" >
+        c_job_city = #{cJobCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobArea != null" >
+        c_job_area = #{cJobArea,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobPosition != null" >
+        c_job_position = #{cJobPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobTypeId != null" >
+        c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobPublishDate != null" >
+        c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cJobWorkDate != null" >
+        c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobWorkTime != null" >
+        c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobGatherTime != null" >
+        c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobGatherLocationId != null" >
+        c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobTitle != null" >
+        c_job_title = #{cJobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobLocationId != null" >
+        c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobSalary != null" >
+        c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobPayMethod != null" >
+        c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobChoiceOpId != null" >
+        c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
+      </if>
+      <if test="cJobTotalPerson != null" >
+        c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
+      </if>
+      <if test="cJobPersonGender != null" >
+        c_job_person_gender = #{cJobPersonGender,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobState != null" >
+        c_job_state = #{cJobState,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserLike != null" >
+        c_user_like = #{cUserLike,jdbcType=INTEGER},
+      </if>
+      <if test="cJobDesc != null" >
+        c_job_desc = #{cJobDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where c_job_id = #{cJobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.starjobs.pojo.TJobInfo" >
+    update t_job_info
+    set c_com_id = #{cComId,jdbcType=INTEGER},
+      c_job_city = #{cJobCity,jdbcType=VARCHAR},
+      c_job_area = #{cJobArea,jdbcType=VARCHAR},
+      c_job_position = #{cJobPosition,jdbcType=VARCHAR},
+      c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
+      c_job_title = #{cJobTitle,jdbcType=VARCHAR},
+      c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
+      c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
+      c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
+      c_job_person_gender = #{cJobPersonGender,jdbcType=VARCHAR},
+      c_job_state = #{cJobState,jdbcType=VARCHAR},
+      c_user_like = #{cUserLike,jdbcType=INTEGER},
+      c_job_desc = #{cJobDesc,jdbcType=LONGVARCHAR}
+    where c_job_id = #{cJobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TJobInfo" >
+    update t_job_info
+    set c_com_id = #{cComId,jdbcType=INTEGER},
+      c_job_city = #{cJobCity,jdbcType=VARCHAR},
+      c_job_area = #{cJobArea,jdbcType=VARCHAR},
+      c_job_position = #{cJobPosition,jdbcType=VARCHAR},
+      c_job_type_id = #{cJobTypeId,jdbcType=INTEGER},
+      c_job_publish_date = #{cJobPublishDate,jdbcType=TIMESTAMP},
+      c_job_work_date = #{cJobWorkDate,jdbcType=VARCHAR},
+      c_job_work_time = #{cJobWorkTime,jdbcType=VARCHAR},
+      c_job_gather_time = #{cJobGatherTime,jdbcType=VARCHAR},
+      c_job_gather_location_id = #{cJobGatherLocationId,jdbcType=INTEGER},
+      c_job_title = #{cJobTitle,jdbcType=VARCHAR},
+      c_job_location_id = #{cJobLocationId,jdbcType=INTEGER},
+      c_job_salary = #{cJobSalary,jdbcType=VARCHAR},
+      c_job_pay_method = #{cJobPayMethod,jdbcType=VARCHAR},
+      c_job_choice_op_id = #{cJobChoiceOpId,jdbcType=INTEGER},
+      c_job_total_person = #{cJobTotalPerson,jdbcType=INTEGER},
+      c_job_person_gender = #{cJobPersonGender,jdbcType=VARCHAR},
+      c_job_state = #{cJobState,jdbcType=VARCHAR},
+      c_user_like = #{cUserLike,jdbcType=INTEGER}
+    where c_job_id = #{cJobId,jdbcType=INTEGER}
+  </update>
+  <!-- 根据条件查询兼职信息 -->
+  <select id="selectByUser" resultMap="BaseResultMap"  parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from t_job_info
+    <if test="city != null" >
+      <where>
+      	c_job_city = #{city,jdbcType=VARCHAR}
+      	<if test="area != null ">
+      		and c_job_area in 
+      		 <foreach collection="area" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
+      	</if>
+      	<if test="typeId != null">
+      		and c_job_type_id in 
+      		 <foreach collection="typeId" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
+      	</if>
+      	<if test="choiceId != null ">
+      		and c_job_choice_op_id in
+      		<foreach collection="choiceId" index="index" item="item" open="(" separator="," close=")">  
+      		 	#{item}
+      		 </foreach>
+      	</if>
+      </where>
+    </if>
+      order by c_job_publish_date desc limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+  </select>
+  <!-- 更新用户查看次数 -->
+  <update id="updateUserLike" parameterType="java.lang.Integer" >
+    update t_job_info
+    set c_user_like = #{cUserLike,jdbcType=INTEGER}
+    where c_job_id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

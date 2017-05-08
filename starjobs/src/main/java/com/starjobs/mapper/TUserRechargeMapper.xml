@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TUserRechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TUserRecharge" >
+    <id column="c_user_recharge_id" property="cUserRechargeId" jdbcType="INTEGER" />
+    <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
+    <result column="c_user_recharge_money" property="cUserRechargeMoney" jdbcType="INTEGER" />
+    <result column="c_user_recharge_date" property="cUserRechargeDate" jdbcType="TIMESTAMP" />
+    <result column="c_user_balance_after" property="cUserBalanceAfter" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_user_recharge_id, c_user_id, c_user_recharge_money, c_user_recharge_date, c_user_balance_after
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TUserRechargeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_recharge
+    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user_recharge
+    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TUserRechargeExample" >
+    delete from t_user_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TUserRecharge" >
+    insert into t_user_recharge (c_user_recharge_id, c_user_id, c_user_recharge_money, 
+      c_user_recharge_date, c_user_balance_after)
+    values (#{cUserRechargeId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cUserRechargeMoney,jdbcType=INTEGER}, 
+      #{cUserRechargeDate,jdbcType=TIMESTAMP}, #{cUserBalanceAfter,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserRecharge" >
+    insert into t_user_recharge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cUserRechargeId != null" >
+        c_user_recharge_id,
+      </if>
+      <if test="cUserId != null" >
+        c_user_id,
+      </if>
+      <if test="cUserRechargeMoney != null" >
+        c_user_recharge_money,
+      </if>
+      <if test="cUserRechargeDate != null" >
+        c_user_recharge_date,
+      </if>
+      <if test="cUserBalanceAfter != null" >
+        c_user_balance_after,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cUserRechargeId != null" >
+        #{cUserRechargeId,jdbcType=INTEGER},
+      </if>
+      <if test="cUserId != null" >
+        #{cUserId,jdbcType=INTEGER},
+      </if>
+      <if test="cUserRechargeMoney != null" >
+        #{cUserRechargeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="cUserRechargeDate != null" >
+        #{cUserRechargeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUserBalanceAfter != null" >
+        #{cUserBalanceAfter,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TUserRechargeExample" resultType="java.lang.Integer" >
+    select count(*) from t_user_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user_recharge
+    <set >
+      <if test="record.cUserRechargeId != null" >
+        c_user_recharge_id = #{record.cUserRechargeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserId != null" >
+        c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserRechargeMoney != null" >
+        c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserRechargeDate != null" >
+        c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cUserBalanceAfter != null" >
+        c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user_recharge
+    set c_user_recharge_id = #{record.cUserRechargeId,jdbcType=INTEGER},
+      c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
+      c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
+      c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TUserRecharge" >
+    update t_user_recharge
+    <set >
+      <if test="cUserId != null" >
+        c_user_id = #{cUserId,jdbcType=INTEGER},
+      </if>
+      <if test="cUserRechargeMoney != null" >
+        c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="cUserRechargeDate != null" >
+        c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUserBalanceAfter != null" >
+        c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER},
+      </if>
+    </set>
+    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TUserRecharge" >
+    update t_user_recharge
+    set c_user_id = #{cUserId,jdbcType=INTEGER},
+      c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
+      c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
+      c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER}
+    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+  </update>
+</mapper>

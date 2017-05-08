@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TAdminMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TAdmin" >
+    <id column="c_admin_id" property="cAdminId" jdbcType="INTEGER" />
+    <result column="c_admin_name" property="cAdminName" jdbcType="VARCHAR" />
+    <result column="c_admin_password" property="cAdminPassword" jdbcType="VARCHAR" />
+    <result column="c_admin_desc" property="cAdminDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from t_admin 
+	</select> 
+  <select id="findUserByName" resultMap="BaseResultMap">
+		select * from t_admin where c_admin_name = #{cAdminName} 
+	</select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_admin_id, c_admin_name, c_admin_password, c_admin_desc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TAdminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin
+    where c_admin_id = #{cAdminId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_admin
+    where c_admin_id = #{cAdminId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TAdminExample" >
+    delete from t_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TAdmin" >
+    insert into t_admin (c_admin_id, c_admin_name, c_admin_password, 
+      c_admin_desc)
+    values (#{cAdminId,jdbcType=INTEGER}, #{cAdminName,jdbcType=VARCHAR}, #{cAdminPassword,jdbcType=VARCHAR}, 
+      #{cAdminDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TAdmin" >
+    insert into t_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cAdminId != null" >
+        c_admin_id,
+      </if>
+      <if test="cAdminName != null" >
+        c_admin_name,
+      </if>
+      <if test="cAdminPassword != null" >
+        c_admin_password,
+      </if>
+      <if test="cAdminDesc != null" >
+        c_admin_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cAdminId != null" >
+        #{cAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="cAdminName != null" >
+        #{cAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="cAdminPassword != null" >
+        #{cAdminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cAdminDesc != null" >
+        #{cAdminDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TAdminExample" resultType="java.lang.Integer" >
+    select count(*) from t_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_admin
+    <set >
+      <if test="record.cAdminId != null" >
+        c_admin_id = #{record.cAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cAdminName != null" >
+        c_admin_name = #{record.cAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAdminPassword != null" >
+        c_admin_password = #{record.cAdminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAdminDesc != null" >
+        c_admin_desc = #{record.cAdminDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_admin
+    set c_admin_id = #{record.cAdminId,jdbcType=INTEGER},
+      c_admin_name = #{record.cAdminName,jdbcType=VARCHAR},
+      c_admin_password = #{record.cAdminPassword,jdbcType=VARCHAR},
+      c_admin_desc = #{record.cAdminDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TAdmin" >
+    update t_admin
+    <set >
+      <if test="cAdminName != null" >
+        c_admin_name = #{cAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="cAdminPassword != null" >
+        c_admin_password = #{cAdminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cAdminDesc != null" >
+        c_admin_desc = #{cAdminDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_admin_id = #{cAdminId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TAdmin" >
+    update t_admin
+    set c_admin_name = #{cAdminName,jdbcType=VARCHAR},
+      c_admin_password = #{cAdminPassword,jdbcType=VARCHAR},
+      c_admin_desc = #{cAdminDesc,jdbcType=VARCHAR}
+    where c_admin_id = #{cAdminId,jdbcType=INTEGER}
+  </update>
+</mapper>
