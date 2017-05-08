@@ -90,7 +90,7 @@
                     <input name="cAdminPassword" type="password" class="form-controlspan12 form-control">
                 </div>
                 <input type="submit">登录</input>
-               <!--  <a href="login" class="btn btn-primary pull-right">登录</a> -->
+            
                 <label class="remember-me"><input type="checkbox"> 记住密码</label>
                 <div class="clearfix"></div>
             </form>
