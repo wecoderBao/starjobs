@@ -105,18 +105,18 @@
     <br>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane active in" id="home">
-      <form id="tab">
+      <form id="tab" method="post" action="editAdmin">
         <div class="form-group">
         <label>用户名</label>
-        <input type="text" value="${tadmin.cAdminName}" class="form-control">
+        <input type="text" value="${tadmin.cAdminName}" name="cAdminName" class="form-control">
         </div>
         <div class="form-group">
         <label>密码</label>
-        <input type="password" value="${tadmin.cAdminPassword}" class="form-control">
+        <input type="password" value="${tadmin.cAdminPassword}" name="cAdminPassword" class="form-control">
         </div>
         <div class="form-group">
         <label>描述</label>
-         <input type="text" value="${tadmin.cAdminDesc}" class="form-control">
+         <input type="text" value="${tadmin.cAdminDesc}" name="cAdminDesc" class="form-control">
         </div>
         <div class="form-group">
               <button class="btn btn-primary">确认修改</button>

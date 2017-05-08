@@ -42,4 +42,16 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return tadminMapper.selectAll();
 	}
+
+	/**
+	 * 修改个人信息
+	 */
+	public int updateByPrimaryKey(TAdmin record) {
+		//获取当前用户的密码
+	 String password=record.getcAdminPassword();
+	 //用md5进行加密
+		String passwordToMD5=MD5.getInstance().getMD5ofStr(password);
+		record.setcAdminPassword(passwordToMD5);		
+		return tadminMapper.updateByPrimaryKey(record);
+	}
 }

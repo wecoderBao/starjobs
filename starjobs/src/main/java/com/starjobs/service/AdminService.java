@@ -21,4 +21,8 @@ public interface AdminService {
 	
 	//管理员查询	
 	public List<TAdmin> selectAllAdmin();
+	
+	//修改管理员的个人信息
+	
+	public int updateByPrimaryKey(TAdmin record);
 }
