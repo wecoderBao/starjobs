@@ -33,4 +33,8 @@ public interface TAdminMapper {
     
   //根据用户名进行查找
   	public TAdmin findUserByName(@Param("cAdminName") String cAdminName);
+  	
+  	//全部查出
+  	
+  	public List<TAdmin> selectAll();
 }

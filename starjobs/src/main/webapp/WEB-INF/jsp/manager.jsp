@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en"><head>
@@ -105,93 +106,21 @@
   <thead>
     <tr>
       <th></th>
-      <th>真实姓名</th>
-      <th>昵称</th>
-      <th>权限</th>
+      <th>用户名</th>
+      <th>密码</th>
+      <th>描述</th>
       <th style="width: 3.5em;"></th>
     </tr>
   </thead>
   <tbody>
+   <c:forEach items="${list}"  var="user">
     <tr>
-      <td>1</td>
-      <td>汤如</td>
-      <td>God Tang</td>
-      <td><span class="label label-danger">超级管理员</span></td>
-      <td>
-          <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>张玉珠</td>
-      <td>章鱼小丸子</td>
-      <td><span class="label label-danger">超级管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr> 
-    <tr>   
-      <td>3</td>
-      <td>向万鹏</td>
-      <td>小帅</td>
-      <td><span class="label label-danger">超级管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>   
-      <td>4</td>
-      <td>黄贤旭</td>
-      <td>黄boss</td>
-      <td><span class="label label-danger">超级管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>   
-      <td>5</td>
-      <td>素素</td>
-      <td>白浅上神</td>
-      <td><span class="label label-warning">系统管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>   
-      <td>6</td>
-      <td>夜华</td>
-      <td>太子殿下</td>
-      <td><span class="label label-warning">系统管理员</span></td>
-      <td>
-          <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-     <tr>   
-      <td>7</td>
-      <td>素素</td>
-      <td>白浅上神</td>
-      <td><span class="label label-warning">系统管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>   
-      <td>8</td>
-      <td>夜华</td>
-      <td>太子殿下</td>
-      <td><span class="label label-warning">系统管理员</span></td>
-      <td>
-           <a href="#editManager" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
+      <td>${user.cAdminId}</td>
+      <td>${user.cAdminName}</td>
+      	<td>${user.cAdminPassword}</td>
+      <td><span class="label label-danger">${user.cAdminDesc} </span></td>
+  		</tr>
+     </c:forEach> 
   </tbody>
 </table>
 
@@ -205,58 +134,10 @@
   <li><a href="#">下一页&raquo;</a></li>
 </ul>
 
-<div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">删除提示</h3>
-        </div>
-        <div class="modal-body">
-            <p class="error-text"><i class="fa fa-warning modal-icon"></i><h3>确定要删除该管理员吗?</h3></p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
-            <button class="btn btn-danger" data-dismiss="modal">删除</button>
-        </div>
-      </div>
-    </div>
-</div>
 
-<div class="modal small fade" id="editManager" tabindex="-2" role="dialog" aria-labelledby="editManager" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">修改管理员信息</h3>
-        </div>
-        <div class="modal-body">
-            <div class="panel-body">
-            <form>
-                <div class="form-group">
-                    <label>真实姓名</label>
-                    <input type="text" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>昵称</label>
-                    <input type="text" class="form-control span12">
-                </div>
-                <div class="form-group">
-                    <label>权限</label>
-                    <select class="form-control span12">
-                        <option>超级管理员</option>
-                        <option selected>系统管理员</option>
-                    </select>
-                </div>
-                    <div class="clearfix"></div>
-            </form>
-        </div>
             
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
-            <button class="btn btn-danger" data-dismiss="modal">保存</button>
-        </div>
+       
       </div>
     </div>
 </div>
@@ -272,23 +153,17 @@
             <div class="panel-body">
             <form>
                 <div class="form-group">
-                    <label>真实姓名</label>
+                    <label>用户名</label>
                     <input type="text" class="form-control span12">
                 </div>
-                <div class="form-group">
-                    <label>昵称</label>
-                    <input type="text" class="form-control span12">
-                </div>
+              
                  <div class="form-group">
                     <label>密码</label>
                     <input type="password" class="form-control span12">
                 </div>
                  <div class="form-group">
-                    <label>权限</label>
-                    <select class="form-control span12">
-                        <option>超级管理员</option>
-                        <option selected>系统管理员</option>
-                    </select>
+                    <label>描述</label>
+                   <input type="password" class="form-control span12">
                 </div>
 
                     <div class="clearfix"></div>

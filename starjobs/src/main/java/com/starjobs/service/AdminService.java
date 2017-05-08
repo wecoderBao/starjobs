@@ -3,7 +3,7 @@
  */
 package com.starjobs.service;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.starjobs.pojo.TAdmin;
 
@@ -18,4 +18,7 @@ public interface AdminService {
 	public TAdmin findUserByName(String cAdminName);
 	//后台登录，md5加密
 	public boolean loginAdmin(String cAdminName,String cAdminPassword );
+	
+	//管理员查询	
+	public List<TAdmin> selectAllAdmin();
 }

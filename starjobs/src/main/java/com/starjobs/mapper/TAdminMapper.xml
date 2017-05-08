@@ -8,7 +8,9 @@
     <result column="c_admin_desc" property="cAdminDesc" jdbcType="VARCHAR" />
   </resultMap>
   
-  
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from t_admin 
+	</select> 
   <select id="findUserByName" resultMap="BaseResultMap">
 		select * from t_admin where c_admin_name = #{cAdminName} 
 	</select>

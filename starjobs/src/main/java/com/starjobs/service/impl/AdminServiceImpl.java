@@ -3,6 +3,8 @@
  */
 package com.starjobs.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,10 @@ public class AdminServiceImpl implements AdminService {
 			return true;
 		}else
 			return false;
+	}
+
+	public List<TAdmin> selectAllAdmin() {
+		// TODO Auto-generated method stub
+		return tadminMapper.selectAll();
 	}
 }
