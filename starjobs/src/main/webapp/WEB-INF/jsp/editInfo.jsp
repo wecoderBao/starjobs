@@ -97,7 +97,7 @@
             
 <ul class="nav nav-tabs">
   <li class="active"><a href="#home" data-toggle="tab">个人信息</a></li>
-  <li><a href="#profile" data-toggle="tab">密码</a></li>
+
 </ul>
 
 <div class="row">
@@ -126,15 +126,6 @@
 
       <div class="tab-pane fade" id="profile">
 
-        <form id="tab2">
-          <div class="form-group">
-            <label>新密码</label>
-            <input type="password" class="form-control">
-          </div>
-          <div>
-              <button class="btn btn-primary">确认修改</button>
-          </div>
-        </form>
       </div>
     </div>
   </div>
