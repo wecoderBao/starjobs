@@ -1,9 +1,11 @@
 package com.starjobs.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TComAddressExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TComAddressMapper {
     int countByExample(TComAddressExample example);
@@ -33,4 +35,6 @@ public interface TComAddressMapper {
     int updateByPrimaryKeyWithBLOBs(TComAddress record);
 
     int updateByPrimaryKey(TComAddress record);
+  //插入一条地址信息，返回主键
+    int insertSelectiveReId(TComAddress record);
 }

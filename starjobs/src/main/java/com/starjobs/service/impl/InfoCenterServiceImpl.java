@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.starjobs.common.ImageUtil;
+import com.starjobs.mapper.TComAddressMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserTokenMapper;
+import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserToken;
@@ -44,6 +46,8 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	TUserTokenMapper tUserTokenMapper;
 	@Autowired
 	TCompanyInfoMapper tCompanyInfoMapper;
+	@Autowired
+	TComAddressMapper tComAddressMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -210,11 +214,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		// 修改头像
 		String headImg = params.get("headImg");
-		headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-
 		String imgFormat = params.get("imgFormat");
 
 		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
 			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
 			if (!StringUtils.isEmpty(resp)) {
 				tComInfo.setcComHeadImg(resp);
@@ -224,7 +227,11 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			tComInfo.setcComName(params.get("comName"));
 		}
 		if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
-			tComInfo.setcComAddressId(1);
+			//插入公司地址
+			TComAddress addr = new TComAddress();
+			addr.setcAddressDetail(params.get("address"));
+			tComAddressMapper.insertSelectiveReId(addr);
+			tComInfo.setcComAddressId(addr.getcComAddressId());
 		}
 		if (!StringUtils.isEmpty(params.get("comDesc"))) {// 修改性别
 			tComInfo.setcComDesc(params.get("comDesc"));
@@ -257,11 +264,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		
 		// 修改头像
 		String certificateImg = params.get("certificateImg");
-		certificateImg = certificateImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-
 		String imgFormat = params.get("imgFormat");
 
 		if (!StringUtils.isEmpty(certificateImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			certificateImg = certificateImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
 			String resp = ImageUtil.saveStr2Photo(path, certificateImg, imgFormat);
 			if (!StringUtils.isEmpty(resp)) {
 				tComInfo.setcComLicenseImg(resp);

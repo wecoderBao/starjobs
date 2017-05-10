@@ -248,4 +248,45 @@
       c_town = #{cTown,jdbcType=VARCHAR}
     where c_com_address_id = #{cComAddressId,jdbcType=INTEGER}
   </update>
+  <!-- 插入返回主键 -->
+  <insert id="insertSelectiveReId" parameterType="com.starjobs.pojo.TComAddress" >
+  	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cComAddressId">
+          SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_com_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cComAddressId != null" >
+        c_com_address_id,
+      </if>
+      <if test="cProvince != null" >
+        c_province,
+      </if>
+      <if test="cCity != null" >
+        c_city,
+      </if>
+      <if test="cTown != null" >
+        c_town,
+      </if>
+      <if test="cAddressDetail != null" >
+        c_address_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cComAddressId != null" >
+        #{cComAddressId,jdbcType=INTEGER},
+      </if>
+      <if test="cProvince != null" >
+        #{cProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="cCity != null" >
+        #{cCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cTown != null" >
+        #{cTown,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressDetail != null" >
+        #{cAddressDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>
