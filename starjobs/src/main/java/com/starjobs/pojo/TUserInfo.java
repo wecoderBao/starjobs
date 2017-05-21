@@ -1,7 +1,5 @@
 package com.starjobs.pojo;
 
-import java.util.Date;
-
 public class TUserInfo {
     private Integer cUserId;
 
@@ -17,7 +15,7 @@ public class TUserInfo {
 
     private String cUserGender;
 
-    private Date cUserBirthDate;
+    private String cUserBirthDate;
 
     private String cUserHeight;
 
@@ -25,13 +23,17 @@ public class TUserInfo {
 
     private String cUserSchoolName;
 
-    private Integer cUserBalance;
+    private String cUserBalance;
 
-    private Integer cUserScore;
+    private String cUserScore;
 
     private String cUserImg;
 
     private String cUserState;
+
+    private String cUserDonetimes;
+
+    private String cUserDesc;
 
     public Integer getcUserId() {
         return cUserId;
@@ -89,12 +91,12 @@ public class TUserInfo {
         this.cUserGender = cUserGender == null ? null : cUserGender.trim();
     }
 
-    public Date getcUserBirthDate() {
+    public String getcUserBirthDate() {
         return cUserBirthDate;
     }
 
-    public void setcUserBirthDate(Date cUserBirthDate) {
-        this.cUserBirthDate = cUserBirthDate;
+    public void setcUserBirthDate(String cUserBirthDate) {
+        this.cUserBirthDate = cUserBirthDate == null ? null : cUserBirthDate.trim();
     }
 
     public String getcUserHeight() {
@@ -121,20 +123,20 @@ public class TUserInfo {
         this.cUserSchoolName = cUserSchoolName == null ? null : cUserSchoolName.trim();
     }
 
-    public Integer getcUserBalance() {
+    public String getcUserBalance() {
         return cUserBalance;
     }
 
-    public void setcUserBalance(Integer cUserBalance) {
-        this.cUserBalance = cUserBalance;
+    public void setcUserBalance(String cUserBalance) {
+        this.cUserBalance = cUserBalance == null ? null : cUserBalance.trim();
     }
 
-    public Integer getcUserScore() {
+    public String getcUserScore() {
         return cUserScore;
     }
 
-    public void setcUserScore(Integer cUserScore) {
-        this.cUserScore = cUserScore;
+    public void setcUserScore(String cUserScore) {
+        this.cUserScore = cUserScore == null ? null : cUserScore.trim();
     }
 
     public String getcUserImg() {
@@ -151,5 +153,21 @@ public class TUserInfo {
 
     public void setcUserState(String cUserState) {
         this.cUserState = cUserState == null ? null : cUserState.trim();
+    }
+
+    public String getcUserDonetimes() {
+        return cUserDonetimes;
+    }
+
+    public void setcUserDonetimes(String cUserDonetimes) {
+        this.cUserDonetimes = cUserDonetimes == null ? null : cUserDonetimes.trim();
+    }
+
+    public String getcUserDesc() {
+        return cUserDesc;
+    }
+
+    public void setcUserDesc(String cUserDesc) {
+        this.cUserDesc = cUserDesc == null ? null : cUserDesc.trim();
     }
 }

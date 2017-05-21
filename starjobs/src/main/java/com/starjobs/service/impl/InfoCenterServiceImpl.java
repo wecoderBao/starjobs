@@ -76,6 +76,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("school", tUserInfo.getcUserSchoolName());
 		data.put("phoneNum", tUserInfo.getcUserPhone());
 		data.put("balance", tUserInfo.getcUserBalance());
+		data.put("doneTimes", tUserInfo.getcUserDonetimes());// 兼职次数
+		data.put("score", tUserInfo.getcUserScore());// 个人评分
+		data.put("introduction", tUserInfo.getcUserDesc());// 个人简介
 		return data;
 	}
 
@@ -129,7 +132,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			tUserInfo.setcUserGender(params.get("gender"));
 		}
 		if (!StringUtils.isEmpty(params.get("birthday"))) {// 修改生日
-			tUserInfo.setcUserBirthDate(new Date());
+			tUserInfo.setcUserBirthDate(params.get("birthday"));
 		}
 		if (!StringUtils.isEmpty(params.get("height"))) {// 修改身高
 			tUserInfo.setcUserHeight(params.get("height"));
@@ -170,10 +173,15 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("userFlag", userFlag);
 		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
 		data.put("comName", tComInfo.getcComName());
-
-		data.put("address", tComInfo.getcComAddressId());// 公司地址
-
-		data.put("certificateImgUrl", tComInfo.getcComLicenseImg());
+		if (null != tComInfo.getcComAddressId()) {
+			TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
+			if (null != addr) {
+				data.put("address", addr.getcAddressDetail());// 公司地址
+			} else {
+				data.put("address", "地址不详，请和客服确认。");
+			}
+		}
+		data.put("hasLicense", tComInfo.getcComHaslicense());
 		data.put("comDesc", tComInfo.getcComDesc());// 公司简介
 		data.put("score", tComInfo.getcComScore());
 		data.put("phoneNum", tComInfo.getcComPhone());
@@ -227,7 +235,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			tComInfo.setcComName(params.get("comName"));
 		}
 		if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
-			//插入公司地址
+			// 插入公司地址
 			TComAddress addr = new TComAddress();
 			addr.setcAddressDetail(params.get("address"));
 			tComAddressMapper.insertSelectiveReId(addr);
@@ -261,7 +269,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		if (tComInfo == null) {
 			return null;
 		}
-		
+
 		// 修改头像
 		String certificateImg = params.get("certificateImg");
 		String imgFormat = params.get("imgFormat");
@@ -278,7 +286,8 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		if (re == 1) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("token", token);
-			data.put("certificateImgUrl", SystemUtil.APP_SERVER_URL+"/photo/certificate/"+tComInfo.getcComLicenseImg());
+			data.put("certificateImgUrl",
+					SystemUtil.APP_SERVER_URL + "/photo/certificate/" + tComInfo.getcComLicenseImg());
 			return data;
 		}
 		return null;

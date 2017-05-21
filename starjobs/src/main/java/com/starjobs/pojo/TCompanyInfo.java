@@ -9,9 +9,9 @@ public class TCompanyInfo {
 
     private String cComName;
 
-    private Integer cComBalance;
+    private String cComBalance;
 
-    private Integer cComScore;
+    private String cComScore;
 
     private String cComHeadImg;
 
@@ -21,7 +21,9 @@ public class TCompanyInfo {
 
     private String cUserState;
 
-    private Integer cExtraBalance;
+    private String cExtraBalance;
+
+    private String cComHaslicense;
 
     private String cComDesc;
 
@@ -57,20 +59,20 @@ public class TCompanyInfo {
         this.cComName = cComName == null ? null : cComName.trim();
     }
 
-    public Integer getcComBalance() {
+    public String getcComBalance() {
         return cComBalance;
     }
 
-    public void setcComBalance(Integer cComBalance) {
-        this.cComBalance = cComBalance;
+    public void setcComBalance(String cComBalance) {
+        this.cComBalance = cComBalance == null ? null : cComBalance.trim();
     }
 
-    public Integer getcComScore() {
+    public String getcComScore() {
         return cComScore;
     }
 
-    public void setcComScore(Integer cComScore) {
-        this.cComScore = cComScore;
+    public void setcComScore(String cComScore) {
+        this.cComScore = cComScore == null ? null : cComScore.trim();
     }
 
     public String getcComHeadImg() {
@@ -105,12 +107,20 @@ public class TCompanyInfo {
         this.cUserState = cUserState == null ? null : cUserState.trim();
     }
 
-    public Integer getcExtraBalance() {
+    public String getcExtraBalance() {
         return cExtraBalance;
     }
 
-    public void setcExtraBalance(Integer cExtraBalance) {
-        this.cExtraBalance = cExtraBalance;
+    public void setcExtraBalance(String cExtraBalance) {
+        this.cExtraBalance = cExtraBalance == null ? null : cExtraBalance.trim();
+    }
+
+    public String getcComHaslicense() {
+        return cComHaslicense;
+    }
+
+    public void setcComHaslicense(String cComHaslicense) {
+        this.cComHaslicense = cComHaslicense == null ? null : cComHaslicense.trim();
     }
 
     public String getcComDesc() {

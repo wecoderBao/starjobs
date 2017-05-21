@@ -9,14 +9,18 @@
     <result column="c_username" property="cUsername" jdbcType="VARCHAR" />
     <result column="c_user_ali_account" property="cUserAliAccount" jdbcType="VARCHAR" />
     <result column="c_user_gender" property="cUserGender" jdbcType="VARCHAR" />
-    <result column="c_user_birth_date" property="cUserBirthDate" jdbcType="DATE" />
+    <result column="c_user_birth_date" property="cUserBirthDate" jdbcType="VARCHAR" />
     <result column="c_user_height" property="cUserHeight" jdbcType="VARCHAR" />
     <result column="c_user_edu_state" property="cUserEduState" jdbcType="VARCHAR" />
     <result column="c_user_school_name" property="cUserSchoolName" jdbcType="VARCHAR" />
-    <result column="c_user_balance" property="cUserBalance" jdbcType="INTEGER" />
-    <result column="c_user_score" property="cUserScore" jdbcType="INTEGER" />
+    <result column="c_user_balance" property="cUserBalance" jdbcType="VARCHAR" />
+    <result column="c_user_score" property="cUserScore" jdbcType="VARCHAR" />
     <result column="c_user_img" property="cUserImg" jdbcType="VARCHAR" />
     <result column="c_user_state" property="cUserState" jdbcType="VARCHAR" />
+    <result column="c_user_doneTimes" property="cUserDonetimes" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.starjobs.pojo.TUserInfo" extends="BaseResultMap" >
+    <result column="c_user_desc" property="cUserDesc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,8 +83,27 @@
   <sql id="Base_Column_List" >
     c_user_id, c_user_phone, c_user_password, c_user_nickname, c_username, c_user_ali_account, 
     c_user_gender, c_user_birth_date, c_user_height, c_user_edu_state, c_user_school_name, 
-    c_user_balance, c_user_score, c_user_img, c_user_state
+    c_user_balance, c_user_score, c_user_img, c_user_state, c_user_doneTimes
   </sql>
+  <sql id="Blob_Column_List" >
+    c_user_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.starjobs.pojo.TUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TUserInfoExample" >
     select
     <if test="distinct" >
@@ -95,9 +118,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from t_user_info
     where c_user_id = #{cUserId,jdbcType=INTEGER}
   </select>
@@ -116,14 +141,14 @@
       c_user_nickname, c_username, c_user_ali_account, 
       c_user_gender, c_user_birth_date, c_user_height, 
       c_user_edu_state, c_user_school_name, c_user_balance, 
-      c_user_score, c_user_img, c_user_state
-      )
+      c_user_score, c_user_img, c_user_state, 
+      c_user_doneTimes, c_user_desc)
     values (#{cUserId,jdbcType=INTEGER}, #{cUserPhone,jdbcType=VARCHAR}, #{cUserPassword,jdbcType=VARCHAR}, 
       #{cUserNickname,jdbcType=VARCHAR}, #{cUsername,jdbcType=VARCHAR}, #{cUserAliAccount,jdbcType=VARCHAR}, 
-      #{cUserGender,jdbcType=VARCHAR}, #{cUserBirthDate,jdbcType=DATE}, #{cUserHeight,jdbcType=VARCHAR}, 
-      #{cUserEduState,jdbcType=VARCHAR}, #{cUserSchoolName,jdbcType=VARCHAR}, #{cUserBalance,jdbcType=INTEGER}, 
-      #{cUserScore,jdbcType=INTEGER}, #{cUserImg,jdbcType=VARCHAR}, #{cUserState,jdbcType=VARCHAR}
-      )
+      #{cUserGender,jdbcType=VARCHAR}, #{cUserBirthDate,jdbcType=VARCHAR}, #{cUserHeight,jdbcType=VARCHAR}, 
+      #{cUserEduState,jdbcType=VARCHAR}, #{cUserSchoolName,jdbcType=VARCHAR}, #{cUserBalance,jdbcType=VARCHAR}, 
+      #{cUserScore,jdbcType=VARCHAR}, #{cUserImg,jdbcType=VARCHAR}, #{cUserState,jdbcType=VARCHAR}, 
+      #{cUserDonetimes,jdbcType=VARCHAR}, #{cUserDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserInfo" >
     insert into t_user_info
@@ -173,6 +198,12 @@
       <if test="cUserState != null" >
         c_user_state,
       </if>
+      <if test="cUserDonetimes != null" >
+        c_user_doneTimes,
+      </if>
+      <if test="cUserDesc != null" >
+        c_user_desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cUserId != null" >
@@ -197,7 +228,7 @@
         #{cUserGender,jdbcType=VARCHAR},
       </if>
       <if test="cUserBirthDate != null" >
-        #{cUserBirthDate,jdbcType=DATE},
+        #{cUserBirthDate,jdbcType=VARCHAR},
       </if>
       <if test="cUserHeight != null" >
         #{cUserHeight,jdbcType=VARCHAR},
@@ -209,16 +240,22 @@
         #{cUserSchoolName,jdbcType=VARCHAR},
       </if>
       <if test="cUserBalance != null" >
-        #{cUserBalance,jdbcType=INTEGER},
+        #{cUserBalance,jdbcType=VARCHAR},
       </if>
       <if test="cUserScore != null" >
-        #{cUserScore,jdbcType=INTEGER},
+        #{cUserScore,jdbcType=VARCHAR},
       </if>
       <if test="cUserImg != null" >
         #{cUserImg,jdbcType=VARCHAR},
       </if>
       <if test="cUserState != null" >
         #{cUserState,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserDonetimes != null" >
+        #{cUserDonetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserDesc != null" >
+        #{cUserDesc,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -253,7 +290,7 @@
         c_user_gender = #{record.cUserGender,jdbcType=VARCHAR},
       </if>
       <if test="record.cUserBirthDate != null" >
-        c_user_birth_date = #{record.cUserBirthDate,jdbcType=DATE},
+        c_user_birth_date = #{record.cUserBirthDate,jdbcType=VARCHAR},
       </if>
       <if test="record.cUserHeight != null" >
         c_user_height = #{record.cUserHeight,jdbcType=VARCHAR},
@@ -265,10 +302,10 @@
         c_user_school_name = #{record.cUserSchoolName,jdbcType=VARCHAR},
       </if>
       <if test="record.cUserBalance != null" >
-        c_user_balance = #{record.cUserBalance,jdbcType=INTEGER},
+        c_user_balance = #{record.cUserBalance,jdbcType=VARCHAR},
       </if>
       <if test="record.cUserScore != null" >
-        c_user_score = #{record.cUserScore,jdbcType=INTEGER},
+        c_user_score = #{record.cUserScore,jdbcType=VARCHAR},
       </if>
       <if test="record.cUserImg != null" >
         c_user_img = #{record.cUserImg,jdbcType=VARCHAR},
@@ -276,7 +313,36 @@
       <if test="record.cUserState != null" >
         c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       </if>
+      <if test="record.cUserDonetimes != null" >
+        c_user_doneTimes = #{record.cUserDonetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserDesc != null" >
+        c_user_desc = #{record.cUserDesc,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_user_info
+    set c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      c_user_phone = #{record.cUserPhone,jdbcType=VARCHAR},
+      c_user_password = #{record.cUserPassword,jdbcType=VARCHAR},
+      c_user_nickname = #{record.cUserNickname,jdbcType=VARCHAR},
+      c_username = #{record.cUsername,jdbcType=VARCHAR},
+      c_user_ali_account = #{record.cUserAliAccount,jdbcType=VARCHAR},
+      c_user_gender = #{record.cUserGender,jdbcType=VARCHAR},
+      c_user_birth_date = #{record.cUserBirthDate,jdbcType=VARCHAR},
+      c_user_height = #{record.cUserHeight,jdbcType=VARCHAR},
+      c_user_edu_state = #{record.cUserEduState,jdbcType=VARCHAR},
+      c_user_school_name = #{record.cUserSchoolName,jdbcType=VARCHAR},
+      c_user_balance = #{record.cUserBalance,jdbcType=VARCHAR},
+      c_user_score = #{record.cUserScore,jdbcType=VARCHAR},
+      c_user_img = #{record.cUserImg,jdbcType=VARCHAR},
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
+      c_user_doneTimes = #{record.cUserDonetimes,jdbcType=VARCHAR},
+      c_user_desc = #{record.cUserDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -290,14 +356,15 @@
       c_username = #{record.cUsername,jdbcType=VARCHAR},
       c_user_ali_account = #{record.cUserAliAccount,jdbcType=VARCHAR},
       c_user_gender = #{record.cUserGender,jdbcType=VARCHAR},
-      c_user_birth_date = #{record.cUserBirthDate,jdbcType=DATE},
+      c_user_birth_date = #{record.cUserBirthDate,jdbcType=VARCHAR},
       c_user_height = #{record.cUserHeight,jdbcType=VARCHAR},
       c_user_edu_state = #{record.cUserEduState,jdbcType=VARCHAR},
       c_user_school_name = #{record.cUserSchoolName,jdbcType=VARCHAR},
-      c_user_balance = #{record.cUserBalance,jdbcType=INTEGER},
-      c_user_score = #{record.cUserScore,jdbcType=INTEGER},
+      c_user_balance = #{record.cUserBalance,jdbcType=VARCHAR},
+      c_user_score = #{record.cUserScore,jdbcType=VARCHAR},
       c_user_img = #{record.cUserImg,jdbcType=VARCHAR},
-      c_user_state = #{record.cUserState,jdbcType=VARCHAR}
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
+      c_user_doneTimes = #{record.cUserDonetimes,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -324,7 +391,7 @@
         c_user_gender = #{cUserGender,jdbcType=VARCHAR},
       </if>
       <if test="cUserBirthDate != null" >
-        c_user_birth_date = #{cUserBirthDate,jdbcType=DATE},
+        c_user_birth_date = #{cUserBirthDate,jdbcType=VARCHAR},
       </if>
       <if test="cUserHeight != null" >
         c_user_height = #{cUserHeight,jdbcType=VARCHAR},
@@ -336,10 +403,10 @@
         c_user_school_name = #{cUserSchoolName,jdbcType=VARCHAR},
       </if>
       <if test="cUserBalance != null" >
-        c_user_balance = #{cUserBalance,jdbcType=INTEGER},
+        c_user_balance = #{cUserBalance,jdbcType=VARCHAR},
       </if>
       <if test="cUserScore != null" >
-        c_user_score = #{cUserScore,jdbcType=INTEGER},
+        c_user_score = #{cUserScore,jdbcType=VARCHAR},
       </if>
       <if test="cUserImg != null" >
         c_user_img = #{cUserImg,jdbcType=VARCHAR},
@@ -347,7 +414,33 @@
       <if test="cUserState != null" >
         c_user_state = #{cUserState,jdbcType=VARCHAR},
       </if>
+      <if test="cUserDonetimes != null" >
+        c_user_doneTimes = #{cUserDonetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserDesc != null" >
+        c_user_desc = #{cUserDesc,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where c_user_id = #{cUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.starjobs.pojo.TUserInfo" >
+    update t_user_info
+    set c_user_phone = #{cUserPhone,jdbcType=VARCHAR},
+      c_user_password = #{cUserPassword,jdbcType=VARCHAR},
+      c_user_nickname = #{cUserNickname,jdbcType=VARCHAR},
+      c_username = #{cUsername,jdbcType=VARCHAR},
+      c_user_ali_account = #{cUserAliAccount,jdbcType=VARCHAR},
+      c_user_gender = #{cUserGender,jdbcType=VARCHAR},
+      c_user_birth_date = #{cUserBirthDate,jdbcType=VARCHAR},
+      c_user_height = #{cUserHeight,jdbcType=VARCHAR},
+      c_user_edu_state = #{cUserEduState,jdbcType=VARCHAR},
+      c_user_school_name = #{cUserSchoolName,jdbcType=VARCHAR},
+      c_user_balance = #{cUserBalance,jdbcType=VARCHAR},
+      c_user_score = #{cUserScore,jdbcType=VARCHAR},
+      c_user_img = #{cUserImg,jdbcType=VARCHAR},
+      c_user_state = #{cUserState,jdbcType=VARCHAR},
+      c_user_doneTimes = #{cUserDonetimes,jdbcType=VARCHAR},
+      c_user_desc = #{cUserDesc,jdbcType=LONGVARCHAR}
     where c_user_id = #{cUserId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TUserInfo" >
@@ -358,14 +451,15 @@
       c_username = #{cUsername,jdbcType=VARCHAR},
       c_user_ali_account = #{cUserAliAccount,jdbcType=VARCHAR},
       c_user_gender = #{cUserGender,jdbcType=VARCHAR},
-      c_user_birth_date = #{cUserBirthDate,jdbcType=DATE},
+      c_user_birth_date = #{cUserBirthDate,jdbcType=VARCHAR},
       c_user_height = #{cUserHeight,jdbcType=VARCHAR},
       c_user_edu_state = #{cUserEduState,jdbcType=VARCHAR},
       c_user_school_name = #{cUserSchoolName,jdbcType=VARCHAR},
-      c_user_balance = #{cUserBalance,jdbcType=INTEGER},
-      c_user_score = #{cUserScore,jdbcType=INTEGER},
+      c_user_balance = #{cUserBalance,jdbcType=VARCHAR},
+      c_user_score = #{cUserScore,jdbcType=VARCHAR},
       c_user_img = #{cUserImg,jdbcType=VARCHAR},
-      c_user_state = #{cUserState,jdbcType=VARCHAR}
+      c_user_state = #{cUserState,jdbcType=VARCHAR},
+      c_user_doneTimes = #{cUserDonetimes,jdbcType=VARCHAR}
     where c_user_id = #{cUserId,jdbcType=INTEGER}
   </update>
   <!-- 根据用户手机号更新密码 -->

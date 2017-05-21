@@ -384,52 +384,62 @@ public class TCompanyInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceEqualTo(Integer value) {
+        public Criteria andCComBalanceEqualTo(String value) {
             addCriterion("c_com_balance =", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceNotEqualTo(Integer value) {
+        public Criteria andCComBalanceNotEqualTo(String value) {
             addCriterion("c_com_balance <>", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceGreaterThan(Integer value) {
+        public Criteria andCComBalanceGreaterThan(String value) {
             addCriterion("c_com_balance >", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCComBalanceGreaterThanOrEqualTo(String value) {
             addCriterion("c_com_balance >=", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceLessThan(Integer value) {
+        public Criteria andCComBalanceLessThan(String value) {
             addCriterion("c_com_balance <", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceLessThanOrEqualTo(Integer value) {
+        public Criteria andCComBalanceLessThanOrEqualTo(String value) {
             addCriterion("c_com_balance <=", value, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceIn(List<Integer> values) {
+        public Criteria andCComBalanceLike(String value) {
+            addCriterion("c_com_balance like", value, "cComBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComBalanceNotLike(String value) {
+            addCriterion("c_com_balance not like", value, "cComBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComBalanceIn(List<String> values) {
             addCriterion("c_com_balance in", values, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceNotIn(List<Integer> values) {
+        public Criteria andCComBalanceNotIn(List<String> values) {
             addCriterion("c_com_balance not in", values, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceBetween(Integer value1, Integer value2) {
+        public Criteria andCComBalanceBetween(String value1, String value2) {
             addCriterion("c_com_balance between", value1, value2, "cComBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCComBalanceNotBetween(Integer value1, Integer value2) {
+        public Criteria andCComBalanceNotBetween(String value1, String value2) {
             addCriterion("c_com_balance not between", value1, value2, "cComBalance");
             return (Criteria) this;
         }
@@ -444,52 +454,62 @@ public class TCompanyInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreEqualTo(Integer value) {
+        public Criteria andCComScoreEqualTo(String value) {
             addCriterion("c_com_score =", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreNotEqualTo(Integer value) {
+        public Criteria andCComScoreNotEqualTo(String value) {
             addCriterion("c_com_score <>", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreGreaterThan(Integer value) {
+        public Criteria andCComScoreGreaterThan(String value) {
             addCriterion("c_com_score >", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCComScoreGreaterThanOrEqualTo(String value) {
             addCriterion("c_com_score >=", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreLessThan(Integer value) {
+        public Criteria andCComScoreLessThan(String value) {
             addCriterion("c_com_score <", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreLessThanOrEqualTo(Integer value) {
+        public Criteria andCComScoreLessThanOrEqualTo(String value) {
             addCriterion("c_com_score <=", value, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreIn(List<Integer> values) {
+        public Criteria andCComScoreLike(String value) {
+            addCriterion("c_com_score like", value, "cComScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComScoreNotLike(String value) {
+            addCriterion("c_com_score not like", value, "cComScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComScoreIn(List<String> values) {
             addCriterion("c_com_score in", values, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreNotIn(List<Integer> values) {
+        public Criteria andCComScoreNotIn(List<String> values) {
             addCriterion("c_com_score not in", values, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreBetween(Integer value1, Integer value2) {
+        public Criteria andCComScoreBetween(String value1, String value2) {
             addCriterion("c_com_score between", value1, value2, "cComScore");
             return (Criteria) this;
         }
 
-        public Criteria andCComScoreNotBetween(Integer value1, Integer value2) {
+        public Criteria andCComScoreNotBetween(String value1, String value2) {
             addCriterion("c_com_score not between", value1, value2, "cComScore");
             return (Criteria) this;
         }
@@ -774,53 +794,133 @@ public class TCompanyInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceEqualTo(Integer value) {
+        public Criteria andCExtraBalanceEqualTo(String value) {
             addCriterion("c_extra_balance =", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceNotEqualTo(Integer value) {
+        public Criteria andCExtraBalanceNotEqualTo(String value) {
             addCriterion("c_extra_balance <>", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceGreaterThan(Integer value) {
+        public Criteria andCExtraBalanceGreaterThan(String value) {
             addCriterion("c_extra_balance >", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCExtraBalanceGreaterThanOrEqualTo(String value) {
             addCriterion("c_extra_balance >=", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceLessThan(Integer value) {
+        public Criteria andCExtraBalanceLessThan(String value) {
             addCriterion("c_extra_balance <", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceLessThanOrEqualTo(Integer value) {
+        public Criteria andCExtraBalanceLessThanOrEqualTo(String value) {
             addCriterion("c_extra_balance <=", value, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceIn(List<Integer> values) {
+        public Criteria andCExtraBalanceLike(String value) {
+            addCriterion("c_extra_balance like", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceNotLike(String value) {
+            addCriterion("c_extra_balance not like", value, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCExtraBalanceIn(List<String> values) {
             addCriterion("c_extra_balance in", values, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceNotIn(List<Integer> values) {
+        public Criteria andCExtraBalanceNotIn(List<String> values) {
             addCriterion("c_extra_balance not in", values, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceBetween(Integer value1, Integer value2) {
+        public Criteria andCExtraBalanceBetween(String value1, String value2) {
             addCriterion("c_extra_balance between", value1, value2, "cExtraBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCExtraBalanceNotBetween(Integer value1, Integer value2) {
+        public Criteria andCExtraBalanceNotBetween(String value1, String value2) {
             addCriterion("c_extra_balance not between", value1, value2, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseIsNull() {
+            addCriterion("c_com_hasLicense is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseIsNotNull() {
+            addCriterion("c_com_hasLicense is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseEqualTo(String value) {
+            addCriterion("c_com_hasLicense =", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseNotEqualTo(String value) {
+            addCriterion("c_com_hasLicense <>", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseGreaterThan(String value) {
+            addCriterion("c_com_hasLicense >", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseGreaterThanOrEqualTo(String value) {
+            addCriterion("c_com_hasLicense >=", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseLessThan(String value) {
+            addCriterion("c_com_hasLicense <", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseLessThanOrEqualTo(String value) {
+            addCriterion("c_com_hasLicense <=", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseLike(String value) {
+            addCriterion("c_com_hasLicense like", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseNotLike(String value) {
+            addCriterion("c_com_hasLicense not like", value, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseIn(List<String> values) {
+            addCriterion("c_com_hasLicense in", values, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseNotIn(List<String> values) {
+            addCriterion("c_com_hasLicense not in", values, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseBetween(String value1, String value2) {
+            addCriterion("c_com_hasLicense between", value1, value2, "cComHaslicense");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComHaslicenseNotBetween(String value1, String value2) {
+            addCriterion("c_com_hasLicense not between", value1, value2, "cComHaslicense");
             return (Criteria) this;
         }
     }

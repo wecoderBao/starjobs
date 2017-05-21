@@ -1,8 +1,6 @@
 package com.starjobs.pojo;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TUserInfoExample {
@@ -104,32 +102,6 @@ public class TUserInfoExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andCUserIdIsNull() {
@@ -622,53 +594,63 @@ public class TUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date =", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateEqualTo(String value) {
+            addCriterion("c_user_birth_date =", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date <>", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateNotEqualTo(String value) {
+            addCriterion("c_user_birth_date <>", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date >", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateGreaterThan(String value) {
+            addCriterion("c_user_birth_date >", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date >=", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateGreaterThanOrEqualTo(String value) {
+            addCriterion("c_user_birth_date >=", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateLessThan(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date <", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateLessThan(String value) {
+            addCriterion("c_user_birth_date <", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("c_user_birth_date <=", value, "cUserBirthDate");
+        public Criteria andCUserBirthDateLessThanOrEqualTo(String value) {
+            addCriterion("c_user_birth_date <=", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateIn(List<Date> values) {
-            addCriterionForJDBCDate("c_user_birth_date in", values, "cUserBirthDate");
+        public Criteria andCUserBirthDateLike(String value) {
+            addCriterion("c_user_birth_date like", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("c_user_birth_date not in", values, "cUserBirthDate");
+        public Criteria andCUserBirthDateNotLike(String value) {
+            addCriterion("c_user_birth_date not like", value, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_user_birth_date between", value1, value2, "cUserBirthDate");
+        public Criteria andCUserBirthDateIn(List<String> values) {
+            addCriterion("c_user_birth_date in", values, "cUserBirthDate");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBirthDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("c_user_birth_date not between", value1, value2, "cUserBirthDate");
+        public Criteria andCUserBirthDateNotIn(List<String> values) {
+            addCriterion("c_user_birth_date not in", values, "cUserBirthDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserBirthDateBetween(String value1, String value2) {
+            addCriterion("c_user_birth_date between", value1, value2, "cUserBirthDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserBirthDateNotBetween(String value1, String value2) {
+            addCriterion("c_user_birth_date not between", value1, value2, "cUserBirthDate");
             return (Criteria) this;
         }
 
@@ -892,52 +874,62 @@ public class TUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceEqualTo(Integer value) {
+        public Criteria andCUserBalanceEqualTo(String value) {
             addCriterion("c_user_balance =", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceNotEqualTo(Integer value) {
+        public Criteria andCUserBalanceNotEqualTo(String value) {
             addCriterion("c_user_balance <>", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceGreaterThan(Integer value) {
+        public Criteria andCUserBalanceGreaterThan(String value) {
             addCriterion("c_user_balance >", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCUserBalanceGreaterThanOrEqualTo(String value) {
             addCriterion("c_user_balance >=", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceLessThan(Integer value) {
+        public Criteria andCUserBalanceLessThan(String value) {
             addCriterion("c_user_balance <", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceLessThanOrEqualTo(Integer value) {
+        public Criteria andCUserBalanceLessThanOrEqualTo(String value) {
             addCriterion("c_user_balance <=", value, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceIn(List<Integer> values) {
+        public Criteria andCUserBalanceLike(String value) {
+            addCriterion("c_user_balance like", value, "cUserBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserBalanceNotLike(String value) {
+            addCriterion("c_user_balance not like", value, "cUserBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserBalanceIn(List<String> values) {
             addCriterion("c_user_balance in", values, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceNotIn(List<Integer> values) {
+        public Criteria andCUserBalanceNotIn(List<String> values) {
             addCriterion("c_user_balance not in", values, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceBetween(Integer value1, Integer value2) {
+        public Criteria andCUserBalanceBetween(String value1, String value2) {
             addCriterion("c_user_balance between", value1, value2, "cUserBalance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceNotBetween(Integer value1, Integer value2) {
+        public Criteria andCUserBalanceNotBetween(String value1, String value2) {
             addCriterion("c_user_balance not between", value1, value2, "cUserBalance");
             return (Criteria) this;
         }
@@ -952,52 +944,62 @@ public class TUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreEqualTo(Integer value) {
+        public Criteria andCUserScoreEqualTo(String value) {
             addCriterion("c_user_score =", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreNotEqualTo(Integer value) {
+        public Criteria andCUserScoreNotEqualTo(String value) {
             addCriterion("c_user_score <>", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreGreaterThan(Integer value) {
+        public Criteria andCUserScoreGreaterThan(String value) {
             addCriterion("c_user_score >", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCUserScoreGreaterThanOrEqualTo(String value) {
             addCriterion("c_user_score >=", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreLessThan(Integer value) {
+        public Criteria andCUserScoreLessThan(String value) {
             addCriterion("c_user_score <", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreLessThanOrEqualTo(Integer value) {
+        public Criteria andCUserScoreLessThanOrEqualTo(String value) {
             addCriterion("c_user_score <=", value, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreIn(List<Integer> values) {
+        public Criteria andCUserScoreLike(String value) {
+            addCriterion("c_user_score like", value, "cUserScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserScoreNotLike(String value) {
+            addCriterion("c_user_score not like", value, "cUserScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserScoreIn(List<String> values) {
             addCriterion("c_user_score in", values, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreNotIn(List<Integer> values) {
+        public Criteria andCUserScoreNotIn(List<String> values) {
             addCriterion("c_user_score not in", values, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreBetween(Integer value1, Integer value2) {
+        public Criteria andCUserScoreBetween(String value1, String value2) {
             addCriterion("c_user_score between", value1, value2, "cUserScore");
             return (Criteria) this;
         }
 
-        public Criteria andCUserScoreNotBetween(Integer value1, Integer value2) {
+        public Criteria andCUserScoreNotBetween(String value1, String value2) {
             addCriterion("c_user_score not between", value1, value2, "cUserScore");
             return (Criteria) this;
         }
@@ -1139,6 +1141,76 @@ public class TUserInfoExample {
 
         public Criteria andCUserStateNotBetween(String value1, String value2) {
             addCriterion("c_user_state not between", value1, value2, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesIsNull() {
+            addCriterion("c_user_doneTimes is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesIsNotNull() {
+            addCriterion("c_user_doneTimes is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesEqualTo(String value) {
+            addCriterion("c_user_doneTimes =", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesNotEqualTo(String value) {
+            addCriterion("c_user_doneTimes <>", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesGreaterThan(String value) {
+            addCriterion("c_user_doneTimes >", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesGreaterThanOrEqualTo(String value) {
+            addCriterion("c_user_doneTimes >=", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesLessThan(String value) {
+            addCriterion("c_user_doneTimes <", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesLessThanOrEqualTo(String value) {
+            addCriterion("c_user_doneTimes <=", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesLike(String value) {
+            addCriterion("c_user_doneTimes like", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesNotLike(String value) {
+            addCriterion("c_user_doneTimes not like", value, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesIn(List<String> values) {
+            addCriterion("c_user_doneTimes in", values, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesNotIn(List<String> values) {
+            addCriterion("c_user_doneTimes not in", values, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesBetween(String value1, String value2) {
+            addCriterion("c_user_doneTimes between", value1, value2, "cUserDonetimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserDonetimesNotBetween(String value1, String value2) {
+            addCriterion("c_user_doneTimes not between", value1, value2, "cUserDonetimes");
             return (Criteria) this;
         }
     }

@@ -18,15 +18,21 @@ public interface TUserInfoMapper {
 
     int insertSelective(TUserInfo record);
 
+    List<TUserInfo> selectByExampleWithBLOBs(TUserInfoExample example);
+
     List<TUserInfo> selectByExample(TUserInfoExample example);
 
     TUserInfo selectByPrimaryKey(Integer cUserId);
 
     int updateByExampleSelective(@Param("record") TUserInfo record, @Param("example") TUserInfoExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") TUserInfo record, @Param("example") TUserInfoExample example);
+
     int updateByExample(@Param("record") TUserInfo record, @Param("example") TUserInfoExample example);
 
     int updateByPrimaryKeySelective(TUserInfo record);
+
+    int updateByPrimaryKeyWithBLOBs(TUserInfo record);
 
     int updateByPrimaryKey(TUserInfo record);
   //根据手机号更新用户密码
