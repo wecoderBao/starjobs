@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 			tciRecord.setcComPhone(phone);
 			tciRecord.setcComPassword(password);
 			tciRecord.setcComName(phone);
-			tciRecord.setcComBalance(50);// 账户余额默认为50元
+			tciRecord.setcComBalance("50");// 账户余额默认为50元
 			tComapanyInfoMapper.insert(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 			// 验证码正确，用户为个人
 			TUserInfo tuiRecord = new TUserInfo();
 			tuiRecord.setcUserPhone(phone);
-			tuiRecord.setcUserBalance(0);
+			tuiRecord.setcUserBalance("0");
 			tuiRecord.setcUsername(phone);
 			tuiRecord.setcUserNickname(phone);
 			tuiRecord.setcUserPassword(password);
