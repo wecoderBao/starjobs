@@ -98,6 +98,7 @@ public class InfoCenterController {
 		params.put("eduState", request.getParameter("eduState"));
 		params.put("school", request.getParameter("school"));
 		params.put("phoneNum", request.getParameter("phoneNum"));
+		params.put("introduction", request.getParameter("introduction"));
 
 		Map<String, Object> data = infoCenterService.updateUserInfo(token, params, realPath);
 		if (data != null) {

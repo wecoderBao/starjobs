@@ -112,11 +112,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		// 修改头像
 		String headImg = params.get("headImg");
-		headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-
 		String imgFormat = params.get("imgFormat");
 
 		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
 			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
 			if (!StringUtils.isEmpty(resp)) {
 				tUserInfo.setcUserImg(resp);
@@ -142,6 +141,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		if (!StringUtils.isEmpty(params.get("school"))) {// 修改学校名字
 			tUserInfo.setcUserSchoolName(params.get("school"));
+		}
+		if (!StringUtils.isEmpty(params.get("introduction"))) {// 修改学校名字
+			tUserInfo.setcUserDesc(params.get("introduction"));
 		}
 
 		int re = tUserInfoMapper.updateByPrimaryKeySelective(tUserInfo);
