@@ -33,7 +33,7 @@ public class MapperTest {
 		tciRecord.setcComPhone("18827090366");
 		tciRecord.setcComPassword("123");
 		tciRecord.setcComName("18827090366");
-		tciRecord.setcComBalance(50);//账户余额默认为50元
+		tciRecord.setcComBalance("50");//账户余额默认为50元
 		int re = tComapanyInfoMapper.insert(tciRecord);
 		System.out.println(re);
 	}

@@ -152,6 +152,7 @@ public class InfoCenterController {
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
 		String realPath = request.getSession().getServletContext().getRealPath("/photo/com");
+		System.out.println("--------------realPath--"+realPath);
 		System.out.println("realPath:" + realPath);
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);

@@ -260,6 +260,15 @@ CREATE TABLE `t_withdraw_verify` (
   CONSTRAINT `c_user_id` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `t_friend`;
+
+CREATE TABLE `t_friend` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `c_uid` varchar(255) DEFAULT NULL COMMENT '用户标识',
+  `c_fid` varchar(255) DEFAULT NULL COMMENT '好友标识',
+   primary key (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Data for the table `t_withdraw_verify` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -3,7 +3,6 @@
  */
 package com.starjobs.service.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -227,9 +226,11 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		String imgFormat = params.get("imgFormat");
 
 		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
+			System.out.println("----------------write pic----------------------");
 			headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
 			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
 			if (!StringUtils.isEmpty(resp)) {
+				System.out.println("----------------write pic name----------------------");
 				tComInfo.setcComHeadImg(resp);
 			}
 		}
