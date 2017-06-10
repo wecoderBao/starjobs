@@ -19,23 +19,24 @@ public class LoginIntercetor implements HandlerInterceptor {
 			throws Exception {
 		//获取请求的url
 		
-		String url=request.getRequestURI();
-		//如果是登录页面则放行
-				if(url.indexOf("login")>=0){
-					return true;
-				}
-				HttpSession session = request.getSession();
-				//从session中取出用户身份信息
-				String username = (String) session.getAttribute("cAdminName");
-				
-				if(username != null){
-					//身份存在，放行
-					return true;
-				}
-				//用户没有登录挑战到登录页面
-				request.getRequestDispatcher("/login.jsp").forward(request, response);
-				
-				return false;
+//		String url=request.getRequestURI();
+//		//如果是登录页面则放行
+//				if(url.indexOf("login")>=0){
+//					return true;
+//				}
+//				HttpSession session = request.getSession();
+//				//从session中取出用户身份信息
+//				String username = (String) session.getAttribute("cAdminName");
+//				
+//				if(username != null){
+//					//身份存在，放行
+//					return true;
+//				}
+//				//用户没有登录挑战到登录页面
+//				request.getRequestDispatcher("/login.jsp").forward(request, response);
+//				
+//				return false;
+		return true;
 		
 	}
 

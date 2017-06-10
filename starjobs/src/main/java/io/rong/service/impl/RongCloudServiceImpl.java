@@ -18,6 +18,7 @@ import io.rong.messages.TxtMessage;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TokenResult;
 import io.rong.service.RongCloudService;
+import io.rong.util.RongConstants;
 
 /**
  * <p>
@@ -48,7 +49,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			portraitUri="http://www.rongcloud.cn/images/logo.png";
 		}
 		try {
-			TokenResult userGetTokenResult = RongCloud.getInstance("appKey", "appSecret").user.getToken(phoneNum,
+			TokenResult userGetTokenResult = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET).user.getToken(phoneNum,
 					name, portraitUri);
 			Map<String,Object> result = new HashMap<String,Object>();
 			result.put("code", userGetTokenResult.getCode().toString());
@@ -70,7 +71,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String[] toUserIds = {toUserId};
 		TxtMessage txtMessage = new TxtMessage(content, "extra");
 		try {
-			CodeSuccessResult result =RongCloud.getInstance("appKey", "appSecret").message.PublishSystem(fromUserId, toUserIds, txtMessage, pushContent, null, 1, 1);
+			CodeSuccessResult result =RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, txtMessage, pushContent, null, 1, 1);
 			if(null!=result){
 				Map<String,Object> data = new HashMap<String,Object>();
 				data.put("code", result.getCode().toString());
@@ -112,7 +113,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String content = ""+fromUserId+"与"+toUserId+"成为好友";
 		TxtMessage txtMessage = new TxtMessage(content, "extra");
 		try {
-			CodeSuccessResult result =RongCloud.getInstance("appKey", "appSecret").message.PublishSystem(fromUserId, toUserIds, txtMessage, null, null, 1, 1);
+			CodeSuccessResult result =RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, txtMessage, null, null, 1, 1);
 			if(null!=result){
 				Map<String,Object> data = new HashMap<String,Object>();
 				data.put("code", result.getCode().toString());

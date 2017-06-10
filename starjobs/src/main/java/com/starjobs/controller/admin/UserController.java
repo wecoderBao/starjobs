@@ -36,7 +36,7 @@ public class UserController {
 	 */
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) throws Exception {
+	public String logout(HttpSession session)  {
 
 		// 清除session
 		session.invalidate();		
