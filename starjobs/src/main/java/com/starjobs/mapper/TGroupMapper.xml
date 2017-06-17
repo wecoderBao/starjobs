@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starjobs.mapper.TGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TGroup" >
+    <id column="c_group_id" property="cGroupId" jdbcType="INTEGER" />
+    <result column="c_group_creater_id" property="cGroupCreaterId" jdbcType="VARCHAR" />
+    <result column="c_group_head_img" property="cGroupHeadImg" jdbcType="VARCHAR" />
+    <result column="c_group_name" property="cGroupName" jdbcType="VARCHAR" />
+    <result column="c_group_statu" property="cGroupStatu" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_group_id, c_group_creater_id, c_group_head_img, c_group_name, c_group_statu
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_group
+    where c_group_id = #{cGroupId,jdbcType=INTEGER} and c_group_statu='0'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_group
+    where c_group_id = #{cGroupId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TGroupExample" >
+    delete from t_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.starjobs.pojo.TGroup" >
+    insert into t_group (c_group_id, c_group_creater_id, c_group_head_img, 
+      c_group_name, c_group_statu)
+    values (#{cGroupId,jdbcType=INTEGER}, #{cGroupCreaterId,jdbcType=VARCHAR}, #{cGroupHeadImg,jdbcType=VARCHAR}, 
+      #{cGroupName,jdbcType=VARCHAR}, #{cGroupStatu,jdbcType=VARCHAR})
+  </insert>
+  <!-- 返回主键 -->
+  <insert id="insertSelective" parameterType="com.starjobs.pojo.TGroup" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cGroupId">
+          SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cGroupId != null" >
+        c_group_id,
+      </if>
+      <if test="cGroupCreaterId != null" >
+        c_group_creater_id,
+      </if>
+      <if test="cGroupHeadImg != null" >
+        c_group_head_img,
+      </if>
+      <if test="cGroupName != null" >
+        c_group_name,
+      </if>
+      <if test="cGroupStatu != null" >
+        c_group_statu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cGroupId != null" >
+        #{cGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="cGroupCreaterId != null" >
+        #{cGroupCreaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupHeadImg != null" >
+        #{cGroupHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupName != null" >
+        #{cGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupStatu != null" >
+        #{cGroupStatu,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.starjobs.pojo.TGroupExample" resultType="java.lang.Integer" >
+    select count(*) from t_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_group
+    <set >
+      <if test="record.cGroupId != null" >
+        c_group_id = #{record.cGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cGroupCreaterId != null" >
+        c_group_creater_id = #{record.cGroupCreaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cGroupHeadImg != null" >
+        c_group_head_img = #{record.cGroupHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cGroupName != null" >
+        c_group_name = #{record.cGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cGroupStatu != null" >
+        c_group_statu = #{record.cGroupStatu,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_group
+    set c_group_id = #{record.cGroupId,jdbcType=INTEGER},
+      c_group_creater_id = #{record.cGroupCreaterId,jdbcType=VARCHAR},
+      c_group_head_img = #{record.cGroupHeadImg,jdbcType=VARCHAR},
+      c_group_name = #{record.cGroupName,jdbcType=VARCHAR},
+      c_group_statu = #{record.cGroupStatu,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TGroup" >
+    update t_group
+    <set >
+      <if test="cGroupCreaterId != null" >
+        c_group_creater_id = #{cGroupCreaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupHeadImg != null" >
+        c_group_head_img = #{cGroupHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupName != null" >
+        c_group_name = #{cGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="cGroupStatu != null" >
+        c_group_statu = #{cGroupStatu,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_group_id = #{cGroupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TGroup" >
+    update t_group
+    set c_group_creater_id = #{cGroupCreaterId,jdbcType=VARCHAR},
+      c_group_head_img = #{cGroupHeadImg,jdbcType=VARCHAR},
+      c_group_name = #{cGroupName,jdbcType=VARCHAR},
+      c_group_statu = #{cGroupStatu,jdbcType=VARCHAR}
+    where c_group_id = #{cGroupId,jdbcType=INTEGER}
+  </update>
+</mapper>

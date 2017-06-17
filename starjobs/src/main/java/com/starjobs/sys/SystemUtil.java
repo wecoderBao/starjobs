@@ -54,6 +54,9 @@ public class SystemUtil {
 	public static final String NO_PUBLISH = "700";
 	//项目url
 	public static final String APP_SERVER_URL = "http://starjobs.duapp.com";
+	
+	//好友未找到
+	public static final String FRIEND_NOT_FOUND = "600";
 
 	// 生成token
 	public static String generateToken(String phone) {

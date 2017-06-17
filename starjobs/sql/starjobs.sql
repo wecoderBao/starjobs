@@ -269,6 +269,27 @@ CREATE TABLE `t_friend` (
    primary key (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `t_group`;
+
+CREATE TABLE `t_group` (
+  `c_group_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `c_group_creater_id` varchar(255) DEFAULT NULL COMMENT '创建者标识，手机号',
+  `c_group_head_img` varchar(255) DEFAULT NULL COMMENT '群组头像url',
+  `c_group_name` varchar(255) DEFAULT NULL COMMENT '群组昵称',
+  `c_group_statu` varchar(255) DEFAULT NULL COMMENT '群组状态标识0活的1失效',
+   primary key (`c_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `t_group_member`;
+
+CREATE TABLE `t_group_member` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `c_group_id` int(11) NOT NULL  COMMENT 't_group外键',
+  `c_group_member_id` varchar(255) DEFAULT NULL COMMENT '群组成员标识，手机号',
+  `c_group_member_identity` varchar(255) DEFAULT NULL COMMENT '群组成员身份标识0群主1成员',
+   primary key (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Data for the table `t_withdraw_verify` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

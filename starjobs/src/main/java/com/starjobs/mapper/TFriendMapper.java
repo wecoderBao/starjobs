@@ -29,4 +29,8 @@ public interface TFriendMapper {
     int updateByPrimaryKey(TFriend record);
     //根据 cuid,cfid查找记录
     TFriend selectByUserId(@Param("cuid") String cuid, @Param("cfid") String cfid);
+    //根据cuid查找
+    List<TFriend> selectByUid(@Param("cuid") String cuid);
+    //根据cfid查找
+    List<TFriend> selectByFid(@Param("cfid") String cfid);
 }
