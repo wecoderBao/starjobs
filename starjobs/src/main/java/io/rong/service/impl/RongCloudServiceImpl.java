@@ -186,13 +186,13 @@ public class RongCloudServiceImpl implements RongCloudService {
 	public Map<String, Object> readFriends(String phoneNum) {
 		// 根据手机号查找好友，本人在左侧
 		List<TFriend> leftList = tFriendMapper.selectByUid(phoneNum);
-		Map<String,Object> result = new HashMap<String,Object>();
-		List<Map<String,Object>> friendList = new ArrayList<Map<String,Object>>();
-		if(null != leftList && leftList.size()>0){
-			for(TFriend tf : leftList){
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Map<String, Object>> friendList = new ArrayList<Map<String, Object>>();
+		if (null != leftList && leftList.size() > 0) {
+			for (TFriend tf : leftList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcFid());
-				if(info != null){
-					Map<String,Object> fr = new HashMap<String,Object>(3);
+				if (info != null) {
+					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
@@ -200,14 +200,14 @@ public class RongCloudServiceImpl implements RongCloudService {
 				}
 			}
 		}
-		
-		//查找好友，本人在右侧
+
+		// 查找好友，本人在右侧
 		List<TFriend> rightList = tFriendMapper.selectByFid(phoneNum);
-		if(null != rightList && rightList.size()>0){
-			for(TFriend tf : rightList){
+		if (null != rightList && rightList.size() > 0) {
+			for (TFriend tf : rightList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
-				if(info != null){
-					Map<String,Object> fr = new HashMap<String,Object>(3);
+				if (info != null) {
+					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
@@ -218,6 +218,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		result.put("friendList", friendList);
 		return result;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -266,11 +267,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 		// 将用户加入指定群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人。
 		String[] groupJoinUserId = { userId.trim() };
 		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取融云端群组id
+		TGroup group = tGroupMapper.selectByPrimaryKey(Integer.parseInt(groupId));
+		if (group == null) {
+			return null;
+		}
 		try {
-			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId, groupId, groupName);
+			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId, group.getcGroupCreaterId(),
+					groupName);
 			if (groupJoinResult != null && groupJoinResult.getCode() == 200) {
-				//添加群成员记录
-				//todo
+				// 添加群成员记录
+				// todo
+				TGroupMember member = new TGroupMember();
+				member.setcGroupId(Integer.parseInt(groupId));// 所在群组id
+				member.setcGroupMemberId(userId);// 成员手机号
+				member.setcGroupMemberIdentity("0");// 群主标识
+				tGroupMemberMapper.insertSelective(member);
 				result.put("code", "200");
 				return result;
 			}
@@ -291,11 +303,18 @@ public class RongCloudServiceImpl implements RongCloudService {
 		// 解散群组方法。（将该群解散，所有用户都无法再接收该群的消息。）
 		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
 		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取融云端群组id
+		TGroup group = tGroupMapper.selectByPrimaryKey(Integer.parseInt(groupId));
+		if (group == null) {
+			return null;
+		}
 		try {
-			CodeSuccessResult groupDismissResult = rongCloud.group.dismiss(userId, groupId);
+			CodeSuccessResult groupDismissResult = rongCloud.group.dismiss(userId, group.getcGroupCreaterId());
 			if (groupDismissResult != null && groupDismissResult.getCode() == 200) {
-				//对群记录进行修改
-				//todo
+				// 对群记录进行修改
+				// todo
+				group.setcGroupStatu("1");//群组失效
+				tGroupMapper.updateByPrimaryKey(group);//更新群组信息
 				result.put("code", "200");
 				return result;
 			}
@@ -306,20 +325,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see io.rong.service.RongCloudService#groupList(java.lang.String)
 	 */
 	public Map<String, Object> groupList(String phoneNum) {
-		//根据手机号查询所在的群id
+		// 根据手机号查询所在的群id
 		List<TGroupMember> memberList = tGroupMemberMapper.selectByPhone(phoneNum);
-		Map<String,Object> result = new HashMap<String,Object>();
-		List<Map<String,Object>> groupList = new ArrayList<Map<String,Object>>();
-		if(memberList != null && memberList.size()>0){
-			//根据所在群id获取群组信息
-			for(TGroupMember member : memberList){
-				TGroup group=tGroupMapper.selectByPrimaryKey(member.getcGroupId());
-				Map<String,Object> aGroup = new HashMap<String,Object>();
-				if(null!=group){
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Map<String, Object>> groupList = new ArrayList<Map<String, Object>>();
+		if (memberList != null && memberList.size() > 0) {
+			// 根据所在群id获取群组信息
+			for (TGroupMember member : memberList) {
+				TGroup group = tGroupMapper.selectByPrimaryKey(member.getcGroupId());
+				Map<String, Object> aGroup = new HashMap<String, Object>();
+				if (null != group) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
 					aGroup.put("groupImg", group.getcGroupHeadImg());
@@ -331,19 +352,21 @@ public class RongCloudServiceImpl implements RongCloudService {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see io.rong.service.RongCloudService#groupMembers(java.lang.String)
 	 */
 	public Map<String, Object> groupMembers(String groupId) {
 		Integer id = Integer.parseInt(groupId);
 		List<TGroupMember> members = tGroupMemberMapper.selectByGroupId(id);
-		Map<String,Object> result = new HashMap<String,Object>();
-		List<Map<String,Object>> memberList = new ArrayList<Map<String,Object>>();
-		for(TGroupMember member : members){
-			Map<String,Object> aMember = new HashMap<String,Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Map<String, Object>> memberList = new ArrayList<Map<String, Object>>();
+		for (TGroupMember member : members) {
+			Map<String, Object> aMember = new HashMap<String, Object>();
 			TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
 			aMember.put("memberName", info.getcUserNickname());
-			aMember.put("memberImg",info.getcUserImg());
+			aMember.put("memberImg", info.getcUserImg());
 			aMember.put("memberId", info.getcUserPhone());
 			aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 			memberList.add(aMember);
