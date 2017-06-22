@@ -199,4 +199,9 @@
     from t_friend
     where  c_fid = #{cfid,jdbcType=VARCHAR}
   </select>
+  <!-- 根据条件删除 -->
+   <delete id="deleteByChoice" parameterType="java.lang.String" >
+    delete from t_friend
+    where c_uid = #{cuid,jdbcType=VARCHAR} and c_fid = #{cfid,jdbcType=VARCHAR}
+  </delete>
 </mapper>

@@ -194,7 +194,7 @@
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
   <!-- 根据手机号查询所在群组列表 -->
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <if test="distinct" >
       distinct
@@ -203,7 +203,7 @@
     from t_group_member where c_group_member_id = #{phoneNum,jdbcType=VARCHAR}
   </select>
   <!-- 根据群组id查询群组成员列表 -->
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByGroupId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <if test="distinct" >
       distinct

@@ -33,4 +33,6 @@ public interface TFriendMapper {
     List<TFriend> selectByUid(@Param("cuid") String cuid);
     //根据cfid查找
     List<TFriend> selectByFid(@Param("cfid") String cfid);
+    //根据cuid和cfid删除
+    int deleteByChoice(@Param("cuid") String cuid, @Param("cfid") String cfid);
 }

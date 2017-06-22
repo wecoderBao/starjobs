@@ -116,7 +116,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * java.lang.String)
 	 */
 	public Map<String, Object> confirmFriendAdded(String fromUserId, String toUserId) {
-		// 将标识排序
+		// 将标识排序，做小右大
 		long fid = Long.parseLong(fromUserId);
 		long tid = Long.parseLong(toUserId);
 		String cuid = fromUserId;
@@ -372,6 +372,27 @@ public class RongCloudServiceImpl implements RongCloudService {
 			memberList.add(aMember);
 		}
 		result.put("memberList", memberList);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see io.rong.service.RongCloudService#deleteFriend(java.lang.String, java.lang.String)
+	 */
+	public Map<String, Object> deleteFriend(String fromUserId, String toUserId) {
+		long currId = Long.parseLong(fromUserId);
+		long delId = Long.parseLong(toUserId);
+		String leftId = fromUserId;
+		String rightId= toUserId;
+		if(currId > delId){
+			leftId = toUserId;
+			rightId = fromUserId;
+		}
+		int result = tFriendMapper.deleteByChoice(leftId, rightId);
+		if(result > 0){
+			Map<String,Object> resultMap = new HashMap<String,Object>();
+			resultMap.put("code", "200");
+			return resultMap;
+		}
 		return null;
 	}
 

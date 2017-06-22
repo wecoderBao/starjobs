@@ -23,6 +23,8 @@ public interface RongCloudService {
 	
 	Map<String,Object> readFriends(String phoneNum);
 	
+	Map<String,Object> deleteFriend(String fromUserId,String toUserId);
+	
 	Map<String,Object> createGroup(String userId,String groupName);
 	
 	Map<String,Object> joinGroup(String userId,String groupId, String groupName);
