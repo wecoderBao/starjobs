@@ -24,6 +24,7 @@ import com.starjobs.pojo.TGroupMember;
 import com.starjobs.pojo.TUserInfo;
 
 import io.rong.RongCloud;
+import io.rong.messages.ContactNtfMessage;
 import io.rong.messages.TxtMessage;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TokenResult;
@@ -91,10 +92,10 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 */
 	public Map<String, Object> addFriend(String fromUserId, String toUserId, String content, String pushContent) {
 		String[] toUserIds = { toUserId };
-		TxtMessage txtMessage = new TxtMessage(content, "extra");
+		ContactNtfMessage ntfMessage = new ContactNtfMessage("add friend", "extra",fromUserId,toUserId,pushContent);
 		try {
 			CodeSuccessResult result = RongCloud.getInstance(RongConstants.RONG_APP_KEY,
-					RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, txtMessage, pushContent,
+					RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, ntfMessage, pushContent,
 							null, 1, 1);
 			if (null != result) {
 				Map<String, Object> data = new HashMap<String, Object>();
