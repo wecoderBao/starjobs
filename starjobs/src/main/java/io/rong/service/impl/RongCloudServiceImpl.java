@@ -277,7 +277,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * @see io.rong.service.RongCloudService#createGroup(java.lang.String,
 	 * java.lang.String)
 	 */
-	public Map<String, Object> createGroup(String userId, String groupName) {
+	public Map<String, Object> createGroup(String userId, String groupName,String jobId) {
 		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -290,6 +290,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				group.setcGroupHeadImg("http://www.rongcloud.cn/images/logo.png");
 				group.setcGroupName(groupName);
 				group.setcGroupStatu("0");
+				group.setcJobId(jobId);
 				tGroupMapper.insertSelective(group);
 				// 保存群组成员
 				TGroupMember member = new TGroupMember();
@@ -449,6 +450,21 @@ public class RongCloudServiceImpl implements RongCloudService {
 			return resultMap;
 		}
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see io.rong.service.RongCloudService#groupGroupIdByJobId(java.lang.String)
+	 */
+	public Map<String, Object> groupGroupIdByJobId(String jobId) {
+		TGroup group = tGroupMapper.selectByJobId(jobId);
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		if(null != group){
+			resultMap.put("groupId", String.valueOf(group.getcGroupId()));
+		}else{
+			resultMap.put("groupId", "-1");
+		}
+
+		return resultMap;
 	}
 
 }

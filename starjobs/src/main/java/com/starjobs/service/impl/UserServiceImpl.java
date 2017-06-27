@@ -353,7 +353,7 @@ public class UserServiceImpl implements UserService {
 		return modelMap;
 	}
 	//发布兼职信息
-	public boolean publishJobInfo(Map<String,String> params){
+	public Map<String,Object> publishJobInfo(Map<String,String> params){
 		TJobInfo jobInfo = new TJobInfo();
 		//兼职地址信息
 		TLocation location = new TLocation();
@@ -388,6 +388,8 @@ public class UserServiceImpl implements UserService {
 		jobInfo.setcJobWorkTime(params.get("workTime"));
 		jobInfo.setcJobSalary(params.get("salary"));
 		tJobInfoMapper.insertSelective(jobInfo);
-		return true;
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("jobId",String.valueOf(jobInfo.getcJobId()));
+		return resultMap;
 	}
 }

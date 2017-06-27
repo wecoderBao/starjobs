@@ -187,7 +187,7 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.lookFriend(userPhone,phoneNum);
+		Map<String, Object> resultMap = rongCloudService.lookFriend(userPhone, phoneNum);
 		if (resultMap == null) {
 			modelMap.put("error_code", SystemUtil.FRIEND_NOT_FOUND);
 			modelMap.put("message", "user not found");
@@ -293,8 +293,10 @@ public class InstanceMessageController {
 		String userFlag = request.getParameter("userFlag");
 		// userId
 		String userId = request.getParameter("userId");
-		// userId
+		// groupName
 		String groupName = request.getParameter("groupName");
+		// jobId可选
+		String jobId = request.getParameter("jobId");
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
@@ -310,7 +312,7 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.createGroup(userId, groupName);
+		Map<String, Object> resultMap = rongCloudService.createGroup(userId, groupName, jobId);
 		if (resultMap == null) {
 
 			return modelMap;
@@ -471,6 +473,44 @@ public class InstanceMessageController {
 		}
 		// 验证输入的验证码
 		Map<String, Object> resultMap = rongCloudService.groupMembers(groupId);
+		if (resultMap == null) {
+
+			return modelMap;
+		}
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		modelMap.put("data", resultMap);
+
+		return modelMap;
+	}
+
+	// 获取群组列表
+	@RequestMapping(value = "/cloud/get/groupIdByJobId", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getGroupIdByJobId(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// jobId
+		String jobId = request.getParameter("jobId");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(jobId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		// 验证输入的验证码
+		Map<String, Object> resultMap = rongCloudService.groupGroupIdByJobId(jobId);
 		if (resultMap == null) {
 
 			return modelMap;

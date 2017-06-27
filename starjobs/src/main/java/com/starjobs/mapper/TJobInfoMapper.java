@@ -14,6 +14,7 @@ public interface TJobInfoMapper {
 
 	int insert(TJobInfo record);
 
+	//返回主键
 	int insertSelective(TJobInfo record);
 
 	List<TJobInfo> selectByExampleWithBLOBs(TJobInfoExample example);

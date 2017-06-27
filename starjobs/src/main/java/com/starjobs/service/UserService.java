@@ -33,5 +33,5 @@ public interface UserService {
 	public Map<String, Object> userGetJobDetail(String jobId);
 	
 	//发布兼职信息
-	public boolean publishJobInfo(Map<String,String> params);
+	public Map<String,Object> publishJobInfo(Map<String,String> params);
 }

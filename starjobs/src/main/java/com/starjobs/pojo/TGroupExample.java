@@ -443,6 +443,76 @@ public class TGroupExample {
             addCriterion("c_group_statu not between", value1, value2, "cGroupStatu");
             return (Criteria) this;
         }
+
+        public Criteria andCJobIdIsNull() {
+            addCriterion("c_job_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdIsNotNull() {
+            addCriterion("c_job_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdEqualTo(String value) {
+            addCriterion("c_job_id =", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdNotEqualTo(String value) {
+            addCriterion("c_job_id <>", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdGreaterThan(String value) {
+            addCriterion("c_job_id >", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdGreaterThanOrEqualTo(String value) {
+            addCriterion("c_job_id >=", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdLessThan(String value) {
+            addCriterion("c_job_id <", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdLessThanOrEqualTo(String value) {
+            addCriterion("c_job_id <=", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdLike(String value) {
+            addCriterion("c_job_id like", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdNotLike(String value) {
+            addCriterion("c_job_id not like", value, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdIn(List<String> values) {
+            addCriterion("c_job_id in", values, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdNotIn(List<String> values) {
+            addCriterion("c_job_id not in", values, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdBetween(String value1, String value2) {
+            addCriterion("c_job_id between", value1, value2, "cJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCJobIdNotBetween(String value1, String value2) {
+            addCriterion("c_job_id not between", value1, value2, "cJobId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

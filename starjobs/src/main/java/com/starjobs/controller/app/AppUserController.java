@@ -175,7 +175,7 @@ public class AppUserController {
 		}
 		// 验证用户是否有发布权限,userFlag必须为0
 		boolean auFlag = jobService.verifyUserAuth(token, userFlag);
-		if(!auFlag){
+		if (!auFlag) {
 			modelMap.put("error_code", SystemUtil.NO_PUBLISH);
 			modelMap.put("message", "forbiden");
 			Map<String, Object> data = new HashMap<String, Object>();
@@ -185,17 +185,16 @@ public class AppUserController {
 			return modelMap;
 		}
 		// 返回兼职信息
-		boolean result = userService.publishJobInfo(params);
+		Map<String, Object> result = userService.publishJobInfo(params);
 		// 发布成功
-		if (result) {
+		if (result != null && result.get("jobId") != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("token", token);
-			data.put("userFlag", SystemUtil.USER_COM);
-			modelMap.put("data", data);
+			result.put("token", token);
+			result.put("userFlag", SystemUtil.USER_COM);
+			modelMap.put("data", result);
 		}
-		
+
 		return modelMap;
 	}
 }

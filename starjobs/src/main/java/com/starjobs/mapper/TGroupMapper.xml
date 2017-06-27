@@ -7,6 +7,7 @@
     <result column="c_group_head_img" property="cGroupHeadImg" jdbcType="VARCHAR" />
     <result column="c_group_name" property="cGroupName" jdbcType="VARCHAR" />
     <result column="c_group_statu" property="cGroupStatu" jdbcType="VARCHAR" />
+    <result column="c_job_id" property="cJobId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_group_id, c_group_creater_id, c_group_head_img, c_group_name, c_group_statu
+    c_group_id, c_group_creater_id, c_group_head_img, c_group_name, c_group_statu, c_job_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TGroupExample" >
     select
@@ -87,7 +88,7 @@
     select 
     <include refid="Base_Column_List" />
     from t_group
-    where c_group_id = #{cGroupId,jdbcType=INTEGER} and c_group_statu='0'
+    where c_group_id = #{cGroupId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_group
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TGroup" >
     insert into t_group (c_group_id, c_group_creater_id, c_group_head_img, 
-      c_group_name, c_group_statu)
+      c_group_name, c_group_statu, c_job_id
+      )
     values (#{cGroupId,jdbcType=INTEGER}, #{cGroupCreaterId,jdbcType=VARCHAR}, #{cGroupHeadImg,jdbcType=VARCHAR}, 
-      #{cGroupName,jdbcType=VARCHAR}, #{cGroupStatu,jdbcType=VARCHAR})
+      #{cGroupName,jdbcType=VARCHAR}, #{cGroupStatu,jdbcType=VARCHAR}, #{cJobId,jdbcType=VARCHAR}
+      )
   </insert>
   <!-- 返回主键 -->
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TGroup" >
@@ -127,6 +130,9 @@
       <if test="cGroupStatu != null" >
         c_group_statu,
       </if>
+      <if test="cJobId != null" >
+        c_job_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cGroupId != null" >
@@ -143,6 +149,9 @@
       </if>
       <if test="cGroupStatu != null" >
         #{cGroupStatu,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobId != null" >
+        #{cJobId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -170,6 +179,9 @@
       <if test="record.cGroupStatu != null" >
         c_group_statu = #{record.cGroupStatu,jdbcType=VARCHAR},
       </if>
+      <if test="record.cJobId != null" >
+        c_job_id = #{record.cJobId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -181,7 +193,8 @@
       c_group_creater_id = #{record.cGroupCreaterId,jdbcType=VARCHAR},
       c_group_head_img = #{record.cGroupHeadImg,jdbcType=VARCHAR},
       c_group_name = #{record.cGroupName,jdbcType=VARCHAR},
-      c_group_statu = #{record.cGroupStatu,jdbcType=VARCHAR}
+      c_group_statu = #{record.cGroupStatu,jdbcType=VARCHAR},
+      c_job_id = #{record.cJobId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -201,6 +214,9 @@
       <if test="cGroupStatu != null" >
         c_group_statu = #{cGroupStatu,jdbcType=VARCHAR},
       </if>
+      <if test="cJobId != null" >
+        c_job_id = #{cJobId,jdbcType=VARCHAR},
+      </if>
     </set>
     where c_group_id = #{cGroupId,jdbcType=INTEGER}
   </update>
@@ -209,7 +225,15 @@
     set c_group_creater_id = #{cGroupCreaterId,jdbcType=VARCHAR},
       c_group_head_img = #{cGroupHeadImg,jdbcType=VARCHAR},
       c_group_name = #{cGroupName,jdbcType=VARCHAR},
-      c_group_statu = #{cGroupStatu,jdbcType=VARCHAR}
+      c_group_statu = #{cGroupStatu,jdbcType=VARCHAR},
+      c_job_id = #{cJobId,jdbcType=VARCHAR}
     where c_group_id = #{cGroupId,jdbcType=INTEGER}
   </update>
+  <!-- 根据jobId查询记录 -->
+   <select id="selectByJobId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_group
+    where c_job_id = #{jobId,jdbcType=VARCHAR}
+  </select>
 </mapper>

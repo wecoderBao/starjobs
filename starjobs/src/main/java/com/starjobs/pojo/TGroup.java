@@ -11,6 +11,8 @@ public class TGroup {
 
     private String cGroupStatu;
 
+    private String cJobId;
+
     public Integer getcGroupId() {
         return cGroupId;
     }
@@ -49,5 +51,13 @@ public class TGroup {
 
     public void setcGroupStatu(String cGroupStatu) {
         this.cGroupStatu = cGroupStatu == null ? null : cGroupStatu.trim();
+    }
+
+    public String getcJobId() {
+        return cJobId;
+    }
+
+    public void setcJobId(String cJobId) {
+        this.cJobId = cJobId == null ? null : cJobId.trim();
     }
 }

@@ -28,5 +28,7 @@ public interface TGroupMapper {
     int updateByPrimaryKeySelective(TGroup record);
 
     int updateByPrimaryKey(TGroup record);
+    //根据jobId查询记录
+    TGroup selectByJobId(@Param("jobId") String jobId);
     
 }

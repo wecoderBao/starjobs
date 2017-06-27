@@ -278,6 +278,7 @@ CREATE TABLE `t_group` (
   `c_group_head_img` varchar(255) DEFAULT NULL COMMENT '群组头像url',
   `c_group_name` varchar(255) DEFAULT NULL COMMENT '群组昵称',
   `c_group_statu` varchar(255) DEFAULT NULL COMMENT '群组状态标识0活的1失效',
+  `c_job_id` varchar(255) DEFAULT NULL COMMENT '兼职信息的id',
    primary key (`c_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

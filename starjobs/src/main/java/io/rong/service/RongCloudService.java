@@ -25,7 +25,7 @@ public interface RongCloudService {
 	
 	Map<String,Object> deleteFriend(String fromUserId,String toUserId);
 	
-	Map<String,Object> createGroup(String userId,String groupName);
+	Map<String,Object> createGroup(String userId,String groupName,String jobId);
 	
 	Map<String,Object> joinGroup(String userId,String groupId, String groupName);
 	
@@ -34,4 +34,6 @@ public interface RongCloudService {
 	Map<String,Object> groupList(String phoneNum);
 	
 	Map<String,Object> groupMembers(String groupId);
+	
+	Map<String,Object> groupGroupIdByJobId(String jobId);
 }

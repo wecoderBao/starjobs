@@ -159,7 +159,11 @@
       #{cJobState,jdbcType=VARCHAR}, #{cUserLike,jdbcType=INTEGER}, #{cJobDesc,jdbcType=LONGVARCHAR}
       )
   </insert>
+  <!-- 插入记录并返回主键 -->
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TJobInfo" >
+  	<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cComAddressId">
+          SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_job_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cJobId != null" >
