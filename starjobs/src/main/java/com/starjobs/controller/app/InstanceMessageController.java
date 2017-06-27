@@ -171,12 +171,14 @@ public class InstanceMessageController {
 		String userFlag = request.getParameter("userFlag");
 		// phoneNum
 		String phoneNum = request.getParameter("phoneNum");
-
+		// userPhone
+		String userPhone = request.getParameter("phoneNum");
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(phoneNum)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(phoneNum)
+				|| StringUtils.isEmpty(userPhone)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -185,7 +187,7 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.lookFriend(phoneNum);
+		Map<String, Object> resultMap = rongCloudService.lookFriend(userPhone,phoneNum);
 		if (resultMap == null) {
 			modelMap.put("error_code", SystemUtil.FRIEND_NOT_FOUND);
 			modelMap.put("message", "user not found");
@@ -266,7 +268,7 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.deleteFriend(fromUserId,toUserId);
+		Map<String, Object> resultMap = rongCloudService.deleteFriend(fromUserId, toUserId);
 		if (resultMap == null) {
 			modelMap.put("error_code", SystemUtil.FRIEND_NOT_FOUND);
 			modelMap.put("message", "user not found");

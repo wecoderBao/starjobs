@@ -25,7 +25,6 @@ import com.starjobs.pojo.TUserInfo;
 
 import io.rong.RongCloud;
 import io.rong.messages.ContactNtfMessage;
-import io.rong.messages.TxtMessage;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TokenResult;
 import io.rong.service.RongCloudService;
@@ -104,21 +103,21 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		// 检查是否已经是好友
 		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
-		//检查好友状态
-		if(null!=friend && !friend.getcState().equals("0")){
-			return null;//已经添加过或者是好友
+		// 检查好友状态
+		if (null != friend && !friend.getcState().equals("0")) {
+			return null;// 已经添加过或者是好友
 		}
-		if(null==friend){
+		if (null == friend) {
 			friend = new TFriend();
 			friend.setcUid(cuid);
 			friend.setcFid(cfid);
 			friend.setcState(fromUserId);
 			tFriendMapper.insert(friend);// 添加好友
-		}else{
-			friend.setcState(fromUserId);//修改状态为请求待确认
+		} else {
+			friend.setcState(fromUserId);// 修改状态为请求待确认
 			tFriendMapper.updateByPrimaryKey(friend);
 		}
-		
+
 		String[] toUserIds = { toUserId };
 		ContactNtfMessage ntfMessage = new ContactNtfMessage("add friend", "extra", fromUserId, toUserId, pushContent);
 		try {
@@ -158,16 +157,16 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		// 检查是否已经是好友
 		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
-		if(friend == null){//记录必须存在
+		if (friend == null) {// 记录必须存在
 			return null;
 		}
-		if(friend.equals("0")){
-			return null;//陌生人
+		if (friend.equals("0")) {
+			return null;// 陌生人
 		}
 		if (null != friend && friend.equals("2")) {
 			return null;// 已经是好友
 		}
-		friend.setcState("2");//成为好友
+		friend.setcState("2");// 成为好友
 		tFriendMapper.updateByPrimaryKey(friend);// 添加好友
 		// 向融云发送通知信息
 		String[] toUserIds = { toUserId };
@@ -195,7 +194,24 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * 
 	 * @see io.rong.service.RongCloudService#lookFriend(java.lang.String)
 	 */
-	public Map<String, Object> lookFriend(String phoneNum) {
+	public Map<String, Object> lookFriend(String userPhone, String phoneNum) {
+		// 将标识排序，做小右大
+		long fid = Long.parseLong(userPhone);
+		long tid = Long.parseLong(phoneNum);
+		String cuid = userPhone;
+		String cfid = phoneNum;
+		if (fid == tid)
+			return null;// 自己和自己不能成为好友
+		if (fid > tid) {
+			cuid = phoneNum;
+			cfid = userPhone;
+		}
+		// 检查是否已经是好友
+		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
+		String state = "0";//陌生人
+		if(null!=friend){
+			state = friend.getcState();
+		}
 		// 根据手机号查找用户
 		TUserInfo userInfo = tUserInfoMapper.selectByPhone(phoneNum.trim());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -203,6 +219,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			resultMap.put("friendName", userInfo.getcUserNickname());
 			resultMap.put("friendPicUrl", userInfo.getcUserImg());
 			resultMap.put("friendPhoneNum", userInfo.getcUserPhone());
+			resultMap.put("state", state);
 			return resultMap;
 		}
 		// 普通用户不存在，查找公司用户
@@ -211,6 +228,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			resultMap.put("friendName", comInfo.getcComName());
 			resultMap.put("friendPicUrl", comInfo.getcComHeadImg());
 			resultMap.put("friendPhoneNum", comInfo.getcComPhone());
+			resultMap.put("state", state);
 			return resultMap;
 		}
 		// 都没找到
@@ -225,7 +243,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (null != leftList && leftList.size() > 0) {
 			for (TFriend tf : leftList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcFid());
-				if (info != null) {
+				if (info != null && tf.getcState().equals("2")) {//好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
@@ -240,7 +258,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (null != rightList && rightList.size() > 0) {
 			for (TFriend tf : rightList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
-				if (info != null) {
+				if (info != null && tf.getcState().equals("2")) {//好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());

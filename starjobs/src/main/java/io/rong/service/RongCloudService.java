@@ -19,7 +19,7 @@ public interface RongCloudService {
 	
 	Map<String,Object> confirmFriendAdded(String fromUserId,String toUserId);
 	
-	Map<String,Object> lookFriend(String phoneNum);
+	Map<String,Object> lookFriend(String userPhone,String phoneNum);
 	
 	Map<String,Object> readFriends(String phoneNum);
 	
