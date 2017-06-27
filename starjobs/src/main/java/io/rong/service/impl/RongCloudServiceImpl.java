@@ -91,11 +91,11 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 */
 	public Map<String, Object> addFriend(String fromUserId, String toUserId, String content, String pushContent) {
 		// 将标识排序，做小右大
-		long fid = Long.parseLong(fromUserId);
-		long tid = Long.parseLong(toUserId);
+		Long fid = Long.parseLong(fromUserId);
+		Long tid = Long.parseLong(toUserId);
 		String cuid = fromUserId;
 		String cfid = toUserId;
-		if (fid == tid)
+		if (fid.equals(tid) )
 			return null;// 自己和自己不能成为好友
 		if (fid > tid) {
 			cuid = toUserId;
@@ -145,11 +145,11 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 */
 	public Map<String, Object> confirmFriendAdded(String fromUserId, String toUserId) {
 		// 将标识排序，做小右大
-		long fid = Long.parseLong(fromUserId);
-		long tid = Long.parseLong(toUserId);
+		Long fid = Long.parseLong(fromUserId);
+		Long tid = Long.parseLong(toUserId);
 		String cuid = fromUserId;
 		String cfid = toUserId;
-		if (fid == tid)
+		if (fid.equals(tid))
 			return null;// 自己和自己不能成为好友
 		if (fid > tid) {
 			cuid = toUserId;
@@ -196,11 +196,11 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 */
 	public Map<String, Object> lookFriend(String userPhone, String phoneNum) {
 		// 将标识排序，做小右大
-		long fid = Long.parseLong(userPhone);
-		long tid = Long.parseLong(phoneNum);
+		Long fid = Long.parseLong(userPhone);
+		Long tid = Long.parseLong(phoneNum);
 		String cuid = userPhone;
 		String cfid = phoneNum;
-		if (fid == tid)
+		if (fid.equals(tid))
 			return null;// 自己和自己不能成为好友
 		if (fid > tid) {
 			cuid = phoneNum;

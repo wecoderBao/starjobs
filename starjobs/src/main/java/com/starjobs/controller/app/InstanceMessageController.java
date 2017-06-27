@@ -172,7 +172,7 @@ public class InstanceMessageController {
 		// phoneNum
 		String phoneNum = request.getParameter("phoneNum");
 		// userPhone
-		String userPhone = request.getParameter("phoneNum");
+		String userPhone = request.getParameter("userPhone");
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
