@@ -266,6 +266,7 @@ CREATE TABLE `t_friend` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `c_uid` varchar(255) DEFAULT NULL COMMENT '用户标识',
   `c_fid` varchar(255) DEFAULT NULL COMMENT '好友标识',
+  `c_state` varchar(255) DEFAULT '0' COMMENT '关系状态0陌生人，手机号请求待确认，2好友'
    primary key (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -5,6 +5,7 @@
     <id column="c_id" property="cId" jdbcType="INTEGER" />
     <result column="c_uid" property="cUid" jdbcType="VARCHAR" />
     <result column="c_fid" property="cFid" jdbcType="VARCHAR" />
+    <result column="c_state" property="cState" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_id, c_uid, c_fid
+    c_id, c_uid, c_fid, c_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TFriendExample" >
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TFriend" >
-    insert into t_friend (c_id, c_uid, c_fid
-      )
-    values (#{cId,jdbcType=INTEGER}, #{cUid,jdbcType=VARCHAR}, #{cFid,jdbcType=VARCHAR}
-      )
+    insert into t_friend (c_id, c_uid, c_fid, 
+      c_state)
+    values (#{cId,jdbcType=INTEGER}, #{cUid,jdbcType=VARCHAR}, #{cFid,jdbcType=VARCHAR}, 
+      #{cState,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TFriend" >
     insert into t_friend
@@ -115,6 +116,9 @@
       <if test="cFid != null" >
         c_fid,
       </if>
+      <if test="cState != null" >
+        c_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cId != null" >
@@ -125,6 +129,9 @@
       </if>
       <if test="cFid != null" >
         #{cFid,jdbcType=VARCHAR},
+      </if>
+      <if test="cState != null" >
+        #{cState,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="record.cFid != null" >
         c_fid = #{record.cFid,jdbcType=VARCHAR},
       </if>
+      <if test="record.cState != null" >
+        c_state = #{record.cState,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +165,8 @@
     update t_friend
     set c_id = #{record.cId,jdbcType=INTEGER},
       c_uid = #{record.cUid,jdbcType=VARCHAR},
-      c_fid = #{record.cFid,jdbcType=VARCHAR}
+      c_fid = #{record.cFid,jdbcType=VARCHAR},
+      c_state = #{record.cState,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -169,13 +180,17 @@
       <if test="cFid != null" >
         c_fid = #{cFid,jdbcType=VARCHAR},
       </if>
+      <if test="cState != null" >
+        c_state = #{cState,jdbcType=VARCHAR},
+      </if>
     </set>
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TFriend" >
     update t_friend
     set c_uid = #{cUid,jdbcType=VARCHAR},
-      c_fid = #{cFid,jdbcType=VARCHAR}
+      c_fid = #{cFid,jdbcType=VARCHAR},
+      c_state = #{cState,jdbcType=VARCHAR}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
   <!-- 根据 cuid,cfid查找记录 -->

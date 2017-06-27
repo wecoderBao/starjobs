@@ -91,8 +91,36 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public Map<String, Object> addFriend(String fromUserId, String toUserId, String content, String pushContent) {
+		// 将标识排序，做小右大
+		long fid = Long.parseLong(fromUserId);
+		long tid = Long.parseLong(toUserId);
+		String cuid = fromUserId;
+		String cfid = toUserId;
+		if (fid == tid)
+			return null;// 自己和自己不能成为好友
+		if (fid > tid) {
+			cuid = toUserId;
+			cfid = fromUserId;
+		}
+		// 检查是否已经是好友
+		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
+		//检查好友状态
+		if(null!=friend && !friend.getcState().equals("0")){
+			return null;//已经添加过或者是好友
+		}
+		if(null==friend){
+			friend = new TFriend();
+			friend.setcUid(cuid);
+			friend.setcFid(cfid);
+			friend.setcState(fromUserId);
+			tFriendMapper.insert(friend);// 添加好友
+		}else{
+			friend.setcState(fromUserId);//修改状态为请求待确认
+			tFriendMapper.updateByPrimaryKey(friend);
+		}
+		
 		String[] toUserIds = { toUserId };
-		ContactNtfMessage ntfMessage = new ContactNtfMessage("add friend", "extra",fromUserId,toUserId,pushContent);
+		ContactNtfMessage ntfMessage = new ContactNtfMessage("add friend", "extra", fromUserId, toUserId, pushContent);
 		try {
 			CodeSuccessResult result = RongCloud.getInstance(RongConstants.RONG_APP_KEY,
 					RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, ntfMessage, pushContent,
@@ -130,20 +158,25 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		// 检查是否已经是好友
 		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
-		if (null != friend) {
+		if(friend == null){//记录必须存在
+			return null;
+		}
+		if(friend.equals("0")){
+			return null;//陌生人
+		}
+		if (null != friend && friend.equals("2")) {
 			return null;// 已经是好友
 		}
-		friend = new TFriend();
-		friend.setcUid(cuid);
-		friend.setcFid(cfid);
-		tFriendMapper.insert(friend);// 添加好友
+		friend.setcState("2");//成为好友
+		tFriendMapper.updateByPrimaryKey(friend);// 添加好友
 		// 向融云发送通知信息
-		String[] toUserIds = { fromUserId, toUserId };
+		String[] toUserIds = { toUserId };
 		String content = "" + fromUserId + "与" + toUserId + "成为好友";
-		TxtMessage txtMessage = new TxtMessage(content, "extra");
+		ContactNtfMessage ntfMessage = new ContactNtfMessage("confirm friend_added", "extra", fromUserId, toUserId,
+				content);
 		try {
 			CodeSuccessResult result = RongCloud.getInstance(RongConstants.RONG_APP_KEY,
-					RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, txtMessage, null, null,
+					RongConstants.RONG_APP_SECRET).message.PublishSystem(fromUserId, toUserIds, ntfMessage, null, null,
 							1, 1);
 			if (null != result) {
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -314,8 +347,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (groupDismissResult != null && groupDismissResult.getCode() == 200) {
 				// 对群记录进行修改
 				// todo
-				group.setcGroupStatu("1");//群组失效
-				tGroupMapper.updateByPrimaryKey(group);//更新群组信息
+				group.setcGroupStatu("1");// 群组失效
+				tGroupMapper.updateByPrimaryKey(group);// 更新群组信息
 				result.put("code", "200");
 				return result;
 			}
@@ -376,21 +409,24 @@ public class RongCloudServiceImpl implements RongCloudService {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see io.rong.service.RongCloudService#deleteFriend(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see io.rong.service.RongCloudService#deleteFriend(java.lang.String,
+	 * java.lang.String)
 	 */
 	public Map<String, Object> deleteFriend(String fromUserId, String toUserId) {
 		long currId = Long.parseLong(fromUserId);
 		long delId = Long.parseLong(toUserId);
 		String leftId = fromUserId;
-		String rightId= toUserId;
-		if(currId > delId){
+		String rightId = toUserId;
+		if (currId > delId) {
 			leftId = toUserId;
 			rightId = fromUserId;
 		}
 		int result = tFriendMapper.deleteByChoice(leftId, rightId);
-		if(result > 0){
-			Map<String,Object> resultMap = new HashMap<String,Object>();
+		if (result > 0) {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("code", "200");
 			return resultMap;
 		}

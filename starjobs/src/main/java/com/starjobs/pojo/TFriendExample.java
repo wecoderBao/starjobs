@@ -303,6 +303,76 @@ public class TFriendExample {
             addCriterion("c_fid not between", value1, value2, "cFid");
             return (Criteria) this;
         }
+
+        public Criteria andCStateIsNull() {
+            addCriterion("c_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateIsNotNull() {
+            addCriterion("c_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateEqualTo(String value) {
+            addCriterion("c_state =", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateNotEqualTo(String value) {
+            addCriterion("c_state <>", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateGreaterThan(String value) {
+            addCriterion("c_state >", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateGreaterThanOrEqualTo(String value) {
+            addCriterion("c_state >=", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateLessThan(String value) {
+            addCriterion("c_state <", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateLessThanOrEqualTo(String value) {
+            addCriterion("c_state <=", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateLike(String value) {
+            addCriterion("c_state like", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateNotLike(String value) {
+            addCriterion("c_state not like", value, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateIn(List<String> values) {
+            addCriterion("c_state in", values, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateNotIn(List<String> values) {
+            addCriterion("c_state not in", values, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateBetween(String value1, String value2) {
+            addCriterion("c_state between", value1, value2, "cState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCStateNotBetween(String value1, String value2) {
+            addCriterion("c_state not between", value1, value2, "cState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
