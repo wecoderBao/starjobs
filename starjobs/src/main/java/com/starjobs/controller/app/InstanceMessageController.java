@@ -486,7 +486,7 @@ public class InstanceMessageController {
 		return modelMap;
 	}
 
-	// 获取群组列表
+	// 根据job id 获取群组
 	@RequestMapping(value = "/cloud/get/groupIdByJobId", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getGroupIdByJobId(HttpServletRequest request) {
@@ -510,13 +510,51 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.groupGroupIdByJobId(jobId);
+		Map<String, Object> resultMap = rongCloudService.getGroupIdByJobId(jobId);
 		if (resultMap == null) {
 
 			return modelMap;
 		}
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		modelMap.put("data", resultMap);
+
+		return modelMap;
+	}
+	@RequestMapping(value = "/cloud/get/groupInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getGroupInfo(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// groupId
+		String groupId = request.getParameter("groupId");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(groupId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		// 验证输入的验证码
+		Map<String, Object> groupInfoMap = rongCloudService.getGroupInfo(groupId);
+		if (groupInfoMap == null) {
+
+			return modelMap;
+		}
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		resultMap.put("groupInfo", groupInfoMap);
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");
 		modelMap.put("data", resultMap);

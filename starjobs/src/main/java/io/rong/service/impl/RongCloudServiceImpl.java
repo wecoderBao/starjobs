@@ -455,7 +455,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	/* (non-Javadoc)
 	 * @see io.rong.service.RongCloudService#groupGroupIdByJobId(java.lang.String)
 	 */
-	public Map<String, Object> groupGroupIdByJobId(String jobId) {
+	public Map<String, Object> getGroupIdByJobId(String jobId) {
 		TGroup group = tGroupMapper.selectByJobId(jobId);
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		if(null != group){
@@ -465,6 +465,30 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 
 		return resultMap;
+	}
+
+	/* (non-Javadoc)
+	 * @see io.rong.service.RongCloudService#getGroupInfo(java.lang.String)
+	 */
+	public Map<String, Object> getGroupInfo(String groupId) {
+		int group_id = Integer.parseInt(groupId);
+		TGroup group = tGroupMapper.selectByPrimaryKey(group_id);
+		Map<String,Object> groupInfoMap = new HashMap<String,Object>();
+		//根据群组id获取群成员列表
+		List<TGroupMember> members = tGroupMemberMapper.selectByGroupId(group_id);
+		String groupSize ="0";
+		if(members != null){
+			groupSize = String.valueOf(members.size());
+		}
+		if(null != group){
+			groupInfoMap.put("groupId", groupId);
+			groupInfoMap.put("groupName", group.getcGroupName());
+			groupInfoMap.put("groupOwnerId", group.getcGroupCreaterId());
+			groupInfoMap.put("groupImgUrl", group.getcGroupHeadImg());
+			groupInfoMap.put("groupSize", groupSize);
+		}
+		
+		return groupInfoMap;
 	}
 
 }

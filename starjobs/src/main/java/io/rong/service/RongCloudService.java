@@ -35,5 +35,7 @@ public interface RongCloudService {
 	
 	Map<String,Object> groupMembers(String groupId);
 	
-	Map<String,Object> groupGroupIdByJobId(String jobId);
+	Map<String,Object> getGroupIdByJobId(String jobId);
+	
+	Map<String,Object> getGroupInfo(String groupId);
 }
