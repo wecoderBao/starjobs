@@ -282,23 +282,23 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId, userId, groupName);
+			// 保存群组
+			TGroup group = new TGroup();
+			group.setcGroupCreaterId(userId);
+			group.setcGroupHeadImg("http://www.rongcloud.cn/images/logo.png");
+			group.setcGroupName(groupName);
+			group.setcGroupStatu("1");
+			group.setcJobId(jobId);
+			tGroupMapper.insertSelective(group);
+			// 保存群组成员
+			TGroupMember member = new TGroupMember();
+			member.setcGroupId(group.getcGroupId());// 所在群组id
+			member.setcGroupMemberId(userId);// 成员手机号
+			member.setcGroupMemberIdentity("0");// 群主标识
+			tGroupMemberMapper.insertSelective(member);
+			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId, String.valueOf(group.getcGroupId()), groupName);
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
-				// 保存群组
-				TGroup group = new TGroup();
-				group.setcGroupCreaterId(userId);
-				group.setcGroupHeadImg("http://www.rongcloud.cn/images/logo.png");
-				group.setcGroupName(groupName);
-				group.setcGroupStatu("0");
-				group.setcJobId(jobId);
-				tGroupMapper.insertSelective(group);
-				// 保存群组成员
-				TGroupMember member = new TGroupMember();
-				member.setcGroupId(group.getcGroupId());// 所在群组id
-				member.setcGroupMemberId(userId);// 成员手机号
-				member.setcGroupMemberIdentity("0");// 群主标识
-				tGroupMemberMapper.insertSelective(member);
-
+				group.setcGroupStatu("0");//创建成功群组激活
 				result.put("code", "200");
 				return result;
 			}
@@ -318,7 +318,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	public Map<String, Object> joinGroup(String userId, String groupId, String groupName) {
 		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
 		// 将用户加入指定群组，用户将可以收到该群的消息，同一用户最多可加入 500 个群，每个群最大至 3000 人。
-		String[] groupJoinUserId = { userId.trim() };
+		String[] groupJoinUserId = userId.split(";");
 		Map<String, Object> result = new HashMap<String, Object>();
 		// 获取融云端群组id
 		TGroup group = tGroupMapper.selectByPrimaryKey(Integer.parseInt(groupId));
@@ -326,7 +326,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			return null;
 		}
 		try {
-			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId, group.getcGroupCreaterId(),
+			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId, String.valueOf(group.getcGroupId()),
 					groupName);
 			if (groupJoinResult != null && groupJoinResult.getCode() == 200) {
 				// 添加群成员记录
@@ -393,7 +393,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			for (TGroupMember member : memberList) {
 				TGroup group = tGroupMapper.selectByPrimaryKey(member.getcGroupId());
 				Map<String, Object> aGroup = new HashMap<String, Object>();
-				if (null != group) {
+				if (null != group && group.getcGroupStatu().equals("0")) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
 					aGroup.put("groupImg", group.getcGroupHeadImg());

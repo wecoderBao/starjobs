@@ -13,7 +13,7 @@ public interface TGroupMapper {
     int deleteByPrimaryKey(Integer cGroupId);
 
     int insert(TGroup record);
-
+    //插入获取主键
     int insertSelective(TGroup record);
 
     List<TGroup> selectByExample(TGroupExample example);

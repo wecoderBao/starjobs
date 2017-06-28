@@ -75,7 +75,7 @@ CREATE TABLE `t_company_info` (
   `c_com_desc` text COMMENT '公司简介',
   `c_com_license_img` varchar(255) DEFAULT NULL COMMENT '营业执照图片图片链接',
   `c_extra_balance` varchar(255) default '0' comment '招聘专用余额',
-  `c_user_state` varchar(2) DEFAULT NULL COMMENT '公司状态0，活的，1，注销，2，待审核',
+  `c_user_state` varchar(2) DEFAULT NULL COMMENT '公司状态0，待审核，1，活的，2，取消发布权限',
   `c_com_hasLicense` varchar(255) DEFAULT '0' COMMENT '是否上传营业证标志，0没有上传，1上传',
   PRIMARY KEY (`c_com_id`),
   KEY `FK_c_com_address_id` (`c_com_address_id`),
