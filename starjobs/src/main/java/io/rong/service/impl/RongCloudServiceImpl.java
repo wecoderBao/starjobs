@@ -25,6 +25,7 @@ import com.starjobs.pojo.TUserInfo;
 
 import io.rong.RongCloud;
 import io.rong.messages.ContactNtfMessage;
+import io.rong.messages.GroupNtfMessage;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TokenResult;
 import io.rong.service.RongCloudService;
@@ -95,7 +96,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		Long tid = Long.parseLong(toUserId);
 		String cuid = fromUserId;
 		String cfid = toUserId;
-		if (fid.equals(tid) )
+		if (fid.equals(tid))
 			return null;// 自己和自己不能成为好友
 		if (fid > tid) {
 			cuid = toUserId;
@@ -208,8 +209,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		// 检查是否已经是好友
 		TFriend friend = tFriendMapper.selectByUserId(cuid, cfid);
-		String state = "0";//陌生人
-		if(null!=friend){
+		String state = "0";// 陌生人
+		if (null != friend) {
 			state = friend.getcState();
 		}
 		// 根据手机号查找用户
@@ -243,7 +244,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (null != leftList && leftList.size() > 0) {
 			for (TFriend tf : leftList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcFid());
-				if (info != null && tf.getcState().equals("2")) {//好友
+				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
@@ -258,7 +259,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (null != rightList && rightList.size() > 0) {
 			for (TFriend tf : rightList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
-				if (info != null && tf.getcState().equals("2")) {//好友
+				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
@@ -277,7 +278,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * @see io.rong.service.RongCloudService#createGroup(java.lang.String,
 	 * java.lang.String)
 	 */
-	public Map<String, Object> createGroup(String userId, String groupName,String jobId) {
+	public Map<String, Object> createGroup(String userId, String groupName, String jobId) {
 		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -296,12 +297,25 @@ public class RongCloudServiceImpl implements RongCloudService {
 			member.setcGroupMemberId(userId);// 成员手机号
 			member.setcGroupMemberIdentity("0");// 群主标识
 			tGroupMemberMapper.insertSelective(member);
-			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId, String.valueOf(group.getcGroupId()), groupName);
+			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId,
+					String.valueOf(group.getcGroupId()), groupName);
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
-				group.setcGroupStatu("0");//创建成功群组激活
-				tGroupMapper.updateByPrimaryKey(group);
-				result.put("code", "200");
-				return result;
+
+				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> data = new HashMap<String, Object>();
+				data.put("operatorNickname", userId);
+				data.put("targetGroupName", groupName);
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Create", data, "创建群组：" + groupName,
+						"创建群组：" + groupName);
+				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
+						messagePublishGroupToGroupId, groupMessage, "创建群组：" + groupName,
+						"{\"pushData\":\"" + "创建群组：" + groupName + "\"}", 1, 1, 0);
+				if (messagePublishGroupResult.getCode() == 200) {
+					group.setcGroupStatu("0");// 创建成功群组激活
+					tGroupMapper.updateByPrimaryKey(group);
+					result.put("code", "200");
+					return result;
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -327,8 +341,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 			return null;
 		}
 		try {
-			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId, String.valueOf(group.getcGroupId()),
-					groupName);
+			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId,
+					String.valueOf(group.getcGroupId()), groupName);
 			if (groupJoinResult != null && groupJoinResult.getCode() == 200) {
 				// 添加群成员记录
 				// todo
@@ -338,6 +352,17 @@ public class RongCloudServiceImpl implements RongCloudService {
 				member.setcGroupMemberIdentity("0");// 群主标识
 				tGroupMemberMapper.insertSelective(member);
 				result.put("code", "200");
+				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> data = new HashMap<String, Object>();
+				data.put("operatorNickname", userId);
+				String[] targetUserIds = { userId };
+				data.put("targetUserIds", targetUserIds);
+				data.put("operatorNickname", userId);
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Add", data, "加入群组：" + groupName,
+						"加入群组：" + groupName);
+				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
+						messagePublishGroupToGroupId, groupMessage, "加入群组：" + groupName,
+						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 0);
 				return result;
 			}
 		} catch (Exception e) {
@@ -370,6 +395,15 @@ public class RongCloudServiceImpl implements RongCloudService {
 				group.setcGroupStatu("1");// 群组失效
 				tGroupMapper.updateByPrimaryKey(group);// 更新群组信息
 				result.put("code", "200");
+				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> data = new HashMap<String, Object>();
+				data.put("operatorNickname", userId);
+				String pushTip = "群组：" + group.getcGroupName() + "解散了";
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Dismiss", data, pushTip, pushTip);
+				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
+						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
+						0);
+
 				return result;
 			}
 		} catch (Exception e) {
@@ -453,42 +487,47 @@ public class RongCloudServiceImpl implements RongCloudService {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see io.rong.service.RongCloudService#groupGroupIdByJobId(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * io.rong.service.RongCloudService#groupGroupIdByJobId(java.lang.String)
 	 */
 	public Map<String, Object> getGroupIdByJobId(String jobId) {
 		TGroup group = tGroupMapper.selectByJobId(jobId);
-		Map<String,Object> resultMap = new HashMap<String,Object>();
-		if(null != group){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		if (null != group) {
 			resultMap.put("groupId", String.valueOf(group.getcGroupId()));
-		}else{
+		} else {
 			resultMap.put("groupId", "-1");
 		}
 
 		return resultMap;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see io.rong.service.RongCloudService#getGroupInfo(java.lang.String)
 	 */
 	public Map<String, Object> getGroupInfo(String groupId) {
 		int group_id = Integer.parseInt(groupId);
 		TGroup group = tGroupMapper.selectByPrimaryKey(group_id);
-		Map<String,Object> groupInfoMap = new HashMap<String,Object>();
-		//根据群组id获取群成员列表
+		Map<String, Object> groupInfoMap = new HashMap<String, Object>();
+		// 根据群组id获取群成员列表
 		List<TGroupMember> members = tGroupMemberMapper.selectByGroupId(group_id);
-		String groupSize ="0";
-		if(members != null){
+		String groupSize = "0";
+		if (members != null) {
 			groupSize = String.valueOf(members.size());
 		}
-		if(null != group){
+		if (null != group) {
 			groupInfoMap.put("groupId", groupId);
 			groupInfoMap.put("groupName", group.getcGroupName());
 			groupInfoMap.put("groupOwnerId", group.getcGroupCreaterId());
 			groupInfoMap.put("groupImgUrl", group.getcGroupHeadImg());
 			groupInfoMap.put("groupSize", groupSize);
 		}
-		
+
 		return groupInfoMap;
 	}
 
