@@ -299,6 +299,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId, String.valueOf(group.getcGroupId()), groupName);
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
 				group.setcGroupStatu("0");//创建成功群组激活
+				tGroupMapper.updateByPrimaryKey(group);
 				result.put("code", "200");
 				return result;
 			}
