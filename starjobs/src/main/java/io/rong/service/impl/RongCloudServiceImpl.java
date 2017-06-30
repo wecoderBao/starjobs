@@ -299,6 +299,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			tGroupMemberMapper.insertSelective(member);
 			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId,
 					String.valueOf(group.getcGroupId()), groupName);
+			System.out.println("--"+groupCreateResult.toString());
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
 
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
@@ -309,7 +310,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 						"创建群组：" + groupName);
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "创建群组：" + groupName,
-						"{\"pushData\":\"" + "创建群组：" + groupName + "\"}", 1, 1, 0);
+						"{\"pushData\":\"" + "创建群组：" + groupName + "\"}", 1, 1, 1);
+				System.out.println("--2--"+messagePublishGroupResult.toString());
 				if (messagePublishGroupResult.getCode() == 200) {
 					group.setcGroupStatu("0");// 创建成功群组激活
 					tGroupMapper.updateByPrimaryKey(group);
@@ -362,7 +364,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 						"加入群组：" + groupName);
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "加入群组：" + groupName,
-						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 0);
+						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
 				return result;
 			}
 		} catch (Exception e) {
@@ -402,7 +404,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Dismiss", data, pushTip, pushTip);
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
-						0);
+						1);
 
 				return result;
 			}
