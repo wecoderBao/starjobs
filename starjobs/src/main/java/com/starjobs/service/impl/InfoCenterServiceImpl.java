@@ -347,6 +347,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				Map<String, String> jobMap = new HashMap<String, String>();
 				jobMap.put("comId", String.valueOf(job.getcJobId()));
 				jobMap.put("jobName", job.getcJobTitle());
+				jobMap.put("jobId", String.valueOf(job.getcJobId()));
 				jobMap.put("jobDesc", job.getcJobDesc());
 				jobMap.put("payMethod", job.getcJobPayMethod());
 				jobMap.put("gender", job.getcJobPersonGender());

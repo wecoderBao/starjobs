@@ -237,8 +237,7 @@ public class InfoCenterController {
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)
-				|| StringUtils.isEmpty(comId)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(comId)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -246,7 +245,6 @@ public class InfoCenterController {
 		if (!isPermitted) {
 			return modelMap;
 		}
-		
 
 		Map<String, Object> data = infoCenterService.getJobListAndComInfoByComId(comId);
 		if (data != null) {
