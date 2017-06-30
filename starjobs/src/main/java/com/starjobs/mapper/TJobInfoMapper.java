@@ -40,4 +40,7 @@ public interface TJobInfoMapper {
 			@Param("choiceId") List<Integer> choiceId, @Param("start") Integer start, @Param("offset") Integer offset);
 	//更新用户查看次数
 	int updateUserLike(@Param("id") Integer id,@Param("cUserLike") Integer cUserLike);
+	
+	//根据公司id查询兼职列表
+	List<TJobInfo> selectByComId(@Param("comId") Integer comId);
 }

@@ -575,4 +575,10 @@
     set c_user_like = #{cUserLike,jdbcType=INTEGER}
     where c_job_id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 根据公司id查询兼职信息 -->
+  <select id="selectByComId" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_job_info where c_com_id = #{comId,jdbcType=INTEGER} order by c_job_publish_date desc
+  </select>
 </mapper>

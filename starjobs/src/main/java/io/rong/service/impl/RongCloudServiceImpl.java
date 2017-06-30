@@ -454,12 +454,25 @@ public class RongCloudServiceImpl implements RongCloudService {
 		List<Map<String, Object>> memberList = new ArrayList<Map<String, Object>>();
 		for (TGroupMember member : members) {
 			Map<String, Object> aMember = new HashMap<String, Object>();
-			TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
-			aMember.put("memberName", info.getcUserNickname());
-			aMember.put("memberImg", info.getcUserImg());
-			aMember.put("memberId", info.getcUserPhone());
-			aMember.put("memberIdentity", member.getcGroupMemberIdentity());
-			memberList.add(aMember);
+			if(member.getcGroupMemberIdentity().equals("0")){//群主是公司用户
+				TCompanyInfo info = tCompanyInfoMapper.selectByPhone(member.getcGroupMemberId());
+				if(info != null){
+					aMember.put("memberName", info.getcComName());
+					aMember.put("memberImg", info.getcComHeadImg());
+					aMember.put("memberId", info.getcComPhone());
+					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
+					memberList.add(aMember);
+				}
+			}else{
+				TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
+				if(info!=null){
+					aMember.put("memberName", info.getcUserNickname());
+					aMember.put("memberImg", info.getcUserImg());
+					aMember.put("memberId", info.getcUserPhone());
+					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
+					memberList.add(aMember);
+				}
+			}		
 		}
 		result.put("memberList", memberList);
 		return result;

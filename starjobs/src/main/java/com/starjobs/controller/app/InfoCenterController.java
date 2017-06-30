@@ -152,7 +152,7 @@ public class InfoCenterController {
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
 		String realPath = request.getSession().getServletContext().getRealPath("/photo/com");
-		System.out.println("--------------realPath--"+realPath);
+		System.out.println("--------------realPath--" + realPath);
 		System.out.println("realPath:" + realPath);
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
@@ -184,6 +184,7 @@ public class InfoCenterController {
 		}
 		return modelMap;
 	}
+
 	// 公司用户上传营业证图片
 	@RequestMapping(value = "/com/upload/certificate", method = RequestMethod.POST)
 	@ResponseBody
@@ -211,6 +212,43 @@ public class InfoCenterController {
 		params.put("imgFormat", request.getParameter("imgFormat"));
 
 		Map<String, Object> data = infoCenterService.uploadComCertificate(token, params, realPath);
+		if (data != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			data.put("token", token);
+			data.put("userFlag", userFlag);
+			modelMap.put("data", data);
+		}
+		return modelMap;
+	}
+
+	// 公司用户根据公司id获取发布兼职列表和公司信息
+	@RequestMapping(value = "/com/get/jobListAndComInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getJobListAndComInfoByComId(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 公司id
+		String comId = request.getParameter("comId");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)
+				|| StringUtils.isEmpty(comId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		
+
+		Map<String, Object> data = infoCenterService.getJobListAndComInfoByComId(comId);
 		if (data != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");

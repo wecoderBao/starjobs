@@ -3,7 +3,9 @@
  */
 package com.starjobs.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,14 @@ import org.springframework.util.StringUtils;
 import com.starjobs.common.ImageUtil;
 import com.starjobs.mapper.TComAddressMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
+import com.starjobs.mapper.TJobInfoMapper;
+import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserTokenMapper;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TCompanyInfo;
+import com.starjobs.pojo.TJobInfo;
+import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserToken;
 import com.starjobs.service.InfoCenterService;
@@ -47,6 +53,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	TCompanyInfoMapper tCompanyInfoMapper;
 	@Autowired
 	TComAddressMapper tComAddressMapper;
+	@Autowired
+	TJobInfoMapper tJobInfoMapper;
+	@Autowired
+	TLocationMapper tLocationMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -294,6 +304,71 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			return data;
 		}
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.starjobs.service.InfoCenterService#getJobListByComId(java.lang.
+	 * String)
+	 */
+	public Map<String, Object> getJobListAndComInfoByComId(String comId) {
+		int com_id = Integer.parseInt(comId);
+
+		// 获取公司信息
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(com_id);
+		Map<String, Object> data = new HashMap<String, Object>();
+		if (tComInfo != null) {
+			data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
+			data.put("comName", tComInfo.getcComName());
+			if (null != tComInfo.getcComAddressId()) {
+				TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
+				if (null != addr) {
+					data.put("address", addr.getcAddressDetail());// 公司地址
+				} else {
+					data.put("address", "地址不详，请和客服确认。");
+				}
+			}
+			data.put("hasLicense", tComInfo.getcComHaslicense());
+			data.put("comDesc", tComInfo.getcComDesc());// 公司简介
+			data.put("score", tComInfo.getcComScore());
+			data.put("phoneNum", tComInfo.getcComPhone());
+			data.put("balance", tComInfo.getcComBalance());
+			data.put("extraBalance", tComInfo.getcExtraBalance());// 招聘余额
+		}
+
+		///
+		List<TJobInfo> jobs = tJobInfoMapper.selectByComId(com_id);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<Map<String, String>> jobList = new ArrayList<Map<String, String>>();
+
+		if (null != jobs) {
+			for (TJobInfo job : jobs) {
+				Map<String, String> jobMap = new HashMap<String, String>();
+				jobMap.put("comId", String.valueOf(job.getcJobId()));
+				jobMap.put("jobName", job.getcJobTitle());
+				jobMap.put("jobDesc", job.getcJobDesc());
+				jobMap.put("payMethod", job.getcJobPayMethod());
+				jobMap.put("gender", job.getcJobPersonGender());
+				jobMap.put("totalPerson", String.valueOf(job.getcJobTotalPerson()));
+				jobMap.put("jobChoice", String.valueOf(job.getcJobChoiceOpId()));
+				jobMap.put("jobType", String.valueOf(job.getcJobTypeId()));
+				jobMap.put("city", job.getcJobCity());
+				jobMap.put("area", job.getcJobArea());
+				jobMap.put("address", job.getcJobPosition());
+				TLocation loc = tLocationMapper.selectByPrimaryKey(job.getcJobLocationId());
+				jobMap.put("locationX", loc.getcLocationLatitude());
+				jobMap.put("locationY", loc.getcLocationLongitude());
+				jobMap.put("locationName", loc.getcLocationName());
+				jobMap.put("workDate", job.getcJobWorkDate());
+				jobMap.put("workTime", job.getcJobWorkTime());
+				jobMap.put("salary", job.getcJobSalary());
+				jobList.add(jobMap);
+			}
+		}
+		dataMap.put("jobList", jobList);
+		dataMap.put("comInfo", data);
+		return dataMap;
 	}
 
 }
