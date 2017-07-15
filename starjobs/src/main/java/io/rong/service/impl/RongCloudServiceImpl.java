@@ -299,7 +299,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			tGroupMemberMapper.insertSelective(member);
 			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId,
 					String.valueOf(group.getcGroupId()), groupName);
-			System.out.println("--"+groupCreateResult.toString());
+			System.out.println("--" + groupCreateResult.toString());
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
 
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
@@ -311,7 +311,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "创建群组：" + groupName,
 						"{\"pushData\":\"" + "创建群组：" + groupName + "\"}", 1, 1, 1);
-				System.out.println("--2--"+messagePublishGroupResult.toString());
+				System.out.println("--2--" + messagePublishGroupResult.toString());
 				if (messagePublishGroupResult.getCode() == 200) {
 					group.setcGroupStatu("0");// 创建成功群组激活
 					tGroupMapper.updateByPrimaryKey(group);
@@ -390,7 +390,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			return null;
 		}
 		try {
-			CodeSuccessResult groupDismissResult = rongCloud.group.dismiss(userId, group.getcGroupCreaterId());
+			CodeSuccessResult groupDismissResult = rongCloud.group.dismiss(userId, groupId);
 			if (groupDismissResult != null && groupDismissResult.getCode() == 200) {
 				// 对群记录进行修改
 				// todo
@@ -454,25 +454,25 @@ public class RongCloudServiceImpl implements RongCloudService {
 		List<Map<String, Object>> memberList = new ArrayList<Map<String, Object>>();
 		for (TGroupMember member : members) {
 			Map<String, Object> aMember = new HashMap<String, Object>();
-			if(member.getcGroupMemberIdentity().equals("0")){//群主是公司用户
+			if (member.getcGroupMemberIdentity().equals("0")) {// 群主是公司用户
 				TCompanyInfo info = tCompanyInfoMapper.selectByPhone(member.getcGroupMemberId());
-				if(info != null){
+				if (info != null) {
 					aMember.put("memberName", info.getcComName());
 					aMember.put("memberImg", info.getcComHeadImg());
 					aMember.put("memberId", info.getcComPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
 				}
-			}else{
+			} else {
 				TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
-				if(info!=null){
+				if (info != null) {
 					aMember.put("memberName", info.getcUserNickname());
 					aMember.put("memberImg", info.getcUserImg());
 					aMember.put("memberId", info.getcUserPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
 				}
-			}		
+			}
 		}
 		result.put("memberList", memberList);
 		return result;
@@ -544,6 +544,49 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 
 		return groupInfoMap;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see io.rong.service.RongCloudService#quitGroup(java.lang.String,
+	 * java.lang.String)
+	 */
+	public Map<String, Object> quitGroup(String userId, String groupId) {
+		// 退出群组方法（将用户从群中移除，不再接收该群组的消息.）
+		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
+
+		String[] groupQuitUserId = { userId };
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		TGroup group = tGroupMapper.selectByPrimaryKey(Integer.parseInt(groupId));
+		if (group == null) {
+			return null;
+		}
+		if(group.getcGroupCreaterId().equals(userId)){
+			return null;//群主无法退群
+		}
+		try {
+			CodeSuccessResult groupQuitResult = rongCloud.group.quit(groupQuitUserId, groupId);
+			if (groupQuitResult.getCode() == 200) {
+				resultMap.put("code", "200");
+				//删除数据库中的群成员记录
+				tGroupMemberMapper.deleteByGroupIdAndUserId(Integer.parseInt(groupId),userId);
+				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> data = new HashMap<String, Object>();
+				data.put("operatorNickname", userId);
+				String[] targetUserIds = {userId,group.getcGroupCreaterId()};
+				data.put("targetUserIds", targetUserIds);
+				data.put("targetUserDisplayNames", groupQuitUserId);
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Quit", data, "退出群组", "退出群组");
+				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
+						messagePublishGroupToGroupId, groupMessage, "退出群组", "{\"pushData\":\"" + "退出群组\"}", 1, 1, 1);
+				return resultMap;
+			}
+
+		} catch (Exception e) {
+
+		}
+		return null;
 	}
 
 }

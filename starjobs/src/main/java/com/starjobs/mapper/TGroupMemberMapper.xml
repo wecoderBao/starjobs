@@ -1,208 +1,250 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.starjobs.mapper.TGroupMemberMapper" >
-  <resultMap id="BaseResultMap" type="com.starjobs.pojo.TGroupMember" >
-    <id column="c_id" property="cId" jdbcType="INTEGER" />
-    <result column="c_group_id" property="cGroupId" jdbcType="INTEGER" />
-    <result column="c_group_member_id" property="cGroupMemberId" jdbcType="VARCHAR" />
-    <result column="c_group_member_identity" property="cGroupMemberIdentity" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    c_id, c_group_id, c_group_member_id, c_group_member_identity
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TGroupMemberExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from t_group_member
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_group_member
-    where c_id = #{cId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_group_member
-    where c_id = #{cId,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.starjobs.pojo.TGroupMemberExample" >
-    delete from t_group_member
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.starjobs.pojo.TGroupMember" >
-    insert into t_group_member (c_id, c_group_id, c_group_member_id, 
-      c_group_member_identity)
-    values (#{cId,jdbcType=INTEGER}, #{cGroupId,jdbcType=INTEGER}, #{cGroupMemberId,jdbcType=VARCHAR}, 
-      #{cGroupMemberIdentity,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.starjobs.pojo.TGroupMember" >
-    insert into t_group_member
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cId != null" >
-        c_id,
-      </if>
-      <if test="cGroupId != null" >
-        c_group_id,
-      </if>
-      <if test="cGroupMemberId != null" >
-        c_group_member_id,
-      </if>
-      <if test="cGroupMemberIdentity != null" >
-        c_group_member_identity,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cId != null" >
-        #{cId,jdbcType=INTEGER},
-      </if>
-      <if test="cGroupId != null" >
-        #{cGroupId,jdbcType=INTEGER},
-      </if>
-      <if test="cGroupMemberId != null" >
-        #{cGroupMemberId,jdbcType=VARCHAR},
-      </if>
-      <if test="cGroupMemberIdentity != null" >
-        #{cGroupMemberIdentity,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.starjobs.pojo.TGroupMemberExample" resultType="java.lang.Integer" >
-    select count(*) from t_group_member
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update t_group_member
-    <set >
-      <if test="record.cId != null" >
-        c_id = #{record.cId,jdbcType=INTEGER},
-      </if>
-      <if test="record.cGroupId != null" >
-        c_group_id = #{record.cGroupId,jdbcType=INTEGER},
-      </if>
-      <if test="record.cGroupMemberId != null" >
-        c_group_member_id = #{record.cGroupMemberId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cGroupMemberIdentity != null" >
-        c_group_member_identity = #{record.cGroupMemberIdentity,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update t_group_member
-    set c_id = #{record.cId,jdbcType=INTEGER},
-      c_group_id = #{record.cGroupId,jdbcType=INTEGER},
-      c_group_member_id = #{record.cGroupMemberId,jdbcType=VARCHAR},
-      c_group_member_identity = #{record.cGroupMemberIdentity,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TGroupMember" >
-    update t_group_member
-    <set >
-      <if test="cGroupId != null" >
-        c_group_id = #{cGroupId,jdbcType=INTEGER},
-      </if>
-      <if test="cGroupMemberId != null" >
-        c_group_member_id = #{cGroupMemberId,jdbcType=VARCHAR},
-      </if>
-      <if test="cGroupMemberIdentity != null" >
-        c_group_member_identity = #{cGroupMemberIdentity,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where c_id = #{cId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TGroupMember" >
-    update t_group_member
-    set c_group_id = #{cGroupId,jdbcType=INTEGER},
-      c_group_member_id = #{cGroupMemberId,jdbcType=VARCHAR},
-      c_group_member_identity = #{cGroupMemberIdentity,jdbcType=VARCHAR}
-    where c_id = #{cId,jdbcType=INTEGER}
-  </update>
-  <!-- 根据手机号查询所在群组列表 -->
-  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from t_group_member where c_group_member_id = #{phoneNum,jdbcType=VARCHAR}
-  </select>
-  <!-- 根据群组id查询群组成员列表 -->
-  <select id="selectByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from t_group_member where c_group_id = #{groupId,jdbcType=INTEGER}
-  </select>
+<mapper namespace="com.starjobs.mapper.TGroupMemberMapper">
+	<resultMap id="BaseResultMap" type="com.starjobs.pojo.TGroupMember">
+		<id column="c_id" property="cId" jdbcType="INTEGER" />
+		<result column="c_group_id" property="cGroupId" jdbcType="INTEGER" />
+		<result column="c_group_member_id" property="cGroupMemberId"
+			jdbcType="VARCHAR" />
+		<result column="c_group_member_identity" property="cGroupMemberIdentity"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		c_id, c_group_id, c_group_member_id,
+		c_group_member_identity
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.starjobs.pojo.TGroupMemberExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from t_group_member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_group_member
+		where c_id = #{cId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_group_member
+		where c_id = #{cId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.starjobs.pojo.TGroupMemberExample">
+		delete from t_group_member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.starjobs.pojo.TGroupMember">
+		insert into t_group_member
+		(c_id, c_group_id, c_group_member_id,
+		c_group_member_identity)
+		values
+		(#{cId,jdbcType=INTEGER}, #{cGroupId,jdbcType=INTEGER},
+		#{cGroupMemberId,jdbcType=VARCHAR},
+		#{cGroupMemberIdentity,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.starjobs.pojo.TGroupMember">
+		insert into t_group_member
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				c_id,
+			</if>
+			<if test="cGroupId != null">
+				c_group_id,
+			</if>
+			<if test="cGroupMemberId != null">
+				c_group_member_id,
+			</if>
+			<if test="cGroupMemberIdentity != null">
+				c_group_member_identity,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				#{cId,jdbcType=INTEGER},
+			</if>
+			<if test="cGroupId != null">
+				#{cGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="cGroupMemberId != null">
+				#{cGroupMemberId,jdbcType=VARCHAR},
+			</if>
+			<if test="cGroupMemberIdentity != null">
+				#{cGroupMemberIdentity,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.starjobs.pojo.TGroupMemberExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_group_member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update t_group_member
+		<set>
+			<if test="record.cId != null">
+				c_id = #{record.cId,jdbcType=INTEGER},
+			</if>
+			<if test="record.cGroupId != null">
+				c_group_id = #{record.cGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="record.cGroupMemberId != null">
+				c_group_member_id =
+				#{record.cGroupMemberId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cGroupMemberIdentity != null">
+				c_group_member_identity =
+				#{record.cGroupMemberIdentity,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update t_group_member
+		set c_id = #{record.cId,jdbcType=INTEGER},
+		c_group_id = #{record.cGroupId,jdbcType=INTEGER},
+		c_group_member_id =
+		#{record.cGroupMemberId,jdbcType=VARCHAR},
+		c_group_member_identity =
+		#{record.cGroupMemberIdentity,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TGroupMember">
+		update t_group_member
+		<set>
+			<if test="cGroupId != null">
+				c_group_id = #{cGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="cGroupMemberId != null">
+				c_group_member_id = #{cGroupMemberId,jdbcType=VARCHAR},
+			</if>
+			<if test="cGroupMemberIdentity != null">
+				c_group_member_identity =
+				#{cGroupMemberIdentity,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where c_id = #{cId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TGroupMember">
+		update
+		t_group_member
+		set c_group_id = #{cGroupId,jdbcType=INTEGER},
+		c_group_member_id = #{cGroupMemberId,jdbcType=VARCHAR},
+		c_group_member_identity = #{cGroupMemberIdentity,jdbcType=VARCHAR}
+		where c_id = #{cId,jdbcType=INTEGER}
+	</update>
+	<!-- 根据手机号查询所在群组列表 -->
+	<select id="selectByPhone" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_group_member where c_group_member_id =
+		#{phoneNum,jdbcType=VARCHAR}
+	</select>
+	<!-- 根据群组id查询群组成员列表 -->
+	<select id="selectByGroupId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_group_member where c_group_id = #{groupId,jdbcType=INTEGER}
+	</select>
+	<!-- 根据群组id和用户id查找群成员记录 -->
+	<select id="selectByGroupIdAndUserId" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from t_group_member where c_group_id = #{groupId,jdbcType=INTEGER} and
+		c_group_member_id = #{userId,jdbcType=VARCHAR}
+	</select>
+	<!-- 根据群组id和用户id删除群成员记录 -->
+	<select id="deleteByGroupIdAndUserId" resultMap="BaseResultMap"
+		parameterType="map">
+		delete from t_group_member where c_group_id =
+		#{groupId,jdbcType=INTEGER} and
+		c_group_member_id =
+		#{userId,jdbcType=VARCHAR}
+	</select>
 </mapper>

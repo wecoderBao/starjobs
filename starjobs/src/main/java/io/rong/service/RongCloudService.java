@@ -38,4 +38,6 @@ public interface RongCloudService {
 	Map<String,Object> getGroupIdByJobId(String jobId);
 	
 	Map<String,Object> getGroupInfo(String groupId);
+	
+	Map<String,Object> quitGroup(String userId, String groupId);
 }

@@ -523,6 +523,7 @@ public class InstanceMessageController {
 
 		return modelMap;
 	}
+
 	@RequestMapping(value = "/cloud/get/groupInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getGroupInfo(HttpServletRequest request) {
@@ -551,13 +552,55 @@ public class InstanceMessageController {
 
 			return modelMap;
 		}
-		Map<String,Object> resultMap = new HashMap<String,Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
 		resultMap.put("groupInfo", groupInfoMap);
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");
 		modelMap.put("data", resultMap);
+
+		return modelMap;
+	}
+
+	// 退出群组方法
+	@RequestMapping(value = "/cloud/quit/group", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> quitGroup(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// groupId
+		String groupId = request.getParameter("groupId");
+		// userId
+		String userId = request.getParameter("userId");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(groupId)
+				|| StringUtils.isEmpty(userId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		// 验证输入的验证码
+		Map<String, Object> resultMap = rongCloudService.quitGroup(userId,groupId);
+		if (resultMap == null) {
+
+			return modelMap;
+		}
+
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+
 
 		return modelMap;
 	}
