@@ -307,6 +307,7 @@ public class UserServiceImpl implements UserService {
 			data.put("workDate", jobInfo.getcJobWorkDate());
 			data.put("workTime", jobInfo.getcJobWorkTime());
 			data.put("salary", jobInfo.getcJobSalary());
+			data.put("jobTypeId", String.valueOf(jobInfo.getcJobTypeId()));
 			infos.add(data);
 		}
 		modelMap.put("jobList", infos);

@@ -351,7 +351,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TGroupMember member = new TGroupMember();
 				member.setcGroupId(Integer.parseInt(groupId));// 所在群组id
 				member.setcGroupMemberId(userId);// 成员手机号
-				member.setcGroupMemberIdentity("0");// 群主标识
+				member.setcGroupMemberIdentity("1");// 群主标识
 				tGroupMemberMapper.insertSelective(member);
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
