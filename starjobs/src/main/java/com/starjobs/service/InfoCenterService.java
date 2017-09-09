@@ -32,7 +32,10 @@ public interface InfoCenterService {
 
 	// 公司用户上传营业证图片
 	public Map<String, Object> uploadComCertificate(String token, Map<String, String> params, String path);
-	
-	//公司用户根据id获取发布兼职列表
-	public Map<String,Object> getJobListAndComInfoByComId(String comId);
+
+	// 公司用户根据id获取发布兼职列表和公司信息
+	public Map<String, Object> getJobListAndComInfoByComId(String comId);
+
+	// 公司用户根据id获取发布兼职列表
+	public Map<String, Object> getJobListByComId(String comId);
 }

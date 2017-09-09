@@ -372,4 +372,40 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		return dataMap;
 	}
 
+	public Map<String, Object> getJobListByComId(String comId) {
+		int com_id = Integer.parseInt(comId);
+		///
+		List<TJobInfo> jobs = tJobInfoMapper.selectByComId(com_id);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<Map<String, String>> jobList = new ArrayList<Map<String, String>>();
+
+		if (null != jobs) {
+			for (TJobInfo job : jobs) {
+				Map<String, String> jobMap = new HashMap<String, String>();
+				jobMap.put("comId", String.valueOf(job.getcJobId()));
+				jobMap.put("jobName", job.getcJobTitle());
+				jobMap.put("jobId", String.valueOf(job.getcJobId()));
+				jobMap.put("jobDesc", job.getcJobDesc());
+				jobMap.put("payMethod", job.getcJobPayMethod());
+				jobMap.put("gender", job.getcJobPersonGender());
+				jobMap.put("totalPerson", String.valueOf(job.getcJobTotalPerson()));
+				jobMap.put("jobChoice", String.valueOf(job.getcJobChoiceOpId()));
+				jobMap.put("jobType", String.valueOf(job.getcJobTypeId()));
+				jobMap.put("city", job.getcJobCity());
+				jobMap.put("area", job.getcJobArea());
+				jobMap.put("address", job.getcJobPosition());
+				TLocation loc = tLocationMapper.selectByPrimaryKey(job.getcJobLocationId());
+				jobMap.put("locationX", loc.getcLocationLatitude());
+				jobMap.put("locationY", loc.getcLocationLongitude());
+				jobMap.put("locationName", loc.getcLocationName());
+				jobMap.put("workDate", job.getcJobWorkDate());
+				jobMap.put("workTime", job.getcJobWorkTime());
+				jobMap.put("salary", job.getcJobSalary());
+				jobList.add(jobMap);
+			}
+		}
+		dataMap.put("jobList", jobList);
+		// dataMap.put("comInfo", data);
+		return dataMap;
+	}
 }

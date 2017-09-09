@@ -346,6 +346,7 @@ public class UserServiceImpl implements UserService {
 		data.put("salary", jobInfo.getcJobSalary());
 		data.put("city", jobInfo.getcJobCity());
 		data.put("area", jobInfo.getcJobArea());
+		data.put("address", jobInfo.getcJobPosition());
 		//查看次数
 		data.put("like", jobInfo.getcUserLike());
 		//更新查看次数
