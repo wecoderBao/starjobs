@@ -40,4 +40,5 @@ public interface RongCloudService {
 	Map<String,Object> getGroupInfo(String groupId);
 	
 	Map<String,Object> quitGroup(String userId, String groupId);
+	Map<String,Object> getRelations(String phoneNum);
 }

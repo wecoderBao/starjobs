@@ -562,19 +562,19 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (group == null) {
 			return null;
 		}
-		if(group.getcGroupCreaterId().equals(userId)){
-			return null;//群主无法退群
+		if (group.getcGroupCreaterId().equals(userId)) {
+			return null;// 群主无法退群
 		}
 		try {
 			CodeSuccessResult groupQuitResult = rongCloud.group.quit(groupQuitUserId, groupId);
 			if (groupQuitResult.getCode() == 200) {
 				resultMap.put("code", "200");
-				//删除数据库中的群成员记录
-				tGroupMemberMapper.deleteByGroupIdAndUserId(Integer.parseInt(groupId),userId);
+				// 删除数据库中的群成员记录
+				tGroupMemberMapper.deleteByGroupIdAndUserId(Integer.parseInt(groupId), userId);
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("operatorNickname", userId);
-				String[] targetUserIds = {userId,group.getcGroupCreaterId()};
+				String[] targetUserIds = { userId, group.getcGroupCreaterId() };
 				data.put("targetUserIds", targetUserIds);
 				data.put("targetUserDisplayNames", groupQuitUserId);
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Quit", data, "退出群组", "退出群组");
@@ -589,4 +589,41 @@ public class RongCloudServiceImpl implements RongCloudService {
 		return null;
 	}
 
+	public Map<String, Object> getRelations(String phoneNum) {
+		// 根据手机号查找好友，本人在左侧
+		List<TFriend> leftList = tFriendMapper.selectByUid(phoneNum);
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Map<String, Object>> friendList = new ArrayList<Map<String, Object>>();
+		if (null != leftList && leftList.size() > 0) {
+			for (TFriend tf : leftList) {
+				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcFid());
+				if (info != null) {// 好友
+					Map<String, Object> fr = new HashMap<String, Object>(3);
+					fr.put("friendName", info.getcUserNickname());
+					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPhoneNum", info.getcUserPhone());
+					fr.put("state", tf.getcState());
+					friendList.add(fr);
+				}
+			}
+		}
+
+		// 查找好友，本人在右侧
+		List<TFriend> rightList = tFriendMapper.selectByFid(phoneNum);
+		if (null != rightList && rightList.size() > 0) {
+			for (TFriend tf : rightList) {
+				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
+				if (info != null && tf.getcState().equals("2")) {// 好友
+					Map<String, Object> fr = new HashMap<String, Object>(3);
+					fr.put("friendName", info.getcUserNickname());
+					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPhoneNum", info.getcUserPhone());
+					fr.put("state", tf.getcState());
+					friendList.add(fr);
+				}
+			}
+		}
+		result.put("relationList", friendList);
+		return result;
+	}
 }
