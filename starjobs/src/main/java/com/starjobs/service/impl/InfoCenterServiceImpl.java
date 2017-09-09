@@ -374,6 +374,12 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 
 	public Map<String, Object> getJobListByComId(String comId) {
 		int com_id = Integer.parseInt(comId);
+		// 获取公司信息
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(com_id);
+		String imgPath = "";
+		if (tComInfo != null) {
+			imgPath = SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg();
+		}
 		///
 		List<TJobInfo> jobs = tJobInfoMapper.selectByComId(com_id);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -382,18 +388,12 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		if (null != jobs) {
 			for (TJobInfo job : jobs) {
 				Map<String, String> jobMap = new HashMap<String, String>();
-				jobMap.put("comId", String.valueOf(job.getcJobId()));
+				jobMap.put("comId", String.valueOf(job.getcComId()));
 				jobMap.put("jobName", job.getcJobTitle());
 				jobMap.put("jobId", String.valueOf(job.getcJobId()));
-				jobMap.put("jobDesc", job.getcJobDesc());
-				jobMap.put("payMethod", job.getcJobPayMethod());
-				jobMap.put("gender", job.getcJobPersonGender());
-				jobMap.put("totalPerson", String.valueOf(job.getcJobTotalPerson()));
-				jobMap.put("jobChoice", String.valueOf(job.getcJobChoiceOpId()));
-				jobMap.put("jobType", String.valueOf(job.getcJobTypeId()));
-				jobMap.put("city", job.getcJobCity());
+				jobMap.put("comImg", imgPath);
 				jobMap.put("area", job.getcJobArea());
-				jobMap.put("address", job.getcJobPosition());
+				jobMap.put("publishTime", job.getcJobPublishDate().toString());
 				TLocation loc = tLocationMapper.selectByPrimaryKey(job.getcJobLocationId());
 				jobMap.put("locationX", loc.getcLocationLatitude());
 				jobMap.put("locationY", loc.getcLocationLongitude());
