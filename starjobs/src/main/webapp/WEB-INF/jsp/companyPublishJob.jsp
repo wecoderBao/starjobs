@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en"><head>
@@ -61,7 +65,8 @@
         });
         //导出文件
         function exportFile(){
-        	
+        	window.location.href="<%=basePath%>"+"export2File";
+        	console.log("=="+"<%=basePath%>"+"export2File")
         }
     </script>
 
@@ -100,7 +105,7 @@
         <div class="main-content">
             
             <div class="btn-toolbar list-toolbar">
-                <button onclick="importFile()" class="btn btn-default">导出数据</button>
+                <button onclick="exportFile()" class="btn btn-default">导出数据</button>
             <div class="btn-group">
             </div>
             </div>
