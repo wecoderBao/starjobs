@@ -111,7 +111,7 @@
         <ul>
             <li><a href="courseManage.html" class="nav-header"><i class="fa fa-fw fa-list-alt"></i>公司审核</a></li>
             <li><a href="wordManage.html" class="nav-header"><i class="fa fa-book"></i>提现审核</a></li>
-            <li><a href="lisenningManage.html" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 招聘信息管理</a></li>
+            <li><a href="/starjobs/companyPublishJob" class="nav-header" target="blank"><i class="fa fa-fw fa-heart"></i> 招聘信息管理</a></li>
         
             <li data-popover="true" data-content="" rel="popover" data-placement="right"><a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-group"></i> 信息管理<i class="fa fa-collapse"></i></a></li>
                 <li><ul class="premium-menu nav nav-list collapse">

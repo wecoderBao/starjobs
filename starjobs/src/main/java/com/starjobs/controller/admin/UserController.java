@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.starjobs.service.AdminService;
 
@@ -41,5 +42,10 @@ public class UserController {
 		// 清除session
 		session.invalidate();		
 		return "redirect:/login.jsp";
+	}
+	//查看公司发布兼职信息
+	@RequestMapping(value="/companyPublishJob",method=RequestMethod.GET)
+	public  String companyPublishJob(){
+		return "jsp/companyPublishJob";
 	}
 }
