@@ -119,11 +119,11 @@ public class ImageUtil {
 		}
 	}
 	public static void main(String[] args)throws Exception {
-		String path = "d:" + File.separator + "a.png";
+		String path = "d:" + File.separator + "test.png";
 		String re = readPhoto(path);
 		System.out.println(re);
 		String str = "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANdEVYdEF1dGhvcgBhY2VyMDMjEBkpAAAAIHRFWHRDcmVhdGlvblRpbWUAMjAxNzowMzoyNSAxNjowMTozOHJMfckAAAAhdEVYdENyZWF0aW9uIFRpbWUAMjAxNzowMzoyNSAxNjowMTozOPrDHg8AAAJnSURBVDhPnVJLa1NBFP7uTXMfbZLSPBTain+jUHUjopBFsAZFuhGlbhTFakHsxk3/hAi66E9QcaEbq/4BF7orJUljGpPe9/ve45lRcSsOzJyZc+Z85zsPJQxDwn8s9bf8hyW+/t1qSeFDIRR5KuX2k8cY9PpsUpCnBRRSYegGwiBGEmfQDQ1QSlDjJISm6wISBwcH6PV6qNfrUFUVRVFIvW15WFioolzWYNsBfN+HcuniBRIOmjaDPM/RbDYxnVqoVCoyiqZpDDKDY8tBq3UCZ86dxc7OU8A6HtP3YY+mkxF1r3To29cvfB8TFRn5rkee4xJTpqIgisKMXC+mw+GY4HsWEaV0985tevniGTvE8p3EPm0+uE+fP+3R9MeEbNulQX9E7E+DwyPiVBR83PvA/Mtot9uSf8A7SRIYhoEsy2QKtVoFjUaD7Ymkr4yPBtTpdHDz1g2srq5ibW0Np5ZPY39/H0tLy+AAGA5HqDdaXHUNr968xvx8Bbh29TK12+dpd/c5BcGUosgi15lQHLn0cPMevX/3ln1zcl2XwjAmP0jo2PJI3djYgIgo6JRKJUlRSEXhPrJO0OXKyLtoj0ipWp2DurKygjTJZW5CKT6apilzEzIIAnkX7Zk1DXieh9FoDHWOFQKpWplHFCZc5ZBBAliWjcXFZbYBju1JgCQpoPMUpWmKGddx2UjgYUe324XjOEz11zD0+4dMq4pW8yTiNOOeO7i+vo6trUdQwsChP1REZOFYLuty5HTNlDmLyfHDQL5TBpydNaESKexUw2QykVFEnrJPXByViyRABaBwEvpazUQURfgJJYGDFOfo/FIAAAAASUVORK5CYII=";
-		System.out.println("ll:"+re.equals(str));
+//		System.out.println("ll:"+re.equals(str));
 		saveStr2Photo("d:", str, "png");
 	}
 }

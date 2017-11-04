@@ -73,8 +73,13 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
-		String realPath = request.getSession().getServletContext().getRealPath("/photo/user");
-		System.out.println("realPath:" + realPath);
+//		String realPath = request.getSession().getServletContext().getRealPath("/photo/user");
+		String realPath = this.getClass().getClassLoader().getResource("/").getPath(); 
+		System.out.println("realpath:" + realPath);
+		//F:/apache-tomcat-8.0.32/webapps/starjobs/WEB-INF/classes/
+		int end = realPath.lastIndexOf("WEB-INF");
+		realPath = realPath.substring(0, end)+"photo/user";
+		System.out.println("opath:" + realPath);
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
