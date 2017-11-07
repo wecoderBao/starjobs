@@ -100,12 +100,14 @@ public class AppUserController {
 		String userFlag = request.getParameter("userFlag");
 		// job id
 		String jobId = request.getParameter("jobId");
+		// userphone
+		String userPhone = request.getParameter("userPhone");
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(jobId)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(jobId) || StringUtils.isEmpty(userPhone)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -114,7 +116,7 @@ public class AppUserController {
 			return modelMap;
 		}
 		// 返回兼职信息
-		Map<String, Object> jobMap = userService.userGetJobDetail(jobId);
+		Map<String, Object> jobMap = userService.userGetJobDetail(jobId,userPhone);
 		if (jobMap == null) {
 			return modelMap;
 		}

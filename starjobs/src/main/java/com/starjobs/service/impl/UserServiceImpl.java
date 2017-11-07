@@ -15,13 +15,17 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.starjobs.mapper.TCompanyInfoMapper;
+import com.starjobs.mapper.TGroupMapper;
 import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
+import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.pojo.TCompanyInfo;
+import com.starjobs.pojo.TGroup;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
+import com.starjobs.pojo.TUserJobApplyExample;
 import com.starjobs.service.TokenService;
 import com.starjobs.service.UserService;
 import com.starjobs.sms.util.MobClient;
@@ -54,6 +58,12 @@ public class UserServiceImpl implements UserService {
 	// 地点操作类
 	@Autowired
 	TLocationMapper tLocationMapper;
+	//申请兼职操作类
+	@Autowired
+	TUserJobApplyMapper tUserJobApplyMapper;
+	//群组操作类
+	@Autowired
+	TGroupMapper tGroupMapper;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -316,7 +326,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 用户查询兼职详细信息
-	public Map<String, Object> userGetJobDetail(String jobId) {
+	public Map<String, Object> userGetJobDetail(String jobId,String userPhone) {
 		int id = 0;
 		id = Integer.parseInt(jobId);
 
@@ -324,6 +334,10 @@ public class UserServiceImpl implements UserService {
 
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(id);
 		if (null == jobInfo) {
+			return modelMap;
+		}
+		TUserInfo userInfo = tUserInfoMapper.selectByPhone(userPhone);
+		if(userInfo == null){
 			return modelMap;
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -348,6 +362,31 @@ public class UserServiceImpl implements UserService {
 		data.put("city", jobInfo.getcJobCity());
 		data.put("area", jobInfo.getcJobArea());
 		data.put("address", jobInfo.getcJobPosition());
+		//用户是否报名该兼职
+		TUserJobApplyExample example = new TUserJobApplyExample();
+		TUserJobApplyExample.Criteria criteria = example.createCriteria();
+		criteria.andCUserIdEqualTo(userInfo.getcUserId());
+		criteria.andCJobIdEqualTo(id);
+		int result = tUserJobApplyMapper.countByExample(example);
+		if(result>0){
+			data.put("applied", "1");
+		}else{
+			data.put("applied","0");
+		}
+		//报名人数
+		TUserJobApplyExample example2 = new TUserJobApplyExample();
+		TUserJobApplyExample.Criteria criteria2 = example.createCriteria();
+		criteria2.andCJobIdEqualTo(id);
+		int result2 = tUserJobApplyMapper.countByExample(example2);
+		data.put("totalApplied", result2);
+		//查找对应的群
+		TGroup group = tGroupMapper.selectByJobId(jobId);
+		if(group == null){
+			data.put("groupId", "");
+		}else{
+			data.put("groupId",group.getcGroupId().toString());
+		}
+		data.put("comPhone", company.getcComPhone());
 		//查看次数
 		data.put("like", jobInfo.getcUserLike());
 		//更新查看次数

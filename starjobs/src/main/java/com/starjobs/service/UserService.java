@@ -30,7 +30,7 @@ public interface UserService {
 	public Map<String, Object> userGetJobInfo(String city, String area, String type, String choice, String page);
 
 	// 用户查询兼职信息
-	public Map<String, Object> userGetJobDetail(String jobId);
+	public Map<String, Object> userGetJobDetail(String jobId,String userPhone);
 	
 	//发布兼职信息
 	public Map<String,Object> publishJobInfo(Map<String,String> params);

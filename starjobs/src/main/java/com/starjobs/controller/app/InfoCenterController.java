@@ -60,6 +60,8 @@ public class InfoCenterController {
 		}
 		Map<String, Object> data = infoCenterService.getUserInfo(token, userFlag);
 		if (data != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
 			modelMap.put("data", data);
 		}
 		return modelMap;
