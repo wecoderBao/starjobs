@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.starjobs.common.StarConstants;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TGroupMapper;
 import com.starjobs.mapper.TJobInfoMapper;
@@ -343,7 +344,7 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("comId", jobInfo.getcComId());
 		TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
-		data.put("comImg", company.getcComHeadImg());
+		data.put("comImg", StarConstants.COM_IMG_URL+company.getcComHeadImg());
 		data.put("comName", company.getcComName());
 		data.put("publishTime", jobInfo.getcJobPublishDate());
 		data.put("jobId", jobInfo.getcJobId());

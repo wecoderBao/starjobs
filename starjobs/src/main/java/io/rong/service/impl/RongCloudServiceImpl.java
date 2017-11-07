@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.starjobs.common.StarConstants;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TFriendMapper;
 import com.starjobs.mapper.TGroupMapper;
@@ -601,7 +602,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
@@ -617,7 +618,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
