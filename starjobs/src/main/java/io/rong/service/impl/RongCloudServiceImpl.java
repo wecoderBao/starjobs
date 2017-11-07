@@ -614,7 +614,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (null != rightList && rightList.size() > 0) {
 			for (TFriend tf : rightList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
-				if (info != null && tf.getcState().equals("2")) {// 好友
+				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl", info.getcUserImg());
