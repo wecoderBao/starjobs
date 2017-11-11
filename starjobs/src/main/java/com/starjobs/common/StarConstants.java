@@ -17,5 +17,5 @@ public class StarConstants {
 	
 	//图片路径前缀
 	public static final String USER_IMG_URL="http://starjobs.duapp.com/photo/user/";
-	public static final String COM_IMG_URL="http://starjobs.duapp.com/photo/com";
+	public static final String COM_IMG_URL="http://starjobs.duapp.com/photo/com/";
 }

@@ -328,7 +328,7 @@ public class UserServiceImpl implements UserService {
 
 	// 用户查询兼职详细信息
 	public Map<String, Object> userGetJobDetail(String jobId,String userPhone) {
-		int id = 0;
+		int id = -1;
 		id = Integer.parseInt(jobId);
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -376,7 +376,7 @@ public class UserServiceImpl implements UserService {
 		}
 		//报名人数
 		TUserJobApplyExample example2 = new TUserJobApplyExample();
-		TUserJobApplyExample.Criteria criteria2 = example.createCriteria();
+		TUserJobApplyExample.Criteria criteria2 = example2.createCriteria();
 		criteria2.andCJobIdEqualTo(id);
 		int result2 = tUserJobApplyMapper.countByExample(example2);
 		data.put("totalApplied", result2);

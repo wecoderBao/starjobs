@@ -1,7 +1,6 @@
 ---兼职类型
 insert into t_job_type (id,code,name) 
 values
-	(1,'1','不限'),
 	(2,'2','促销导购'),
 	(3,'3','服务员'),
 	(4,'4','家教辅导'),
@@ -23,7 +22,6 @@ values
 ---兼职筛选条件
 insert into t_job_choice(id,code,name)
 values
-	(1,'1','不限'),
 	(2,'2','短期兼职'),
 	(3,'3','长期兼职'),
 	(4,'4','寒假工'),
