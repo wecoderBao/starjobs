@@ -21,4 +21,6 @@ public interface UserLikeService {
 	public Map<String, Object> likeCompany(String userPhone, String comPhone);
 	
 	public Map<String,Object> getAllLikeCompany(String userPhone);
+	
+	public Map<String,Object> giveScore2Com(String userPhone,String jobId,String comId,String score);
 }

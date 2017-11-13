@@ -113,4 +113,45 @@ public class UserLikeController {
 
 		return modelMap;
 	}
+
+	// 用户给公司打分
+	@RequestMapping(value = "/user/give/score2com", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getScore2Com(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// userPhone
+		String userPhone = request.getParameter("userPhone");
+		String score = request.getParameter("score");
+		String comId = request.getParameter("comId");
+		String jobId = request.getParameter("jobId");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(userPhone)
+				|| StringUtils.isEmpty(score)|| StringUtils.isEmpty(comId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		// 验证输入的验证码
+		Map<String, Object> resultMap = userLikeService.giveScore2Com(userPhone,jobId,comId,score);
+		if (resultMap == null) {
+			return modelMap;
+		}
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		modelMap.put("data", resultMap);
+
+		return modelMap;
+	}
 }
