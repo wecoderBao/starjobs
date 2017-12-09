@@ -219,7 +219,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (null != userInfo) {
 			resultMap.put("friendName", userInfo.getcUserNickname());
-			resultMap.put("friendPicUrl", userInfo.getcUserImg());
+			resultMap.put("friendPicUrl", StarConstants.USER_IMG_URL+userInfo.getcUserImg());
 			resultMap.put("friendPhoneNum", userInfo.getcUserPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -228,7 +228,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phoneNum.trim());
 		if (null != comInfo) {
 			resultMap.put("friendName", comInfo.getcComName());
-			resultMap.put("friendPicUrl", comInfo.getcComHeadImg());
+			resultMap.put("friendPicUrl", StarConstants.COM_IMG_URL+comInfo.getcComHeadImg());
 			resultMap.put("friendPhoneNum", comInfo.getcComPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -284,10 +284,13 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
+			TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+			String comHeadImg = comInfo.getcComHeadImg();
+			comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
 			// 保存群组
 			TGroup group = new TGroup();
 			group.setcGroupCreaterId(userId);
-			group.setcGroupHeadImg("http://www.rongcloud.cn/images/logo.png");
+			group.setcGroupHeadImg(comHeadImg);
 			group.setcGroupName(groupName);
 			group.setcGroupStatu("1");
 			group.setcJobId(jobId);
@@ -435,7 +438,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (null != group && group.getcGroupStatu().equals("0")) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
-					aGroup.put("groupImg", group.getcGroupHeadImg());
+					aGroup.put("groupImg",StarConstants.COM_IMG_URL+ group.getcGroupHeadImg());
 					groupList.add(aGroup);
 				}
 			}
@@ -460,7 +463,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TCompanyInfo info = tCompanyInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcComName());
-					aMember.put("memberImg", info.getcComHeadImg());
+					aMember.put("memberImg",StarConstants.COM_IMG_URL+ info.getcComHeadImg());
 					aMember.put("memberId", info.getcComPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
@@ -469,7 +472,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcUserNickname());
-					aMember.put("memberImg", info.getcUserImg());
+					aMember.put("memberImg", StarConstants.USER_IMG_URL+info.getcUserImg());
 					aMember.put("memberId", info.getcUserPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
