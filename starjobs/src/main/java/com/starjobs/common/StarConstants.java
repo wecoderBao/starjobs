@@ -18,4 +18,12 @@ public class StarConstants {
 	//图片路径前缀
 	public static final String USER_IMG_URL="http://starjobs.duapp.com/photo/user/";
 	public static final String COM_IMG_URL="http://starjobs.duapp.com/photo/com/";
+	
+	//兼职信息状态
+	//发布中
+	public static final String JOB_KEEPING = "0";
+	//停止
+	public static final String JOB_STOP = "1";
+	//审核
+	public static final String JOB_VERIFY = "2";
 }

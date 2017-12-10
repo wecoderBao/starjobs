@@ -36,15 +36,15 @@ import com.starjobs.service.UserLikeService;
 public class UserLikeServiceImpl implements UserLikeService {
 
 	@Autowired
-	TUserLikeComMapper tUserLikeComMapper;
+	private TUserLikeComMapper tUserLikeComMapper;
 	@Autowired
-	TCompanyInfoMapper tCompanyInfoMapper;
+	private TCompanyInfoMapper tCompanyInfoMapper;
 	@Autowired
-	TUserJobApplyMapper tUserJobApplyMapper;
+	private TUserJobApplyMapper tUserJobApplyMapper;
 	@Autowired
-	TUserInfoMapper tUserInfoMapper;
+	private TUserInfoMapper tUserInfoMapper;
 	@Autowired
-	TComScoreMapper tComScoreMapper;
+	private TComScoreMapper tComScoreMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.starjobs.service.UserLikeService#likeCompany(java.lang.String, java.lang.String)

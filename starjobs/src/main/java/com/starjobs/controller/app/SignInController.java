@@ -31,7 +31,7 @@ import com.starjobs.sys.SystemUtil;
 @Controller
 public class SignInController {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	// 用户注册
 	@RequestMapping(value = "/user/register/sign_in", method = RequestMethod.POST)

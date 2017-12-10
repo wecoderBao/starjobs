@@ -135,7 +135,7 @@ public class AppUserController {
 		return modelMap;
 	}
 
-	// 用户获取单个兼职信息信息
+	// 发布兼职信息
 	@RequestMapping(value = "/user/publish/job_info", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> publishJobInfo(HttpServletRequest request) {
