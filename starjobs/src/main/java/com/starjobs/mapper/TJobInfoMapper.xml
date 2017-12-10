@@ -546,7 +546,7 @@
     from t_job_info
     <if test="city != null" >
       <where>
-      	c_job_city = #{city,jdbcType=VARCHAR}
+      	c_job_city = #{city,jdbcType=VARCHAR} and c_job_state= #{jobState,jdbcType=VARCHAR}
       	<if test="area != null ">
       		and c_job_area in 
       		 <foreach collection="area" index="index" item="item" open="(" separator="," close=")">  

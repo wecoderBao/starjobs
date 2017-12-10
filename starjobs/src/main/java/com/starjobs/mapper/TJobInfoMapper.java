@@ -36,7 +36,7 @@ public interface TJobInfoMapper {
 	int updateByPrimaryKey(TJobInfo record);
 
 	// 更据查询条件查询兼职信息
-	List<TJobInfo> selectByUser(@Param("city") String city, @Param("area") List<String> area, @Param("typeId") List<Integer> typeId,
+	List<TJobInfo> selectByUser(@Param("jobState")String jobState,@Param("city") String city, @Param("area") List<String> area, @Param("typeId") List<Integer> typeId,
 			@Param("choiceId") List<Integer> choiceId, @Param("start") Integer start, @Param("offset") Integer offset);
 	//更新用户查看次数
 	int updateUserLike(@Param("id") Integer id,@Param("cUserLike") Integer cUserLike);

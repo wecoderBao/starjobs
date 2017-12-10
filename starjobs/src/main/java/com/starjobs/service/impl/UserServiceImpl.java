@@ -319,8 +319,9 @@ public class UserServiceImpl implements UserService {
 		}
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		ArrayList<Map<String, Object>> infos = new ArrayList<Map<String, Object>>();
-
-		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, areas, typeIds, choiceIds, start, offset);
+		//显示正常的招聘信息
+		String jobState = "0";
+		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(jobState,city, areas, typeIds, choiceIds, start, offset);
 		if (null == jobList || jobList.size() == 0) {
 			return modelMap;
 		}
@@ -499,6 +500,8 @@ public class UserServiceImpl implements UserService {
 		jobInfo.setcJobWorkDate(params.get("workDate"));
 		jobInfo.setcJobWorkTime(params.get("workTime"));
 		jobInfo.setcJobSalary(params.get("salary"));
+		//兼职状态
+		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.insertSelective(jobInfo);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
