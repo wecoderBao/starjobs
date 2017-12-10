@@ -3,7 +3,6 @@
  */
 package com.starjobs.test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -44,7 +43,7 @@ public class JobInfoTest {
 		List<Integer> choiceId = null;
 		int start = 0;
 		int offset = 10;
-		List<TJobInfo> jobList = tJobInfoMapper.selectByUser(city, area, typeId, choiceId, start, offset);
+		List<TJobInfo> jobList = tJobInfoMapper.selectByUser("0",city, area, typeId, choiceId, start, offset);
 
 		System.out.println(jobList.size());
 		for (TJobInfo jobInfo : jobList) {
