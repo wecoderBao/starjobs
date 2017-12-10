@@ -78,6 +78,46 @@ public class JobApplyController {
 		return modelMap;
 	}
 
+	// 用户申请兼职
+	@RequestMapping(value = "/user/applyJob/joinGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> applyJobAndJoinGroup(@RequestParam String userPhone, @RequestParam Integer jobId,
+			HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 申请描述信息
+		String applyDesc = request.getParameter("applyDesc");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(userPhone)
+				|| jobId == null) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+
+		// 申请兼职,加入群组
+		Map<String, Object> result = jobApplyService.applyJobAndJoinGroup(userPhone, jobId, applyDesc);
+		// 发布成功
+		if (result != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			result.put("token", token);
+			result.put("userFlag", SystemUtil.USER_COM);
+			modelMap.put("data", result);
+		}
+
+		return modelMap;
+	}
+
 	// 公司查看申请兼职列表
 	@RequestMapping(value = "/com/check/job/apply", method = RequestMethod.POST)
 	@ResponseBody

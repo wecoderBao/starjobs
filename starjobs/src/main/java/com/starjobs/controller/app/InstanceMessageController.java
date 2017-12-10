@@ -34,9 +34,9 @@ import io.rong.service.RongCloudService;
 @Controller
 public class InstanceMessageController {
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	RongCloudService rongCloudService;
+	private RongCloudService rongCloudService;
 
 	// 获取融云端token
 	@RequestMapping(value = "/cloud/get/token", method = RequestMethod.POST)

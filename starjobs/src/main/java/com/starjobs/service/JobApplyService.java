@@ -17,4 +17,7 @@ public interface JobApplyService {
 	Map<String,Object> applyJob(String userPhone,Integer jobId, String applyDesc);
 	//公司查看兼职申请情况
 	Map<String,Object> checkJobApply(Integer jobId);
+	//申请兼职，加入群组
+	Map<String,Object> applyJobAndJoinGroup(String userPhone,Integer jobId, String applyDesc);
+	
 }
