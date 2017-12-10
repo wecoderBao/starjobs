@@ -53,6 +53,8 @@ public class MyPublishServiceImpl implements MyPublishService {
 		comInfo.setcComBalance(String.valueOf(balance));
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
+		resultMap.put("code", "200");
+		resultMap.put("info", "成功");
 		return resultMap;
 	}
 
@@ -85,6 +87,8 @@ public class MyPublishServiceImpl implements MyPublishService {
 		Date now = new Date();
 		jobInfo.setcJobPublishDate(now);
 		tJobInfoMapper.updateByPrimaryKey(jobInfo);
+		resultMap.put("code", "200");
+		resultMap.put("info", "成功");
 		return resultMap;
 	}
 
