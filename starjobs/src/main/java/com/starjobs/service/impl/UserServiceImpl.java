@@ -42,6 +42,8 @@ import com.starjobs.service.UserService;
 import com.starjobs.sms.util.MobClient;
 import com.starjobs.sys.SystemUtil;
 
+import io.rong.service.RongCloudService;
+
 /**
  * <p>
  * Title:SignInServiceImpl
@@ -56,7 +58,7 @@ import com.starjobs.sys.SystemUtil;
 public class UserServiceImpl implements UserService {
 	// 公司信息操作类
 	@Autowired
-	TCompanyInfoMapper tComapanyInfoMapper;
+	TCompanyInfoMapper tCompanyInfoMapper;
 	// 个人用户信息操作类
 	@Autowired
 	TUserInfoMapper tUserInfoMapper;
@@ -86,6 +88,8 @@ public class UserServiceImpl implements UserService {
 	TComAddressMapper tComAddressMapper;
 	@Autowired
 	TComScoreMapper tComScoreMapper;
+	@Autowired
+	private RongCloudService rongCloudService;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -134,7 +138,7 @@ public class UserServiceImpl implements UserService {
 		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
 			// 查询用户是否存在，若存在则不能再注册
-			TCompanyInfo record = tComapanyInfoMapper.selectByPhone(phone);
+			TCompanyInfo record = tCompanyInfoMapper.selectByPhone(phone);
 			if (record != null) {
 				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
 				modelMap.put("message", "phone registered");
@@ -145,7 +149,7 @@ public class UserServiceImpl implements UserService {
 			tciRecord.setcComPassword(password);
 			tciRecord.setcComName(phone);
 			tciRecord.setcComBalance("50");// 账户余额默认为50元
-			tComapanyInfoMapper.insert(tciRecord);
+			tCompanyInfoMapper.insert(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
 
@@ -191,7 +195,7 @@ public class UserServiceImpl implements UserService {
 		if (SystemUtil.CODE_SUCC.equals(jsonResult.get("status").toString())
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
 			int re = 0;
-			re = tComapanyInfoMapper.updatePwdByPhoneNum(phone, password);
+			re = tCompanyInfoMapper.updatePwdByPhoneNum(phone, password);
 			if (re == 1) {
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
@@ -225,7 +229,7 @@ public class UserServiceImpl implements UserService {
 
 		if (SystemUtil.USER_COM.equals(userFlag)) {
 			// 用户为公司，验证登录操作
-			TCompanyInfo tciRecord = tComapanyInfoMapper.selectByPhone(phone);
+			TCompanyInfo tciRecord = tCompanyInfoMapper.selectByPhone(phone);
 			if (tciRecord != null && password.equals(tciRecord.getcComPassword())) {
 				// 验证密码成功
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -328,7 +332,7 @@ public class UserServiceImpl implements UserService {
 		for (TJobInfo jobInfo : jobList) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("comId", jobInfo.getcComId());
-			TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
+			TCompanyInfo company = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
 			data.put("comImg", company.getcComHeadImg());
 			data.put("publishTime", jobInfo.getcJobPublishDate());
 			data.put("jobId", jobInfo.getcJobId());
@@ -364,8 +368,9 @@ public class UserServiceImpl implements UserService {
 			return modelMap;
 		}
 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("jobType",String.valueOf(jobInfo.getcJobTypeId()));
 		data.put("comId", jobInfo.getcComId());
-		TCompanyInfo company = tComapanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
+		TCompanyInfo company = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
 		data.put("comImg", StarConstants.COM_IMG_URL + company.getcComHeadImg());
 		data.put("comName", company.getcComName());
 		data.put("publishTime", jobInfo.getcJobPublishDate());
@@ -503,6 +508,8 @@ public class UserServiceImpl implements UserService {
 		//兼职状态
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.insertSelective(jobInfo);
+		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("comId")));
+		rongCloudService.createGroup(comInfo.getcComPhone(),jobInfo.getcJobTitle(),String.valueOf(jobInfo.getcJobId()));
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
 		return resultMap;

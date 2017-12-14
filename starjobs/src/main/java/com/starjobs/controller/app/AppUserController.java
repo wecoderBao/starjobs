@@ -107,7 +107,8 @@ public class AppUserController {
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(jobId) || StringUtils.isEmpty(userPhone)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(jobId)
+				|| StringUtils.isEmpty(userPhone)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -116,7 +117,7 @@ public class AppUserController {
 			return modelMap;
 		}
 		// 返回兼职信息
-		Map<String, Object> jobMap = userService.userGetJobDetail(jobId,userPhone);
+		Map<String, Object> jobMap = userService.userGetJobDetail(jobId, userPhone);
 		if (jobMap == null) {
 			return modelMap;
 		}
@@ -139,6 +140,71 @@ public class AppUserController {
 	@RequestMapping(value = "/user/publish/job_info", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> publishJobInfo(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 公司ID
+		String comId = request.getParameter("comId");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("comId", request.getParameter("comId"));
+		params.put("jobName", request.getParameter("jobName"));
+		params.put("jobDesc", request.getParameter("jobDesc"));
+		params.put("payMethod", request.getParameter("payMethod"));
+		params.put("gender", request.getParameter("gender"));
+		params.put("totalPerson", request.getParameter("totalPerson"));
+		params.put("jobChoice", request.getParameter("jobChoice"));
+		params.put("jobType", request.getParameter("jobType"));
+		params.put("city", request.getParameter("city"));
+		params.put("area", request.getParameter("area"));
+		params.put("address", request.getParameter("address"));
+		params.put("locationX", request.getParameter("locationX"));
+		params.put("locationY", request.getParameter("locationY"));
+		params.put("locationName", request.getParameter("locationName"));
+		params.put("workDate", request.getParameter("workDate"));
+		params.put("workTime", request.getParameter("workTime"));
+		params.put("salary", request.getParameter("salary"));
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(comId)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			return modelMap;
+		}
+		// 验证用户是否有发布权限,userFlag必须为0
+		boolean auFlag = jobService.verifyUserAuth(token, userFlag);
+		if (!auFlag) {
+			modelMap.put("error_code", SystemUtil.NO_PUBLISH);
+			modelMap.put("message", "forbiden");
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("token", token);
+			data.put("userFlag", SystemUtil.USER_COM);
+			modelMap.put("data", data);
+			return modelMap;
+		}
+		// 返回兼职信息
+		Map<String, Object> result = userService.publishJobInfo(params);
+		// 发布成功
+		if (result != null && result.get("jobId") != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			result.put("token", token);
+			result.put("userFlag", SystemUtil.USER_COM);
+			modelMap.put("data", result);
+		}
+
+		return modelMap;
+	}
+
+	// 发布兼职信息同时创建群组
+	@RequestMapping(value = "/user/publishJob/createGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> publishJobAndCreateGroup(HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
 		// 用户类别标记
