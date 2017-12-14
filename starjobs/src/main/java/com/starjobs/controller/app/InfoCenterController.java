@@ -97,14 +97,14 @@ public class InfoCenterController {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("headImg", request.getParameter("headImg"));
 		params.put("imgFormat", request.getParameter("imgFormat"));
-		params.put("nickName", request.getParameter("nickName"));
+		params.put("nickname", request.getParameter("nickname"));
 		params.put("username", request.getParameter("username"));
 		params.put("gender", request.getParameter("gender"));
 		params.put("birthday", request.getParameter("birthday"));
 		params.put("height", request.getParameter("height"));
 		params.put("eduState", request.getParameter("eduState"));
 		params.put("school", request.getParameter("school"));
-		params.put("phoneNum", request.getParameter("phoneNum"));
+		params.put("phone", request.getParameter("phone"));
 		params.put("introduction", request.getParameter("introduction"));
 
 		Map<String, Object> data = infoCenterService.updateUserInfo(token, params, realPath);
@@ -158,6 +158,10 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
+		//省市县
+		String province = request.getParameter("province");
+		String city = request.getParameter("city");
+		String town = request.getParameter("town");
 		String realPath = request.getSession().getServletContext().getRealPath("/photo/com");
 		System.out.println("--------------realPath--" + realPath);
 		System.out.println("realPath:" + realPath);
@@ -176,10 +180,14 @@ public class InfoCenterController {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("headImg", request.getParameter("headImg"));
 		params.put("imgFormat", request.getParameter("imgFormat"));
-		params.put("comName", request.getParameter("comName"));
+		params.put("nickname", request.getParameter("nickname"));
 		params.put("address", request.getParameter("address"));
 		params.put("comDesc", request.getParameter("comDesc"));
-		params.put("phoneNum", request.getParameter("phoneNum"));
+		params.put("phone", request.getParameter("phone"));
+		
+		params.put("province",province);
+		params.put("city", city);
+		params.put("area", town);
 
 		Map<String, Object> data = infoCenterService.updateComInfo(token, params, realPath);
 		if (data != null) {

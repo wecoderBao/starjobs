@@ -83,7 +83,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("height", tUserInfo.getcUserHeight());
 		data.put("eduState", tUserInfo.getcUserEduState());
 		data.put("school", tUserInfo.getcUserSchoolName());
-		data.put("phoneNum", tUserInfo.getcUserPhone());
+		data.put("phone", tUserInfo.getcUserPhone());
 		data.put("balance", tUserInfo.getcUserBalance());
 		data.put("doneTimes", tUserInfo.getcUserDonetimes());// 兼职次数
 		data.put("score", tUserInfo.getcUserScore());// 个人评分
@@ -105,7 +105,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			return null;
 		}
 		// 若修改手机号
-		String newPhone = params.get("phoneNum");
+		String newPhone = params.get("phone");
 		if (!StringUtils.isEmpty(newPhone)) {
 			// 根据token修改手机号
 			TUserToken tokenRecord = tUserTokenMapper.selectByTokenValue(token);
@@ -130,8 +130,8 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				tUserInfo.setcUserImg(resp);
 			}
 		}
-		if (!StringUtils.isEmpty(params.get("nickName"))) {// 修改昵称
-			tUserInfo.setcUserNickname(params.get("nickName"));
+		if (!StringUtils.isEmpty(params.get("nickname"))) {// 修改昵称
+			tUserInfo.setcUserNickname(params.get("nickname"));
 		}
 		if (!StringUtils.isEmpty(params.get("username"))) {// 修改姓名
 			tUserInfo.setcUsername(params.get("username"));
@@ -183,10 +183,13 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("token", token);
 		data.put("userFlag", userFlag);
 		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
-		data.put("comName", tComInfo.getcComName());
+		data.put("nickname", tComInfo.getcComName());
 		if (null != tComInfo.getcComAddressId()) {
 			TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
 			if (null != addr) {
+				data.put("province", addr.getcProvince());
+				data.put("city", addr.getcCity());
+				data.put("area", addr.getcTown());
 				data.put("address", addr.getcAddressDetail());// 公司地址
 			} else {
 				data.put("address", "地址不详，请和客服确认。");
@@ -195,7 +198,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("hasLicense", tComInfo.getcComHaslicense());
 		data.put("comDesc", tComInfo.getcComDesc());// 公司简介
 		data.put("score", tComInfo.getcComScore());
-		data.put("phoneNum", tComInfo.getcComPhone());
+		data.put("phone", tComInfo.getcComPhone());
 		data.put("balance", tComInfo.getcComBalance());
 		data.put("extraBalance", tComInfo.getcExtraBalance());// 招聘余额
 		return data;
@@ -217,7 +220,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			return null;
 		}
 		// 若修改手机号
-		String newPhone = params.get("phoneNum");
+		String newPhone = params.get("phone");
 		if (!StringUtils.isEmpty(newPhone)) {
 			// 根据token修改手机号
 			TUserToken tokenRecord = tUserTokenMapper.selectByTokenValue(token);
@@ -244,16 +247,44 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				tComInfo.setcComHeadImg(resp);
 			}
 		}
-		if (!StringUtils.isEmpty(params.get("comName"))) {// 修改公司名称
-			tComInfo.setcComName(params.get("comName"));
+		if (!StringUtils.isEmpty(params.get("nickname"))) {// 修改公司名称
+			tComInfo.setcComName(params.get("nickname"));
 		}
-		if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
-			// 插入公司地址
-			TComAddress addr = new TComAddress();
-			addr.setcAddressDetail(params.get("address"));
+		// 插入公司地址
+		TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
+		if (addr == null) {
+			addr = new TComAddress();
+			if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
+				addr.setcAddressDetail(params.get("address"));
+			}
+			if (!StringUtils.isEmpty(params.get("province"))) {
+				addr.setcProvince(params.get("province"));
+			}
+			if (!StringUtils.isEmpty(params.get("city"))) {
+				addr.setcCity(params.get("city"));
+			}
+			if (!StringUtils.isEmpty(params.get("area"))) {
+				addr.setcTown(params.get("area"));
+			}
 			tComAddressMapper.insertSelectiveReId(addr);
-			tComInfo.setcComAddressId(addr.getcComAddressId());
+		} else {
+			if (!StringUtils.isEmpty(params.get("address"))) {// 修改公司地址
+				addr.setcAddressDetail(params.get("address"));
+			}
+			if (!StringUtils.isEmpty(params.get("province"))) {
+				addr.setcProvince(params.get("province"));
+			}
+			if (!StringUtils.isEmpty(params.get("city"))) {
+				addr.setcCity(params.get("city"));
+			}
+			if (!StringUtils.isEmpty(params.get("area"))) {
+				addr.setcTown(params.get("area"));
+			}
+			tComAddressMapper.updateByPrimaryKey(addr);
 		}
+
+		tComInfo.setcComAddressId(addr.getcComAddressId());
+
 		if (!StringUtils.isEmpty(params.get("comDesc"))) {// 修改性别
 			tComInfo.setcComDesc(params.get("comDesc"));
 		}

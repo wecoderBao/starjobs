@@ -266,6 +266,19 @@ public class UserServiceImpl implements UserService {
 				data.put("phone", tuiRecord.getcUserPhone());
 				data.put("balance", tuiRecord.getcUserBalance());
 				data.put("userFlag", SystemUtil.USER_STU);
+				data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/user/" + tuiRecord.getcUserImg());// 图片url
+				
+				data.put("username", tuiRecord.getcUsername());
+				data.put("gender", tuiRecord.getcUserGender());
+				data.put("birthday", tuiRecord.getcUserBirthDate());// 出生日期
+				data.put("height", tuiRecord.getcUserHeight());
+				data.put("eduState", tuiRecord.getcUserEduState());
+				data.put("school", tuiRecord.getcUserSchoolName());
+				data.put("phone", tuiRecord.getcUserPhone());
+				
+				data.put("doneTimes", tuiRecord.getcUserDonetimes());// 兼职次数
+				data.put("score", tuiRecord.getcUserScore());// 个人评分
+				data.put("introduction", tuiRecord.getcUserDesc());// 个人简介
 
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
@@ -305,14 +318,18 @@ public class UserServiceImpl implements UserService {
 		if (!StringUtils.isEmpty(typeId)) {
 			typeIds = new ArrayList<Integer>();
 			for (String s : typeId.split(";")) {
-				typeIds.add(Integer.parseInt(s));
+				if(Integer.parseInt(s)!=0){
+					typeIds.add(Integer.parseInt(s));
+				}
 			}
 		}
 		// choiceid
 		if (!StringUtils.isEmpty(choiceId)) {
 			choiceIds = new ArrayList<Integer>();
 			for (String s : choiceId.split(";")) {
-				choiceIds.add(Integer.parseInt(s));
+				if(Integer.parseInt(s) != 0){
+					choiceIds.add(Integer.parseInt(s));	
+				}
 			}
 		}
 		int start = 0, offset = SystemUtil.PAGE_OFFSET;
