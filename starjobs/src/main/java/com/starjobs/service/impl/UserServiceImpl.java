@@ -234,12 +234,36 @@ public class UserServiceImpl implements UserService {
 				// 验证密码成功
 				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("token", token);
-				data.put("userid", tciRecord.getcComId());
+				data.put("userFlag", userFlag);
+				data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tciRecord.getcComHeadImg());// 图片url
 				data.put("nickname", tciRecord.getcComName());
+				if (null != tciRecord.getcComAddressId()) {
+					TComAddress addr = tComAddressMapper.selectByPrimaryKey(tciRecord.getcComAddressId());
+					if (null != addr) {
+						data.put("province", addr.getcProvince());
+						data.put("city", addr.getcCity());
+						data.put("area", addr.getcTown());
+						data.put("address", addr.getcAddressDetail());// 公司地址
+					}else {
+						data.put("province", "0");
+						data.put("city", "0");
+						data.put("area", "0");
+						data.put("address", "地址不详，请和客服确认。");
+					}
+				}else{
+					data.put("province", "0");
+					data.put("city", "0");
+					data.put("area", "0");
+					data.put("address", "地址不详，请和客服确认。");
+				}
+				data.put("hasLicense", tciRecord.getcComHaslicense());
+				data.put("comDesc", tciRecord.getcComDesc());// 公司简介
+				data.put("score", tciRecord.getcComScore());
 				data.put("phone", tciRecord.getcComPhone());
 				data.put("balance", tciRecord.getcComBalance());
-				data.put("userFlag", SystemUtil.USER_COM);
-
+				data.put("extraBalance", tciRecord.getcExtraBalance());// 招聘余额
+				data.put("userid", String.valueOf(tciRecord.getcComId()));
+				
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
 				modelMap.put("data", data);

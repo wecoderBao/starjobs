@@ -191,9 +191,17 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				data.put("city", addr.getcCity());
 				data.put("area", addr.getcTown());
 				data.put("address", addr.getcAddressDetail());// 公司地址
-			} else {
+			}else {
+				data.put("province", "0");
+				data.put("city", "0");
+				data.put("area", "0");
 				data.put("address", "地址不详，请和客服确认。");
 			}
+		}else{
+			data.put("province", "0");
+			data.put("city", "0");
+			data.put("area", "0");
+			data.put("address", "地址不详，请和客服确认。");
 		}
 		data.put("hasLicense", tComInfo.getcComHaslicense());
 		data.put("comDesc", tComInfo.getcComDesc());// 公司简介
@@ -201,6 +209,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("phone", tComInfo.getcComPhone());
 		data.put("balance", tComInfo.getcComBalance());
 		data.put("extraBalance", tComInfo.getcExtraBalance());// 招聘余额
+		data.put("userid", String.valueOf(tComInfo.getcComId()));
 		return data;
 	}
 
@@ -215,7 +224,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		// 获取手机号
 		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
-		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("userid")));
 		if (tComInfo == null) {
 			return null;
 		}

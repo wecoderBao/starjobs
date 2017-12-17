@@ -158,6 +158,7 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
+		String id = request.getParameter("userid");
 		//省市县
 		String province = request.getParameter("province");
 		String city = request.getParameter("city");
@@ -169,7 +170,8 @@ public class InfoCenterController {
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) 
+				|| !SystemUtil.USER_COM.equals(userFlag) || StringUtils.isEmpty(id)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -188,6 +190,8 @@ public class InfoCenterController {
 		params.put("province",province);
 		params.put("city", city);
 		params.put("area", town);
+		
+		params.put("userid",id);
 
 		Map<String, Object> data = infoCenterService.updateComInfo(token, params, realPath);
 		if (data != null) {
