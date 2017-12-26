@@ -444,6 +444,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			}
 		}
 		result.put("groupList", groupList);
+		result.put("groupSize", groupList.size());
 		return result;
 	}
 
