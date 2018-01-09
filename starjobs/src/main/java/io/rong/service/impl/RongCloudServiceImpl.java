@@ -22,6 +22,7 @@ import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TFriend;
 import com.starjobs.pojo.TGroup;
 import com.starjobs.pojo.TGroupMember;
+import com.starjobs.pojo.TGroupMemberExample;
 import com.starjobs.pojo.TUserInfo;
 
 import io.rong.RongCloud;
@@ -439,12 +440,16 @@ public class RongCloudServiceImpl implements RongCloudService {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
 					aGroup.put("groupImg",StarConstants.COM_IMG_URL+ group.getcGroupHeadImg());
+					TGroupMemberExample memberExample = new TGroupMemberExample();
+					TGroupMemberExample.Criteria criteria = memberExample.createCriteria();
+					criteria.andCGroupIdEqualTo(group.getcGroupId());
+					int groupSize = tGroupMemberMapper.countByExample(memberExample);
+					aGroup.put("groupSize", groupSize);
 					groupList.add(aGroup);
 				}
 			}
 		}
 		result.put("groupList", groupList);
-		result.put("groupSize", groupList.size());
 		return result;
 	}
 
