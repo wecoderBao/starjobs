@@ -468,9 +468,11 @@
 		where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
 	</update>
 	<!-- 根据手机号查询用户信息 -->
-  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPhone" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from t_user_info
     where c_user_phone = #{cUserPhone,jdbcType=VARCHAR}
   </select>

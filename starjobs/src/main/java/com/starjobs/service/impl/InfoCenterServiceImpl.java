@@ -290,7 +290,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			if (!StringUtils.isEmpty(params.get("area"))) {
 				addr.setcTown(params.get("area"));
 			}
-			tComAddressMapper.updateByPrimaryKey(addr);
+			tComAddressMapper.updateByPrimaryKeySelective(addr);
 		}
 
 		tComInfo.setcComAddressId(addr.getcComAddressId());
