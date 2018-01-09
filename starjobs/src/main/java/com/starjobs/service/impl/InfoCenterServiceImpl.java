@@ -64,9 +64,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	 * @see com.starjobs.service.InfoCenterService#getUserInfo(java.lang.String,
 	 * java.lang.String)
 	 */
-	public Map<String, Object> getUserInfo(String token, String userFlag) {
+	public Map<String, Object> getUserInfo(String token,String phoneNum, String userFlag) {
 		// 获取手机号
-		String phoneNum = tokenService.getPhoneNum(token);
+//		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
 		TUserInfo tUserInfo = tUserInfoMapper.selectByPhone(phoneNum);
 		if (tUserInfo == null) {
@@ -88,6 +88,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("doneTimes", tUserInfo.getcUserDonetimes());// 兼职次数
 		data.put("score", tUserInfo.getcUserScore());// 个人评分
 		data.put("introduction", tUserInfo.getcUserDesc());// 个人简介
+		data.put("userId", String.valueOf(tUserInfo.getcUserId()));
 		return data;
 	}
 
@@ -100,7 +101,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		// 获取手机号
 		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
-		TUserInfo tUserInfo = tUserInfoMapper.selectByPhone(phoneNum);
+		TUserInfo tUserInfo = tUserInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("userId")));
 		if (tUserInfo == null) {
 			return null;
 		}
@@ -170,10 +171,10 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	 * @see com.starjobs.service.InfoCenterService#getComInfo(java.lang.String,
 	 * java.lang.String)
 	 */
-	public Map<String, Object> getComInfo(String token, String userFlag) {
+	public Map<String, Object> getComInfo(String token, String phoneNum, String userFlag) {
 
 		// 获取手机号
-		String phoneNum = tokenService.getPhoneNum(token);
+//		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
 		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
 		if (tComInfo == null) {

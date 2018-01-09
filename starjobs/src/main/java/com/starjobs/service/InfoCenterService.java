@@ -19,13 +19,13 @@ import java.util.Map;
 public interface InfoCenterService {
 
 	// 获取普通用户个人信息
-	public Map<String, Object> getUserInfo(String token, String userFlag);
+	public Map<String, Object> getUserInfo(String token,String phoneNum, String userFlag);
 
 	// 更新普通用户信息
 	public Map<String, Object> updateUserInfo(String token, Map<String, String> params, String path);
 
 	// 获取公司用户个人信息
-	public Map<String, Object> getComInfo(String token, String userFlag);
+	public Map<String, Object> getComInfo(String token,String phoneNum, String userFlag);
 
 	// 更新公司用户信息
 	public Map<String, Object> updateComInfo(String token, Map<String, String> params, String path);
