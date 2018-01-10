@@ -173,7 +173,7 @@ public class InfoCenterController {
 		//省市县
 		String province = request.getParameter("province");
 		String city = request.getParameter("city");
-		String town = request.getParameter("town");
+		String town = request.getParameter("area");
 		String realPath = request.getSession().getServletContext().getRealPath("/photo/com");
 		System.out.println("--------------realPath--" + realPath);
 		System.out.println("realPath:" + realPath);
