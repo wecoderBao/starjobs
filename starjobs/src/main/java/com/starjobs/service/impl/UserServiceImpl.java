@@ -153,6 +153,9 @@ public class UserServiceImpl implements UserService {
 			tciRecord.setcExtraBalance("0");
 			tciRecord.setcComHaslicense("0");
 			tciRecord.setcComScore("5");
+			tciRecord.setcComHeadImg("default.png");
+			tciRecord.setcUserState("1");
+			tciRecord.setcComLicenseImg("default.png");
 			
 			tCompanyInfoMapper.insertSelective(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
@@ -179,7 +182,7 @@ public class UserServiceImpl implements UserService {
 			tuiRecord.setcUserBirthDate("0");
 			tuiRecord.setcUserDesc("简介待补充...");
 			tuiRecord.setcUserDonetimes("0");
-			tuiRecord.setcUserEduState("未知");
+			tuiRecord.setcUserEduState("0");
 			tuiRecord.setcUserGender("男");
 			tuiRecord.setcUserHeight("180cm");
 			tuiRecord.setcUserImg("default.png");
