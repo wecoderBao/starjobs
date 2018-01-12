@@ -149,7 +149,12 @@ public class UserServiceImpl implements UserService {
 			tciRecord.setcComPassword(password);
 			tciRecord.setcComName(phone);
 			tciRecord.setcComBalance("50");// 账户余额默认为50元
-			tCompanyInfoMapper.insert(tciRecord);
+			tciRecord.setcComDesc("公司简介待补充...");
+			tciRecord.setcExtraBalance("0");
+			tciRecord.setcComHaslicense("0");
+			tciRecord.setcComScore("5");
+			
+			tCompanyInfoMapper.insertSelective(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
 
@@ -170,7 +175,19 @@ public class UserServiceImpl implements UserService {
 			tuiRecord.setcUsername(phone);
 			tuiRecord.setcUserNickname(phone);
 			tuiRecord.setcUserPassword(password);
-			tUserInfoMapper.insert(tuiRecord);
+			tuiRecord.setcUserAliAccount("0");
+			tuiRecord.setcUserBirthDate("0");
+			tuiRecord.setcUserDesc("简介待补充...");
+			tuiRecord.setcUserDonetimes("0");
+			tuiRecord.setcUserEduState("未知");
+			tuiRecord.setcUserGender("男");
+			tuiRecord.setcUserHeight("180cm");
+			tuiRecord.setcUserImg("default.png");
+			tuiRecord.setcUserSchoolName("未知");
+			tuiRecord.setcUserScore("5");
+			tuiRecord.setcUserState("0");
+			
+			tUserInfoMapper.insertSelective(tuiRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
 
