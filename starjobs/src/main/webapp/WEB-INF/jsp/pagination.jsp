@@ -8,7 +8,7 @@
 <body>
 
 	<div align="center">
-		<font size="5"> 那些年一起追过的小说 </font>
+		<font size="5"> 刷新列表</font>
 	</div>
 	<br />
 	<label>导出</label>
@@ -18,12 +18,12 @@
 	<br />
 	<table border="1" width="100%">
 		<tr>
-			<td>单号</td>
+			<td>区域</td>
 			<td>名称</td>
-			<td>价格</td>
-			<td>类别</td>
-			<td>作者</td>
-			<td>描述</td>
+			<td>手机号</td>
+			<td>地址</td>
+			<td>次数</td>
+			<td>金额</td>
 		</tr>
 
 		<c:if test="${empty page.list }">
@@ -31,14 +31,14 @@
 				<td colspan="8" align="center">没有商品</td>
 			</tr>
 		</c:if>
-		<c:forEach items="${page.list }" var="book">
+		<c:forEach items="${page.list }" var="refresh">
 			<tr>
-				<td>${book.id}</td>
-				<td>${book.name}</td>
-				<td>${book.price}</td>
-				<td>${book.category}</td>
-				<td>${book.author}</td>
-				<td>${book.descs}</td>
+				<td>${refresh.area}</td>
+				<td>${refresh.name}</td>
+				<td>${refresh.phone}</td>
+				<td>${refresh.address}</td>
+				<td>${refresh.refreshTimes}</td>
+				<td>${refresh.money}</td>
 			</tr>
 		</c:forEach>
 

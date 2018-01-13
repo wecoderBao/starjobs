@@ -94,22 +94,26 @@ public class RefreshController {
 	 * @param response
 	 * @return
 	 */
+	@RequestMapping("/get/refreshList")
 	public void getRefreshList(@RequestParam int page, @RequestParam int limit, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		/**
 		 * 查询数据列表
 		 */
-		ArrayList<?> bookList = new ArrayList<Object>();
+		ArrayList<CompanyRefresh> refreshList = new ArrayList<CompanyRefresh>();
+		refreshList.add(new CompanyRefresh("洪山区", "爱尔眼科医院", "13164618323", "洪山区12号", "6", "600"));
+		refreshList.add(new CompanyRefresh("洪山区", "爱尔眼科医院", "13164618323", "洪山区12号", "6", "600"));
+		refreshList.add(new CompanyRefresh("洪山区", "爱尔眼科医院", "13164618323", "洪山区12号", "6", "600"));
 		/**
 		 * 查询记录总数
 		 */
 		int totalCount = 100;
 
-		PageUtil pageUtil = new PageUtil(bookList, page, limit, totalCount);
+		PageUtil pageUtil = new PageUtil(refreshList, page, limit, totalCount);
 		request.setAttribute("page", pageUtil);
 		try {
-			request.getRequestDispatcher("/jsp/pagination.jsp?page=" + page).forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/pagination.jsp?page=" + page).forward(request, response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
