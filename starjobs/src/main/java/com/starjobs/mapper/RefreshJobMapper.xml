@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.starjobs.pojo.RefreshJob" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="com_id" property="comId" jdbcType="INTEGER" />
+    <result column="job_id" property="jobId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="refresh_cost" property="refreshCost" jdbcType="DECIMAL" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, com_id, create_time, refresh_cost
+    id, com_id, job_id, create_time, refresh_cost
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.RefreshJobExample" >
     select
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.RefreshJob" >
-    insert into refresh_job (id, com_id, create_time, 
-      refresh_cost)
-    values (#{id,jdbcType=INTEGER}, #{comId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{refreshCost,jdbcType=DECIMAL})
+    insert into refresh_job (id, com_id, job_id, 
+      create_time, refresh_cost)
+    values (#{id,jdbcType=INTEGER}, #{comId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{refreshCost,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.RefreshJob" >
     insert into refresh_job
@@ -112,6 +113,9 @@
       </if>
       <if test="comId != null" >
         com_id,
+      </if>
+      <if test="jobId != null" >
+        job_id,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -126,6 +130,9 @@
       </if>
       <if test="comId != null" >
         #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -150,6 +157,9 @@
       <if test="record.comId != null" >
         com_id = #{record.comId,jdbcType=INTEGER},
       </if>
+      <if test="record.jobId != null" >
+        job_id = #{record.jobId,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -165,6 +175,7 @@
     update refresh_job
     set id = #{record.id,jdbcType=INTEGER},
       com_id = #{record.comId,jdbcType=INTEGER},
+      job_id = #{record.jobId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       refresh_cost = #{record.refreshCost,jdbcType=DECIMAL}
     <if test="_parameter != null" >
@@ -176,6 +187,9 @@
     <set >
       <if test="comId != null" >
         com_id = #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null" >
+        job_id = #{jobId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -189,8 +203,47 @@
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.RefreshJob" >
     update refresh_job
     set com_id = #{comId,jdbcType=INTEGER},
+      job_id = #{jobId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       refresh_cost = #{refreshCost,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 分页查询 -->
+  <sql id="orderGroupLimit">
+      <if test="groupBy != null and groupBy != ''">group by  ${groupBy} </if>
+      <if test="orderBy != null and orderBy != ''">order by  ${orderBy} </if>
+      <if test="offset != null and limit != null">
+           limit #{offset}, #{limit}
+      </if>
+  </sql>
+  <select id="queryRefreshList" parameterType="hashmap" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from refresh_job
+  	WHERE 1=1
+    <if test="comId != null" >
+        and com_id = #{comId}
+    </if>
+    <if test="createTime != null" >
+        and create_time = #{createTime}
+    </if>
+    <if test="refreshCost != null" >
+        and refresh_cost=#{refreshCost}
+    </if>
+    <include refid="orderGroupLimit"/>
+  </select>
+  <select id="queryRefreshTotal" parameterType="hashmap" resultType="int">
+    SELECT count(*) FROM refresh_job
+    WHERE 1=1
+    <if test="comId != null" >
+        and com_id = #{comId}
+    </if>
+    <if test="createTime != null" >
+        and create_time = #{createTime}
+    </if>
+    <if test="refreshCost != null" >
+        and refresh_cost=#{refreshCost}
+    </if>
+        <if test="groupBy != null">group by  ${groupBy} </if>
+   </select>
+    
 </mapper>

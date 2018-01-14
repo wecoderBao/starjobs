@@ -1,9 +1,12 @@
 package com.starjobs.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.RefreshJobExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface RefreshJobMapper {
     int countByExample(RefreshJobExample example);
@@ -27,4 +30,8 @@ public interface RefreshJobMapper {
     int updateByPrimaryKeySelective(RefreshJob record);
 
     int updateByPrimaryKey(RefreshJob record);
+    
+    int queryRefreshTotal(Map<String,Object> map);
+    
+    List<RefreshJob> queryRefreshList(Map<String,Object> map);
 }

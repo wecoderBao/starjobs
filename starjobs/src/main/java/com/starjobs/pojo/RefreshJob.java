@@ -8,6 +8,8 @@ public class RefreshJob {
 
     private Integer comId;
 
+    private Integer jobId;
+
     private Date createTime;
 
     private BigDecimal refreshCost;
@@ -26,6 +28,14 @@ public class RefreshJob {
 
     public void setComId(Integer comId) {
         this.comId = comId;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public Date getCreateTime() {

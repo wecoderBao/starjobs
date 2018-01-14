@@ -3,6 +3,7 @@
  */
 package com.starjobs.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.starjobs.common.StarConstants;
+import com.starjobs.mapper.RefreshJobMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TLocationMapper;
+import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TLocation;
@@ -34,6 +37,8 @@ public class MyPublishServiceImpl implements MyPublishService {
 	private TLocationMapper tLocationMapper;
 	@Autowired
 	private TCompanyInfoMapper tCompanyInfoMapper;
+	@Autowired
+	private RefreshJobMapper refreshJobMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.starjobs.service.MyPublishService#recommendJob(int)
@@ -53,6 +58,16 @@ public class MyPublishServiceImpl implements MyPublishService {
 		comInfo.setcComBalance(String.valueOf(balance));
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
+		/**
+		 * 记录操作
+		 */
+		RefreshJob refreshJob = new RefreshJob();
+		refreshJob.setComId(comInfo.getcComId());
+		refreshJob.setCreateTime(new Date());
+		refreshJob.setRefreshCost(new BigDecimal(10));
+		refreshJob.setJobId(jobId);
+		refreshJobMapper.insertSelective(refreshJob);
+		
 		resultMap.put("code", "200");
 		resultMap.put("info", "成功");
 		return resultMap;
@@ -87,6 +102,16 @@ public class MyPublishServiceImpl implements MyPublishService {
 		Date now = new Date();
 		jobInfo.setcJobPublishDate(now);
 		tJobInfoMapper.updateByPrimaryKey(jobInfo);
+		/**
+		 * 记录操作
+		 */
+		RefreshJob refreshJob = new RefreshJob();
+		refreshJob.setComId(comInfo.getcComId());
+		refreshJob.setCreateTime(new Date());
+		refreshJob.setRefreshCost(new BigDecimal(10));
+		refreshJob.setJobId(jobId);
+		refreshJobMapper.insertSelective(refreshJob);
+		
 		resultMap.put("code", "200");
 		resultMap.put("info", "成功");
 		return resultMap;

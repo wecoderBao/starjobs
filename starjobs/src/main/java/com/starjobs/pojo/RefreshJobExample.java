@@ -226,6 +226,66 @@ public class RefreshJobExample {
             return (Criteria) this;
         }
 
+        public Criteria andJobIdIsNull() {
+            addCriterion("job_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdIsNotNull() {
+            addCriterion("job_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdEqualTo(Integer value) {
+            addCriterion("job_id =", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdNotEqualTo(Integer value) {
+            addCriterion("job_id <>", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdGreaterThan(Integer value) {
+            addCriterion("job_id >", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("job_id >=", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdLessThan(Integer value) {
+            addCriterion("job_id <", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdLessThanOrEqualTo(Integer value) {
+            addCriterion("job_id <=", value, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdIn(List<Integer> values) {
+            addCriterion("job_id in", values, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdNotIn(List<Integer> values) {
+            addCriterion("job_id not in", values, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdBetween(Integer value1, Integer value2) {
+            addCriterion("job_id between", value1, value2, "jobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("job_id not between", value1, value2, "jobId");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;
