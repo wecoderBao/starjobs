@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.starjobs.common.StarConstants;
+import com.starjobs.mapper.JobApplyRestrictMapper;
 import com.starjobs.mapper.TGroupMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserJobApplyMapper;
@@ -46,6 +47,8 @@ public class JobApplyServiceImpl implements JobApplyService {
 	private RongCloudService rongCloudService;
 	@Autowired
 	private TGroupMapper tGroupMapper;
+	@Autowired
+	private JobApplyRestrictMapper jobApplyRestrictMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -59,6 +62,14 @@ public class JobApplyServiceImpl implements JobApplyService {
 		if (userInfo == null) {
 			return null;
 		}
+		/**
+		 * 判断用户一天内是否有两次申请记录
+		 */
+		int total = jobApplyRestrictMapper.queryUserRecordTotalByDay();
+		if(total >= StarConstants.USER_APPLY_JOB_MAX_TIMES) {
+			return null;
+		}
+		
 		TUserJobApply jobApply = new TUserJobApply();
 		jobApply.setcApplyState(StarConstants.APPLY_STATE_NOT_CHECK);
 		jobApply.setcJobId(jobId);

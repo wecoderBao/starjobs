@@ -27,4 +27,8 @@ public interface JobApplyRestrictMapper {
     int updateByPrimaryKeySelective(JobApplyRestrict record);
 
     int updateByPrimaryKey(JobApplyRestrict record);
+    /**
+     * 查询当天申请记录数
+     */
+    int queryUserRecordTotalByDay();
 }
