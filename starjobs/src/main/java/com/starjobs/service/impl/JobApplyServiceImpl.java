@@ -17,6 +17,7 @@ import com.starjobs.mapper.JobApplyRestrictMapper;
 import com.starjobs.mapper.TGroupMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserJobApplyMapper;
+import com.starjobs.pojo.JobApplyRestrict;
 import com.starjobs.pojo.TGroup;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserJobApply;
@@ -78,6 +79,14 @@ public class JobApplyServiceImpl implements JobApplyService {
 		jobApply.setcApplyDesc(applyDesc);
 		tUserJobApplyMapper.insertSelective(jobApply);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		/**
+		 * 添加申请记录
+		 */
+		JobApplyRestrict applyRestrict = new JobApplyRestrict();
+		applyRestrict.setCreateTime(new Date());
+		applyRestrict.setJobId(jobId);
+		applyRestrict.setUserId(userInfo.getcUserId());
+		jobApplyRestrictMapper.insertSelective(applyRestrict);
 
 		return resultMap;
 	}
