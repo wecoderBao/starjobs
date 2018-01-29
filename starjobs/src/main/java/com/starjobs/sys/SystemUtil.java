@@ -27,6 +27,10 @@ public class SystemUtil {
 	public static final String CODE_SUCC = "200";
 	// 验证失败状态码 400
 	public static final String CODE_FAIL = "400";
+	//token失效
+	public static final String CODE_TOKEN_EXPIRE = "401";
+	//余额不足
+	public static final String CODE_NOT_ENOUGH_BALANCE = "402";
 	//查询信息为空状态码
 	public static final String CODE_EMPTY = "900";
 	// 用户登录时没有注册
