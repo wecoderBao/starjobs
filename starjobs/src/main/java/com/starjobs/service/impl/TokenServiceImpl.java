@@ -50,10 +50,12 @@ public class TokenServiceImpl implements TokenService {
 		}
 		//token失效
 		if(record.getcCreateTime() == null) {
+			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
 			return false;
 		}
 		boolean expireFlag = (new Date()).getTime() - record.getcCreateTime().getTime() > StarConstants.TOKEN_EXPIRE_TIME;
 		if(expireFlag) {
+			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
 			return false;
 		}
 		//更新token时间
