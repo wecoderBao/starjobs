@@ -240,6 +240,9 @@
     <if test="comId != null" >
         and com_id = #{comId}
     </if>
+    <if test="jobId != null" >
+        and job_id = #{jobId}
+    </if>
     <if test="createTime != null" >
         and create_time = #{createTime}
     </if>
@@ -253,6 +256,9 @@
     WHERE 1=1
     <if test="comId != null" >
         and com_id = #{comId}
+    </if>
+    <if test="jobId != null" >
+        and job_id = #{jobId}
     </if>
     <if test="createTime != null" >
         and create_time = #{createTime}
