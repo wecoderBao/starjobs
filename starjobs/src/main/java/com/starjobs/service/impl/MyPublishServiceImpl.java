@@ -21,6 +21,7 @@ import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TLocation;
 import com.starjobs.service.MyPublishService;
+import com.starjobs.sys.SystemUtil;
 
 /**
  * <p>Title:MyPublishServiceImpl</p>
@@ -47,11 +48,10 @@ public class MyPublishServiceImpl implements MyPublishService {
 		Map<String,Object> resultMap = new HashMap<String,Object>(16);
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
-		int balance = Integer.parseInt(comInfo.getcComBalance());
+		double balance = Double.parseDouble(comInfo.getcComBalance());
 		
 		if(balance < 10){
-			resultMap.put("code", "701");
-			resultMap.put("info", "余额不足");
+			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
 		balance -=10;
@@ -69,7 +69,6 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJobMapper.insertSelective(refreshJob);
 		
 		resultMap.put("code", "200");
-		resultMap.put("info", "成功");
 		return resultMap;
 	}
 
@@ -89,11 +88,10 @@ public class MyPublishServiceImpl implements MyPublishService {
 		Map<String,Object> resultMap = new HashMap<String,Object>(16);
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
-		int balance = Integer.parseInt(comInfo.getcComBalance());
+		double balance = Double.parseDouble(comInfo.getcComBalance());
 		
 		if(balance < 10){
-			resultMap.put("code", "701");
-			resultMap.put("info", "余额不足");
+			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
 		balance -=10;
@@ -113,7 +111,6 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJobMapper.insertSelective(refreshJob);
 		
 		resultMap.put("code", "200");
-		resultMap.put("info", "成功");
 		return resultMap;
 	}
 

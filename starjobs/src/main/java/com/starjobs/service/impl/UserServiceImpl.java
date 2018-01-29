@@ -3,6 +3,7 @@
  */
 package com.starjobs.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.starjobs.common.StarConstants;
+import com.starjobs.mapper.RefreshJobMapper;
 import com.starjobs.mapper.TComAddressMapper;
 import com.starjobs.mapper.TComScoreMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
@@ -25,6 +27,7 @@ import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.mapper.TUserLikeComMapper;
+import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TComScore;
 import com.starjobs.pojo.TComScoreExample;
@@ -58,38 +61,40 @@ import io.rong.service.RongCloudService;
 public class UserServiceImpl implements UserService {
 	// 公司信息操作类
 	@Autowired
-	TCompanyInfoMapper tCompanyInfoMapper;
+	private TCompanyInfoMapper tCompanyInfoMapper;
 	// 个人用户信息操作类
 	@Autowired
-	TUserInfoMapper tUserInfoMapper;
+	private TUserInfoMapper tUserInfoMapper;
 	// token操作
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	// 兼职信息操作
 	@Autowired
-	TJobInfoMapper tJobInfoMapper;
+	private TJobInfoMapper tJobInfoMapper;
 	// 地点操作类
 	@Autowired
-	TLocationMapper tLocationMapper;
+	private TLocationMapper tLocationMapper;
 	// 申请兼职操作类
 	@Autowired
-	TUserJobApplyMapper tUserJobApplyMapper;
+	private TUserJobApplyMapper tUserJobApplyMapper;
 	// 关注公司
 	@Autowired
-	TUserLikeComMapper tUserLikeComMapper;
+	private TUserLikeComMapper tUserLikeComMapper;
 	// 群组操作类
 	@Autowired
-	TGroupMapper tGroupMapper;
+	private TGroupMapper tGroupMapper;
 	//好友
 	@Autowired
-	TFriendMapper tFriendMapper;
+	private TFriendMapper tFriendMapper;
 	//公司地址
 	@Autowired
-	TComAddressMapper tComAddressMapper;
+	private TComAddressMapper tComAddressMapper;
 	@Autowired
-	TComScoreMapper tComScoreMapper;
+	private TComScoreMapper tComScoreMapper;
 	@Autowired
 	private RongCloudService rongCloudService;
+	@Autowired
+	private RefreshJobMapper refreshJobMapper;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -533,6 +538,20 @@ public class UserServiceImpl implements UserService {
 
 	// 发布兼职信息
 	public Map<String, Object> publishJobInfo(Map<String, String> params) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("comId")));
+		if(null == comInfo) {
+			return null;
+		}
+		
+		double balance = Double.parseDouble(comInfo.getcComBalance());
+		if(balance < 10){
+			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
+			return resultMap;
+		}
+		
+		
+		
 		TJobInfo jobInfo = new TJobInfo();
 		// 兼职地址信息
 		TLocation location = new TLocation();
@@ -569,9 +588,23 @@ public class UserServiceImpl implements UserService {
 		//兼职状态
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.insertSelective(jobInfo);
-		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("comId")));
+		
 		rongCloudService.createGroup(comInfo.getcComPhone(),jobInfo.getcJobTitle(),String.valueOf(jobInfo.getcJobId()));
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		balance -=10;
+		comInfo.setcComBalance(String.valueOf(balance));
+		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
+		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
+		/**
+		 * 记录操作
+		 */
+		RefreshJob refreshJob = new RefreshJob();
+		refreshJob.setComId(comInfo.getcComId());
+		refreshJob.setCreateTime(new Date());
+		refreshJob.setRefreshCost(new BigDecimal(10));
+		refreshJob.setJobId(jobInfo.getcJobId());
+		refreshJobMapper.insertSelective(refreshJob);
+		resultMap.put("code", "200");
 		resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
 		return resultMap;
 	}
