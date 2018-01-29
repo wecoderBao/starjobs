@@ -3,10 +3,13 @@
  */
 package com.starjobs.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.starjobs.common.StarConstants;
 import com.starjobs.mapper.TUserTokenMapper;
 import com.starjobs.pojo.TUserToken;
 import com.starjobs.service.TokenService;
@@ -33,6 +36,7 @@ public class TokenServiceImpl implements TokenService {
 		TUserToken record = new TUserToken();
 		record.setcPhoneNum(phone);
 		record.setcTokenValue(token);
+		record.setcCreateTime(new Date());
 		re = tUserTokenMapper.insert(record);
 		return re;
 	}
@@ -43,10 +47,19 @@ public class TokenServiceImpl implements TokenService {
 		TUserToken record = tUserTokenMapper.selectByTokenValue(token);
 		if (record == null) {
 			return false;
-		} else {
-			return true;
 		}
-
+		//token失效
+		if(record.getcCreateTime() == null) {
+			return false;
+		}
+		boolean expireFlag = (new Date()).getTime() - record.getcCreateTime().getTime() > StarConstants.TOKEN_EXPIRE_TIME;
+		if(expireFlag) {
+			return false;
+		}
+		//更新token时间
+		record.setcCreateTime(new Date());
+		tUserTokenMapper.updateByPrimaryKeySelective(record);
+		return true;
 	}
 
 	// 获取用户手机号
