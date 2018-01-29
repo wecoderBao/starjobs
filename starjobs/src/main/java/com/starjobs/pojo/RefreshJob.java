@@ -14,6 +14,8 @@ public class RefreshJob {
 
     private BigDecimal refreshCost;
 
+    private Integer refreshType;
+
     public Integer getId() {
         return id;
     }
@@ -52,5 +54,13 @@ public class RefreshJob {
 
     public void setRefreshCost(BigDecimal refreshCost) {
         this.refreshCost = refreshCost;
+    }
+
+    public Integer getRefreshType() {
+        return refreshType;
+    }
+
+    public void setRefreshType(Integer refreshType) {
+        this.refreshType = refreshType;
     }
 }

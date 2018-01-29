@@ -66,6 +66,7 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJob.setCreateTime(new Date());
 		refreshJob.setRefreshCost(new BigDecimal(10));
 		refreshJob.setJobId(jobId);
+		refreshJob.setRefreshType(2);
 		refreshJobMapper.insertSelective(refreshJob);
 		
 		resultMap.put("code", "200");
@@ -107,6 +108,7 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJob.setComId(comInfo.getcComId());
 		refreshJob.setCreateTime(new Date());
 		refreshJob.setRefreshCost(new BigDecimal(10));
+		refreshJob.setRefreshType(3);
 		refreshJob.setJobId(jobId);
 		refreshJobMapper.insertSelective(refreshJob);
 		

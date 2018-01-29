@@ -7,6 +7,7 @@
     <result column="job_id" property="jobId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="refresh_cost" property="refreshCost" jdbcType="DECIMAL" />
+    <result column="refresh_type" property="refreshType" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, com_id, job_id, create_time, refresh_cost
+    id, com_id, job_id, create_time, refresh_cost, refresh_type
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.RefreshJobExample" >
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.RefreshJob" >
     insert into refresh_job (id, com_id, job_id, 
-      create_time, refresh_cost)
+      create_time, refresh_cost, refresh_type
+      )
     values (#{id,jdbcType=INTEGER}, #{comId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{refreshCost,jdbcType=DECIMAL})
+      #{createTime,jdbcType=TIMESTAMP}, #{refreshCost,jdbcType=DECIMAL}, #{refreshType,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.RefreshJob" >
     insert into refresh_job
@@ -123,6 +126,9 @@
       <if test="refreshCost != null" >
         refresh_cost,
       </if>
+      <if test="refreshType != null" >
+        refresh_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +145,9 @@
       </if>
       <if test="refreshCost != null" >
         #{refreshCost,jdbcType=DECIMAL},
+      </if>
+      <if test="refreshType != null" >
+        #{refreshType,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.refreshCost != null" >
         refresh_cost = #{record.refreshCost,jdbcType=DECIMAL},
       </if>
+      <if test="record.refreshType != null" >
+        refresh_type = #{record.refreshType,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       com_id = #{record.comId,jdbcType=INTEGER},
       job_id = #{record.jobId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      refresh_cost = #{record.refreshCost,jdbcType=DECIMAL}
+      refresh_cost = #{record.refreshCost,jdbcType=DECIMAL},
+      refresh_type = #{record.refreshType,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="refreshCost != null" >
         refresh_cost = #{refreshCost,jdbcType=DECIMAL},
       </if>
+      <if test="refreshType != null" >
+        refresh_type = #{refreshType,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +221,8 @@
     set com_id = #{comId,jdbcType=INTEGER},
       job_id = #{jobId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      refresh_cost = #{refreshCost,jdbcType=DECIMAL}
+      refresh_cost = #{refreshCost,jdbcType=DECIMAL},
+      refresh_type = #{refreshType,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!-- 分页查询 -->

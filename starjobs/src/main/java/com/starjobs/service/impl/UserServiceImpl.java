@@ -602,6 +602,7 @@ public class UserServiceImpl implements UserService {
 		refreshJob.setComId(comInfo.getcComId());
 		refreshJob.setCreateTime(new Date());
 		refreshJob.setRefreshCost(new BigDecimal(10));
+		refreshJob.setRefreshType(1);
 		refreshJob.setJobId(jobInfo.getcJobId());
 		refreshJobMapper.insertSelective(refreshJob);
 		resultMap.put("code", "200");

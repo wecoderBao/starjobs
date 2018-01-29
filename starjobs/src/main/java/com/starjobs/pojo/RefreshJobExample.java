@@ -405,6 +405,66 @@ public class RefreshJobExample {
             addCriterion("refresh_cost not between", value1, value2, "refreshCost");
             return (Criteria) this;
         }
+
+        public Criteria andRefreshTypeIsNull() {
+            addCriterion("refresh_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeIsNotNull() {
+            addCriterion("refresh_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeEqualTo(Integer value) {
+            addCriterion("refresh_type =", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeNotEqualTo(Integer value) {
+            addCriterion("refresh_type <>", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeGreaterThan(Integer value) {
+            addCriterion("refresh_type >", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("refresh_type >=", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeLessThan(Integer value) {
+            addCriterion("refresh_type <", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("refresh_type <=", value, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeIn(List<Integer> values) {
+            addCriterion("refresh_type in", values, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeNotIn(List<Integer> values) {
+            addCriterion("refresh_type not in", values, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeBetween(Integer value1, Integer value2) {
+            addCriterion("refresh_type between", value1, value2, "refreshType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefreshTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("refresh_type not between", value1, value2, "refreshType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
