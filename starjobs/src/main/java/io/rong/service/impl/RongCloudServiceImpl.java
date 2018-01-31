@@ -17,12 +17,14 @@ import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TFriendMapper;
 import com.starjobs.mapper.TGroupMapper;
 import com.starjobs.mapper.TGroupMemberMapper;
+import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TFriend;
 import com.starjobs.pojo.TGroup;
 import com.starjobs.pojo.TGroupMember;
 import com.starjobs.pojo.TGroupMemberExample;
+import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TUserInfo;
 
 import io.rong.RongCloud;
@@ -48,15 +50,17 @@ import io.rong.util.RongConstants;
 public class RongCloudServiceImpl implements RongCloudService {
 
 	@Autowired
-	TFriendMapper tFriendMapper;
+	private TFriendMapper tFriendMapper;
 	@Autowired
-	TUserInfoMapper tUserInfoMapper;
+	private TUserInfoMapper tUserInfoMapper;
 	@Autowired
-	TCompanyInfoMapper tCompanyInfoMapper;
+	private TCompanyInfoMapper tCompanyInfoMapper;
 	@Autowired
-	TGroupMapper tGroupMapper;
+	private TGroupMapper tGroupMapper;
 	@Autowired
-	TGroupMemberMapper tGroupMemberMapper;
+	private TGroupMemberMapper tGroupMemberMapper;
+	@Autowired
+	private TJobInfoMapper tJobInfoMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -285,13 +289,19 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
-			String comHeadImg = comInfo.getcComHeadImg();
-			comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
+//			TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+//			String comHeadImg = comInfo.getcComHeadImg();
+//			comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
+			String groupHeadImg = "";
+			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(jobId));
+			if(null == job) {
+				return null;
+			}
+			groupHeadImg = getGroupHeadImgByType(job.getcJobChoiceOpId());
 			// 保存群组
 			TGroup group = new TGroup();
 			group.setcGroupCreaterId(userId);
-			group.setcGroupHeadImg(comHeadImg);
+			group.setcGroupHeadImg(groupHeadImg);
 			group.setcGroupName(groupName);
 			group.setcGroupStatu("1");
 			group.setcJobId(jobId);
@@ -330,7 +340,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		return null;
 	}
-
+	private String getGroupHeadImgByType(Integer typeId) {
+		if(typeId == null) {
+			return "default.png";
+		}else if(typeId == 2) {
+			return "short.png";
+		}else if(typeId == 3) {
+			return "long.png";
+		}else if(typeId == 4) {
+			return "winter.png";
+		}else if(typeId == 5) {
+			return "summer.png";
+		}else if(typeId == 6) {
+			return "intern.png";
+		}
+		return "default.png";
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
