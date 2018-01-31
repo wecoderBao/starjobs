@@ -1,55 +1,66 @@
 package com.starjobs.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TUserWithdraw {
-    private Integer cUserWithdrawId;
+    private Integer id;
 
-    private Integer cUserId;
+    private Integer userId;
 
-    private Integer cUserWithdrawMoney;
+    private BigDecimal withdrawMoney;
 
-    private Date cUserWithdrawDate;
+    private Date createTime;
 
-    private Integer cUserWithdrawAfter;
+    private BigDecimal balance;
 
-    public Integer getcUserWithdrawId() {
-        return cUserWithdrawId;
+    private Byte status;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setcUserWithdrawId(Integer cUserWithdrawId) {
-        this.cUserWithdrawId = cUserWithdrawId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getcUserId() {
-        return cUserId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setcUserId(Integer cUserId) {
-        this.cUserId = cUserId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getcUserWithdrawMoney() {
-        return cUserWithdrawMoney;
+    public BigDecimal getWithdrawMoney() {
+        return withdrawMoney;
     }
 
-    public void setcUserWithdrawMoney(Integer cUserWithdrawMoney) {
-        this.cUserWithdrawMoney = cUserWithdrawMoney;
+    public void setWithdrawMoney(BigDecimal withdrawMoney) {
+        this.withdrawMoney = withdrawMoney;
     }
 
-    public Date getcUserWithdrawDate() {
-        return cUserWithdrawDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setcUserWithdrawDate(Date cUserWithdrawDate) {
-        this.cUserWithdrawDate = cUserWithdrawDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Integer getcUserWithdrawAfter() {
-        return cUserWithdrawAfter;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setcUserWithdrawAfter(Integer cUserWithdrawAfter) {
-        this.cUserWithdrawAfter = cUserWithdrawAfter;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

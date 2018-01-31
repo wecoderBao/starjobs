@@ -1,55 +1,56 @@
 package com.starjobs.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TUserRecharge {
-    private Integer cUserRechargeId;
+    private Integer id;
 
-    private Integer cUserId;
+    private Integer userId;
 
-    private Integer cUserRechargeMoney;
+    private BigDecimal rechargeMoney;
 
-    private Date cUserRechargeDate;
+    private Date createTime;
 
-    private Integer cUserBalanceAfter;
+    private BigDecimal balance;
 
-    public Integer getcUserRechargeId() {
-        return cUserRechargeId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setcUserRechargeId(Integer cUserRechargeId) {
-        this.cUserRechargeId = cUserRechargeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getcUserId() {
-        return cUserId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setcUserId(Integer cUserId) {
-        this.cUserId = cUserId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getcUserRechargeMoney() {
-        return cUserRechargeMoney;
+    public BigDecimal getRechargeMoney() {
+        return rechargeMoney;
     }
 
-    public void setcUserRechargeMoney(Integer cUserRechargeMoney) {
-        this.cUserRechargeMoney = cUserRechargeMoney;
+    public void setRechargeMoney(BigDecimal rechargeMoney) {
+        this.rechargeMoney = rechargeMoney;
     }
 
-    public Date getcUserRechargeDate() {
-        return cUserRechargeDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setcUserRechargeDate(Date cUserRechargeDate) {
-        this.cUserRechargeDate = cUserRechargeDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Integer getcUserBalanceAfter() {
-        return cUserBalanceAfter;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setcUserBalanceAfter(Integer cUserBalanceAfter) {
-        this.cUserBalanceAfter = cUserBalanceAfter;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

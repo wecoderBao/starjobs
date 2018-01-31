@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.starjobs.mapper.TUserWithdrawMapper" >
   <resultMap id="BaseResultMap" type="com.starjobs.pojo.TUserWithdraw" >
-    <id column="c_user_ withdraw _id" property="cUserWithdrawId" jdbcType="INTEGER" />
-    <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
-    <result column="c_user_ withdraw _money" property="cUserWithdrawMoney" jdbcType="INTEGER" />
-    <result column="c_user_ withdraw _date" property="cUserWithdrawDate" jdbcType="TIMESTAMP" />
-    <result column="c_user_ withdraw _after" property="cUserWithdrawAfter" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="withdraw_money" property="withdrawMoney" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,8 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "c_user_ withdraw _id", c_user_id, "c_user_ withdraw _money", "c_user_ withdraw _date", 
-    "c_user_ withdraw _after"
+    id, user_id, withdraw_money, create_time, balance, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TUserWithdrawExample" >
     select
@@ -88,11 +88,11 @@
     select 
     <include refid="Base_Column_List" />
     from t_user_withdraw
-    where "c_user_ withdraw _id" = #{cUserWithdrawId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user_withdraw
-    where "c_user_ withdraw _id" = #{cUserWithdrawId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.starjobs.pojo.TUserWithdrawExample" >
     delete from t_user_withdraw
@@ -101,47 +101,53 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TUserWithdraw" >
-    insert into t_user_withdraw ("c_user_ withdraw _id", c_user_id, "c_user_ withdraw _money", 
-      "c_user_ withdraw _date", "c_user_ withdraw _after"
+    insert into t_user_withdraw (id, user_id, withdraw_money, 
+      create_time, balance, status
       )
-    values (#{cUserWithdrawId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cUserWithdrawMoney,jdbcType=INTEGER}, 
-      #{cUserWithdrawDate,jdbcType=TIMESTAMP}, #{cUserWithdrawAfter,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{withdrawMoney,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{balance,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserWithdraw" >
     insert into t_user_withdraw
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cUserWithdrawId != null" >
-        "c_user_ withdraw _id",
+      <if test="id != null" >
+        id,
       </if>
-      <if test="cUserId != null" >
-        c_user_id,
+      <if test="userId != null" >
+        user_id,
       </if>
-      <if test="cUserWithdrawMoney != null" >
-        "c_user_ withdraw _money",
+      <if test="withdrawMoney != null" >
+        withdraw_money,
       </if>
-      <if test="cUserWithdrawDate != null" >
-        "c_user_ withdraw _date",
+      <if test="createTime != null" >
+        create_time,
       </if>
-      <if test="cUserWithdrawAfter != null" >
-        "c_user_ withdraw _after",
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cUserWithdrawId != null" >
-        #{cUserWithdrawId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="cUserId != null" >
-        #{cUserId,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="cUserWithdrawMoney != null" >
-        #{cUserWithdrawMoney,jdbcType=INTEGER},
+      <if test="withdrawMoney != null" >
+        #{withdrawMoney,jdbcType=DECIMAL},
       </if>
-      <if test="cUserWithdrawDate != null" >
-        #{cUserWithdrawDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="cUserWithdrawAfter != null" >
-        #{cUserWithdrawAfter,jdbcType=INTEGER},
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -154,20 +160,23 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update t_user_withdraw
     <set >
-      <if test="record.cUserWithdrawId != null" >
-        "c_user_ withdraw _id" = #{record.cUserWithdrawId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.cUserId != null" >
-        c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.cUserWithdrawMoney != null" >
-        "c_user_ withdraw _money" = #{record.cUserWithdrawMoney,jdbcType=INTEGER},
+      <if test="record.withdrawMoney != null" >
+        withdraw_money = #{record.withdrawMoney,jdbcType=DECIMAL},
       </if>
-      <if test="record.cUserWithdrawDate != null" >
-        "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.cUserWithdrawAfter != null" >
-        "c_user_ withdraw _after" = #{record.cUserWithdrawAfter,jdbcType=INTEGER},
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -176,11 +185,12 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update t_user_withdraw
-    set "c_user_ withdraw _id" = #{record.cUserWithdrawId,jdbcType=INTEGER},
-      c_user_id = #{record.cUserId,jdbcType=INTEGER},
-      "c_user_ withdraw _money" = #{record.cUserWithdrawMoney,jdbcType=INTEGER},
-      "c_user_ withdraw _date" = #{record.cUserWithdrawDate,jdbcType=TIMESTAMP},
-      "c_user_ withdraw _after" = #{record.cUserWithdrawAfter,jdbcType=INTEGER}
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      withdraw_money = #{record.withdrawMoney,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      balance = #{record.balance,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -188,27 +198,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TUserWithdraw" >
     update t_user_withdraw
     <set >
-      <if test="cUserId != null" >
-        c_user_id = #{cUserId,jdbcType=INTEGER},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="cUserWithdrawMoney != null" >
-        "c_user_ withdraw _money" = #{cUserWithdrawMoney,jdbcType=INTEGER},
+      <if test="withdrawMoney != null" >
+        withdraw_money = #{withdrawMoney,jdbcType=DECIMAL},
       </if>
-      <if test="cUserWithdrawDate != null" >
-        "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="cUserWithdrawAfter != null" >
-        "c_user_ withdraw _after" = #{cUserWithdrawAfter,jdbcType=INTEGER},
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
       </if>
     </set>
-    where "c_user_ withdraw _id" = #{cUserWithdrawId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TUserWithdraw" >
     update t_user_withdraw
-    set c_user_id = #{cUserId,jdbcType=INTEGER},
-      "c_user_ withdraw _money" = #{cUserWithdrawMoney,jdbcType=INTEGER},
-      "c_user_ withdraw _date" = #{cUserWithdrawDate,jdbcType=TIMESTAMP},
-      "c_user_ withdraw _after" = #{cUserWithdrawAfter,jdbcType=INTEGER}
-    where "c_user_ withdraw _id" = #{cUserWithdrawId,jdbcType=INTEGER}
+    set user_id = #{userId,jdbcType=INTEGER},
+      withdraw_money = #{withdrawMoney,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      balance = #{balance,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

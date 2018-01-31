@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.starjobs.mapper.TUserRechargeMapper" >
   <resultMap id="BaseResultMap" type="com.starjobs.pojo.TUserRecharge" >
-    <id column="c_user_recharge_id" property="cUserRechargeId" jdbcType="INTEGER" />
-    <result column="c_user_id" property="cUserId" jdbcType="INTEGER" />
-    <result column="c_user_recharge_money" property="cUserRechargeMoney" jdbcType="INTEGER" />
-    <result column="c_user_recharge_date" property="cUserRechargeDate" jdbcType="TIMESTAMP" />
-    <result column="c_user_balance_after" property="cUserBalanceAfter" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="recharge_money" property="rechargeMoney" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_user_recharge_id, c_user_id, c_user_recharge_money, c_user_recharge_date, c_user_balance_after
+    id, user_id, recharge_money, create_time, balance
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.starjobs.pojo.TUserRechargeExample" >
     select
@@ -87,11 +87,11 @@
     select 
     <include refid="Base_Column_List" />
     from t_user_recharge
-    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user_recharge
-    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.starjobs.pojo.TUserRechargeExample" >
     delete from t_user_recharge
@@ -100,45 +100,45 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TUserRecharge" >
-    insert into t_user_recharge (c_user_recharge_id, c_user_id, c_user_recharge_money, 
-      c_user_recharge_date, c_user_balance_after)
-    values (#{cUserRechargeId,jdbcType=INTEGER}, #{cUserId,jdbcType=INTEGER}, #{cUserRechargeMoney,jdbcType=INTEGER}, 
-      #{cUserRechargeDate,jdbcType=TIMESTAMP}, #{cUserBalanceAfter,jdbcType=INTEGER})
+    insert into t_user_recharge (id, user_id, recharge_money, 
+      create_time, balance)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{rechargeMoney,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{balance,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TUserRecharge" >
     insert into t_user_recharge
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cUserRechargeId != null" >
-        c_user_recharge_id,
+      <if test="id != null" >
+        id,
       </if>
-      <if test="cUserId != null" >
-        c_user_id,
+      <if test="userId != null" >
+        user_id,
       </if>
-      <if test="cUserRechargeMoney != null" >
-        c_user_recharge_money,
+      <if test="rechargeMoney != null" >
+        recharge_money,
       </if>
-      <if test="cUserRechargeDate != null" >
-        c_user_recharge_date,
+      <if test="createTime != null" >
+        create_time,
       </if>
-      <if test="cUserBalanceAfter != null" >
-        c_user_balance_after,
+      <if test="balance != null" >
+        balance,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cUserRechargeId != null" >
-        #{cUserRechargeId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="cUserId != null" >
-        #{cUserId,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="cUserRechargeMoney != null" >
-        #{cUserRechargeMoney,jdbcType=INTEGER},
+      <if test="rechargeMoney != null" >
+        #{rechargeMoney,jdbcType=DECIMAL},
       </if>
-      <if test="cUserRechargeDate != null" >
-        #{cUserRechargeDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="cUserBalanceAfter != null" >
-        #{cUserBalanceAfter,jdbcType=INTEGER},
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -151,20 +151,20 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update t_user_recharge
     <set >
-      <if test="record.cUserRechargeId != null" >
-        c_user_recharge_id = #{record.cUserRechargeId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.cUserId != null" >
-        c_user_id = #{record.cUserId,jdbcType=INTEGER},
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.cUserRechargeMoney != null" >
-        c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
+      <if test="record.rechargeMoney != null" >
+        recharge_money = #{record.rechargeMoney,jdbcType=DECIMAL},
       </if>
-      <if test="record.cUserRechargeDate != null" >
-        c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.cUserBalanceAfter != null" >
-        c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER},
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -173,11 +173,11 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update t_user_recharge
-    set c_user_recharge_id = #{record.cUserRechargeId,jdbcType=INTEGER},
-      c_user_id = #{record.cUserId,jdbcType=INTEGER},
-      c_user_recharge_money = #{record.cUserRechargeMoney,jdbcType=INTEGER},
-      c_user_recharge_date = #{record.cUserRechargeDate,jdbcType=TIMESTAMP},
-      c_user_balance_after = #{record.cUserBalanceAfter,jdbcType=INTEGER}
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      recharge_money = #{record.rechargeMoney,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      balance = #{record.balance,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -185,27 +185,27 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.starjobs.pojo.TUserRecharge" >
     update t_user_recharge
     <set >
-      <if test="cUserId != null" >
-        c_user_id = #{cUserId,jdbcType=INTEGER},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="cUserRechargeMoney != null" >
-        c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
+      <if test="rechargeMoney != null" >
+        recharge_money = #{rechargeMoney,jdbcType=DECIMAL},
       </if>
-      <if test="cUserRechargeDate != null" >
-        c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="cUserBalanceAfter != null" >
-        c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER},
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
       </if>
     </set>
-    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.starjobs.pojo.TUserRecharge" >
     update t_user_recharge
-    set c_user_id = #{cUserId,jdbcType=INTEGER},
-      c_user_recharge_money = #{cUserRechargeMoney,jdbcType=INTEGER},
-      c_user_recharge_date = #{cUserRechargeDate,jdbcType=TIMESTAMP},
-      c_user_balance_after = #{cUserBalanceAfter,jdbcType=INTEGER}
-    where c_user_recharge_id = #{cUserRechargeId,jdbcType=INTEGER}
+    set user_id = #{userId,jdbcType=INTEGER},
+      recharge_money = #{rechargeMoney,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      balance = #{balance,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

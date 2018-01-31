@@ -10,7 +10,7 @@ public interface TUserRechargeMapper {
 
     int deleteByExample(TUserRechargeExample example);
 
-    int deleteByPrimaryKey(Integer cUserRechargeId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(TUserRecharge record);
 
@@ -18,7 +18,7 @@ public interface TUserRechargeMapper {
 
     List<TUserRecharge> selectByExample(TUserRechargeExample example);
 
-    TUserRecharge selectByPrimaryKey(Integer cUserRechargeId);
+    TUserRecharge selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") TUserRecharge record, @Param("example") TUserRechargeExample example);
 

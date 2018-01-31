@@ -207,14 +207,14 @@ CREATE TABLE `t_user_job_apply` (
 DROP TABLE IF EXISTS `t_user_recharge`;
 
 CREATE TABLE `t_user_recharge` (
-  `c_user_recharge_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录表id	主键',
-  `c_user_id` int(11) DEFAULT NULL COMMENT '用户ID	外键',
-  `c_user_recharge_money` int(20) DEFAULT NULL COMMENT '充值金额',
-  `c_user_recharge_date` datetime DEFAULT NULL COMMENT '充值日期',
-  `c_user_balance_after` int(20) DEFAULT NULL COMMENT '充值后用户余额',
-  PRIMARY KEY (`c_user_recharge_id`),
-  KEY `fk_c_user_i` (`c_user_id`),
-  CONSTRAINT `fk_c_user_i` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录表id	主键',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户ID	外键',
+  `recharge_money` decimal(18,2) DEFAULT NULL COMMENT '充值金额',
+  `create_time` datetime DEFAULT NULL COMMENT '充值日期',
+  `balance` decimal(18,2) DEFAULT NULL COMMENT '充值后用户余额',
+  PRIMARY KEY (`id`),
+  KEY `fk_c_user_i` (`user_id`),
+  CONSTRAINT `fk_c_user_i` FOREIGN KEY (`user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -235,14 +235,15 @@ CREATE TABLE `t_user_token` (
 DROP TABLE IF EXISTS `t_user_withdraw`;
 
 CREATE TABLE `t_user_withdraw` (
-  `c_user_ withdraw _id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录表id',
-  `c_user_id` int(11) DEFAULT NULL COMMENT '用户ID',
-  `c_user_ withdraw _money` int(20) DEFAULT NULL COMMENT '提现金额',
-  `c_user_ withdraw _date` datetime DEFAULT NULL COMMENT '提现日期',
-  `c_user_ withdraw _after` int(20) DEFAULT NULL COMMENT '提现后用户余额',
-  PRIMARY KEY (`c_user_ withdraw _id`),
-  KEY `fk_user` (`c_user_id`),
-  CONSTRAINT `fk_user` FOREIGN KEY (`c_user_id`) REFERENCES `t_user_info` (`c_user_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录表id',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
+  `withdraw_money` decimal(18,2) DEFAULT NULL COMMENT '提现金额',
+  `create_time` datetime DEFAULT NULL COMMENT '提现日期',
+  `balance` decimal(18,2) DEFAULT NULL COMMENT '提现后用户余额',
+  status tinyint unsigned default null comment '提现状态1申请2已提现0取消提现',
+  PRIMARY KEY (`id`),
+  KEY `fk_user` (`user_id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `t_user_info` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

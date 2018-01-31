@@ -10,7 +10,7 @@ public interface TUserWithdrawMapper {
 
     int deleteByExample(TUserWithdrawExample example);
 
-    int deleteByPrimaryKey(Integer cUserWithdrawId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(TUserWithdraw record);
 
@@ -18,7 +18,7 @@ public interface TUserWithdrawMapper {
 
     List<TUserWithdraw> selectByExample(TUserWithdrawExample example);
 
-    TUserWithdraw selectByPrimaryKey(Integer cUserWithdrawId);
+    TUserWithdraw selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") TUserWithdraw record, @Param("example") TUserWithdrawExample example);
 

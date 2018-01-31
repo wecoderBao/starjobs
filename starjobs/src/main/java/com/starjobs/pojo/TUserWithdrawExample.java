@@ -1,5 +1,6 @@
 package com.starjobs.pojo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,303 +106,363 @@ public class TUserWithdrawExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andCUserWithdrawIdIsNull() {
-            addCriterion("\"c_user_ withdraw _id\" is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdIsNotNull() {
-            addCriterion("\"c_user_ withdraw _id\" is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" =", value, "cUserWithdrawId");
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdNotEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" <>", value, "cUserWithdrawId");
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdGreaterThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" >", value, "cUserWithdrawId");
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" >=", value, "cUserWithdrawId");
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdLessThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" <", value, "cUserWithdrawId");
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdLessThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _id\" <=", value, "cUserWithdrawId");
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _id\" in", values, "cUserWithdrawId");
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdNotIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _id\" not in", values, "cUserWithdrawId");
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _id\" between", value1, value2, "cUserWithdrawId");
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _id\" not between", value1, value2, "cUserWithdrawId");
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIsNull() {
-            addCriterion("c_user_id is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIsNotNull() {
-            addCriterion("c_user_id is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdEqualTo(Integer value) {
-            addCriterion("c_user_id =", value, "cUserId");
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotEqualTo(Integer value) {
-            addCriterion("c_user_id <>", value, "cUserId");
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdGreaterThan(Integer value) {
-            addCriterion("c_user_id >", value, "cUserId");
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("c_user_id >=", value, "cUserId");
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdLessThan(Integer value) {
-            addCriterion("c_user_id <", value, "cUserId");
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdLessThanOrEqualTo(Integer value) {
-            addCriterion("c_user_id <=", value, "cUserId");
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIn(List<Integer> values) {
-            addCriterion("c_user_id in", values, "cUserId");
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotIn(List<Integer> values) {
-            addCriterion("c_user_id not in", values, "cUserId");
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_id between", value1, value2, "cUserId");
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_id not between", value1, value2, "cUserId");
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyIsNull() {
-            addCriterion("\"c_user_ withdraw _money\" is null");
+        public Criteria andWithdrawMoneyIsNull() {
+            addCriterion("withdraw_money is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyIsNotNull() {
-            addCriterion("\"c_user_ withdraw _money\" is not null");
+        public Criteria andWithdrawMoneyIsNotNull() {
+            addCriterion("withdraw_money is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" =", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyEqualTo(BigDecimal value) {
+            addCriterion("withdraw_money =", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyNotEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" <>", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyNotEqualTo(BigDecimal value) {
+            addCriterion("withdraw_money <>", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyGreaterThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" >", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyGreaterThan(BigDecimal value) {
+            addCriterion("withdraw_money >", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyGreaterThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" >=", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("withdraw_money >=", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyLessThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" <", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyLessThan(BigDecimal value) {
+            addCriterion("withdraw_money <", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyLessThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _money\" <=", value, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("withdraw_money <=", value, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _money\" in", values, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyIn(List<BigDecimal> values) {
+            addCriterion("withdraw_money in", values, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyNotIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _money\" not in", values, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyNotIn(List<BigDecimal> values) {
+            addCriterion("withdraw_money not in", values, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _money\" between", value1, value2, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("withdraw_money between", value1, value2, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawMoneyNotBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _money\" not between", value1, value2, "cUserWithdrawMoney");
+        public Criteria andWithdrawMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("withdraw_money not between", value1, value2, "withdrawMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateIsNull() {
-            addCriterion("\"c_user_ withdraw _date\" is null");
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateIsNotNull() {
-            addCriterion("\"c_user_ withdraw _date\" is not null");
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateEqualTo(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" =", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateNotEqualTo(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" <>", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateGreaterThan(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" >", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" >=", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateLessThan(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" <", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateLessThanOrEqualTo(Date value) {
-            addCriterion("\"c_user_ withdraw _date\" <=", value, "cUserWithdrawDate");
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateIn(List<Date> values) {
-            addCriterion("\"c_user_ withdraw _date\" in", values, "cUserWithdrawDate");
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateNotIn(List<Date> values) {
-            addCriterion("\"c_user_ withdraw _date\" not in", values, "cUserWithdrawDate");
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateBetween(Date value1, Date value2) {
-            addCriterion("\"c_user_ withdraw _date\" between", value1, value2, "cUserWithdrawDate");
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawDateNotBetween(Date value1, Date value2) {
-            addCriterion("\"c_user_ withdraw _date\" not between", value1, value2, "cUserWithdrawDate");
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterIsNull() {
-            addCriterion("\"c_user_ withdraw _after\" is null");
+        public Criteria andBalanceIsNull() {
+            addCriterion("balance is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterIsNotNull() {
-            addCriterion("\"c_user_ withdraw _after\" is not null");
+        public Criteria andBalanceIsNotNull() {
+            addCriterion("balance is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" =", value, "cUserWithdrawAfter");
+        public Criteria andBalanceEqualTo(BigDecimal value) {
+            addCriterion("balance =", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterNotEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" <>", value, "cUserWithdrawAfter");
+        public Criteria andBalanceNotEqualTo(BigDecimal value) {
+            addCriterion("balance <>", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterGreaterThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" >", value, "cUserWithdrawAfter");
+        public Criteria andBalanceGreaterThan(BigDecimal value) {
+            addCriterion("balance >", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterGreaterThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" >=", value, "cUserWithdrawAfter");
+        public Criteria andBalanceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("balance >=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterLessThan(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" <", value, "cUserWithdrawAfter");
+        public Criteria andBalanceLessThan(BigDecimal value) {
+            addCriterion("balance <", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterLessThanOrEqualTo(Integer value) {
-            addCriterion("\"c_user_ withdraw _after\" <=", value, "cUserWithdrawAfter");
+        public Criteria andBalanceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("balance <=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _after\" in", values, "cUserWithdrawAfter");
+        public Criteria andBalanceIn(List<BigDecimal> values) {
+            addCriterion("balance in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterNotIn(List<Integer> values) {
-            addCriterion("\"c_user_ withdraw _after\" not in", values, "cUserWithdrawAfter");
+        public Criteria andBalanceNotIn(List<BigDecimal> values) {
+            addCriterion("balance not in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _after\" between", value1, value2, "cUserWithdrawAfter");
+        public Criteria andBalanceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("balance between", value1, value2, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserWithdrawAfterNotBetween(Integer value1, Integer value2) {
-            addCriterion("\"c_user_ withdraw _after\" not between", value1, value2, "cUserWithdrawAfter");
+        public Criteria andBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("balance not between", value1, value2, "balance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Byte value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Byte value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Byte value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Byte value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Byte> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Byte> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

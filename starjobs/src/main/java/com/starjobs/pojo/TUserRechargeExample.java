@@ -1,5 +1,6 @@
 package com.starjobs.pojo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,303 +106,303 @@ public class TUserRechargeExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andCUserRechargeIdIsNull() {
-            addCriterion("c_user_recharge_id is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdIsNotNull() {
-            addCriterion("c_user_recharge_id is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdEqualTo(Integer value) {
-            addCriterion("c_user_recharge_id =", value, "cUserRechargeId");
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdNotEqualTo(Integer value) {
-            addCriterion("c_user_recharge_id <>", value, "cUserRechargeId");
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdGreaterThan(Integer value) {
-            addCriterion("c_user_recharge_id >", value, "cUserRechargeId");
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("c_user_recharge_id >=", value, "cUserRechargeId");
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdLessThan(Integer value) {
-            addCriterion("c_user_recharge_id <", value, "cUserRechargeId");
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdLessThanOrEqualTo(Integer value) {
-            addCriterion("c_user_recharge_id <=", value, "cUserRechargeId");
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdIn(List<Integer> values) {
-            addCriterion("c_user_recharge_id in", values, "cUserRechargeId");
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdNotIn(List<Integer> values) {
-            addCriterion("c_user_recharge_id not in", values, "cUserRechargeId");
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_recharge_id between", value1, value2, "cUserRechargeId");
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_recharge_id not between", value1, value2, "cUserRechargeId");
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIsNull() {
-            addCriterion("c_user_id is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIsNotNull() {
-            addCriterion("c_user_id is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdEqualTo(Integer value) {
-            addCriterion("c_user_id =", value, "cUserId");
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotEqualTo(Integer value) {
-            addCriterion("c_user_id <>", value, "cUserId");
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdGreaterThan(Integer value) {
-            addCriterion("c_user_id >", value, "cUserId");
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("c_user_id >=", value, "cUserId");
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdLessThan(Integer value) {
-            addCriterion("c_user_id <", value, "cUserId");
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdLessThanOrEqualTo(Integer value) {
-            addCriterion("c_user_id <=", value, "cUserId");
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdIn(List<Integer> values) {
-            addCriterion("c_user_id in", values, "cUserId");
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotIn(List<Integer> values) {
-            addCriterion("c_user_id not in", values, "cUserId");
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_id between", value1, value2, "cUserId");
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_id not between", value1, value2, "cUserId");
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyIsNull() {
-            addCriterion("c_user_recharge_money is null");
+        public Criteria andRechargeMoneyIsNull() {
+            addCriterion("recharge_money is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyIsNotNull() {
-            addCriterion("c_user_recharge_money is not null");
+        public Criteria andRechargeMoneyIsNotNull() {
+            addCriterion("recharge_money is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyEqualTo(Integer value) {
-            addCriterion("c_user_recharge_money =", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyEqualTo(BigDecimal value) {
+            addCriterion("recharge_money =", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyNotEqualTo(Integer value) {
-            addCriterion("c_user_recharge_money <>", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyNotEqualTo(BigDecimal value) {
+            addCriterion("recharge_money <>", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyGreaterThan(Integer value) {
-            addCriterion("c_user_recharge_money >", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyGreaterThan(BigDecimal value) {
+            addCriterion("recharge_money >", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyGreaterThanOrEqualTo(Integer value) {
-            addCriterion("c_user_recharge_money >=", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("recharge_money >=", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyLessThan(Integer value) {
-            addCriterion("c_user_recharge_money <", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyLessThan(BigDecimal value) {
+            addCriterion("recharge_money <", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyLessThanOrEqualTo(Integer value) {
-            addCriterion("c_user_recharge_money <=", value, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("recharge_money <=", value, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyIn(List<Integer> values) {
-            addCriterion("c_user_recharge_money in", values, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyIn(List<BigDecimal> values) {
+            addCriterion("recharge_money in", values, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyNotIn(List<Integer> values) {
-            addCriterion("c_user_recharge_money not in", values, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyNotIn(List<BigDecimal> values) {
+            addCriterion("recharge_money not in", values, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_recharge_money between", value1, value2, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("recharge_money between", value1, value2, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeMoneyNotBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_recharge_money not between", value1, value2, "cUserRechargeMoney");
+        public Criteria andRechargeMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("recharge_money not between", value1, value2, "rechargeMoney");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateIsNull() {
-            addCriterion("c_user_recharge_date is null");
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateIsNotNull() {
-            addCriterion("c_user_recharge_date is not null");
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateEqualTo(Date value) {
-            addCriterion("c_user_recharge_date =", value, "cUserRechargeDate");
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateNotEqualTo(Date value) {
-            addCriterion("c_user_recharge_date <>", value, "cUserRechargeDate");
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateGreaterThan(Date value) {
-            addCriterion("c_user_recharge_date >", value, "cUserRechargeDate");
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("c_user_recharge_date >=", value, "cUserRechargeDate");
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateLessThan(Date value) {
-            addCriterion("c_user_recharge_date <", value, "cUserRechargeDate");
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateLessThanOrEqualTo(Date value) {
-            addCriterion("c_user_recharge_date <=", value, "cUserRechargeDate");
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateIn(List<Date> values) {
-            addCriterion("c_user_recharge_date in", values, "cUserRechargeDate");
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateNotIn(List<Date> values) {
-            addCriterion("c_user_recharge_date not in", values, "cUserRechargeDate");
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateBetween(Date value1, Date value2) {
-            addCriterion("c_user_recharge_date between", value1, value2, "cUserRechargeDate");
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserRechargeDateNotBetween(Date value1, Date value2) {
-            addCriterion("c_user_recharge_date not between", value1, value2, "cUserRechargeDate");
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterIsNull() {
-            addCriterion("c_user_balance_after is null");
+        public Criteria andBalanceIsNull() {
+            addCriterion("balance is null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterIsNotNull() {
-            addCriterion("c_user_balance_after is not null");
+        public Criteria andBalanceIsNotNull() {
+            addCriterion("balance is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterEqualTo(Integer value) {
-            addCriterion("c_user_balance_after =", value, "cUserBalanceAfter");
+        public Criteria andBalanceEqualTo(BigDecimal value) {
+            addCriterion("balance =", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterNotEqualTo(Integer value) {
-            addCriterion("c_user_balance_after <>", value, "cUserBalanceAfter");
+        public Criteria andBalanceNotEqualTo(BigDecimal value) {
+            addCriterion("balance <>", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterGreaterThan(Integer value) {
-            addCriterion("c_user_balance_after >", value, "cUserBalanceAfter");
+        public Criteria andBalanceGreaterThan(BigDecimal value) {
+            addCriterion("balance >", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterGreaterThanOrEqualTo(Integer value) {
-            addCriterion("c_user_balance_after >=", value, "cUserBalanceAfter");
+        public Criteria andBalanceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("balance >=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterLessThan(Integer value) {
-            addCriterion("c_user_balance_after <", value, "cUserBalanceAfter");
+        public Criteria andBalanceLessThan(BigDecimal value) {
+            addCriterion("balance <", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterLessThanOrEqualTo(Integer value) {
-            addCriterion("c_user_balance_after <=", value, "cUserBalanceAfter");
+        public Criteria andBalanceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("balance <=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterIn(List<Integer> values) {
-            addCriterion("c_user_balance_after in", values, "cUserBalanceAfter");
+        public Criteria andBalanceIn(List<BigDecimal> values) {
+            addCriterion("balance in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterNotIn(List<Integer> values) {
-            addCriterion("c_user_balance_after not in", values, "cUserBalanceAfter");
+        public Criteria andBalanceNotIn(List<BigDecimal> values) {
+            addCriterion("balance not in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_balance_after between", value1, value2, "cUserBalanceAfter");
+        public Criteria andBalanceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("balance between", value1, value2, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andCUserBalanceAfterNotBetween(Integer value1, Integer value2) {
-            addCriterion("c_user_balance_after not between", value1, value2, "cUserBalanceAfter");
+        public Criteria andBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("balance not between", value1, value2, "balance");
             return (Criteria) this;
         }
     }
