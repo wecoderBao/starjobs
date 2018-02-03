@@ -35,5 +35,5 @@ public class StarConstants {
 	/**
 	 * token失效时间
 	 */
-	public static final long TOKEN_EXPIRE_TIME = 3600L;
+	public static final long TOKEN_EXPIRE_TIME = 3600000L;
 }
