@@ -253,7 +253,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL+info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				}
@@ -268,7 +268,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL+info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				}
@@ -297,7 +297,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if(null == job) {
 				return null;
 			}
-			groupHeadImg = getGroupHeadImgByType(job.getcJobChoiceOpId());
+			groupHeadImg = getGroupHeadImgByType(job.getcJobTypeId());
 			// 保存群组
 			TGroup group = new TGroup();
 			group.setcGroupCreaterId(userId);
@@ -344,15 +344,39 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if(typeId == null) {
 			return "default.png";
 		}else if(typeId == 2) {
-			return "short.png";
+			return "02daogou.png";
 		}else if(typeId == 3) {
-			return "long.png";
+			return "03server.png";
 		}else if(typeId == 4) {
-			return "winter.png";
+			return "04teacher.png";
 		}else if(typeId == 5) {
-			return "summer.png";
+			return "05fadan.png";
 		}else if(typeId == 6) {
-			return "intern.png";
+			return "06wenyuan.png";
+		}else if(typeId == 7) {
+			return "07huawu.png";
+		}else if(typeId == 8) {
+			return "08liyi.png";
+		}else if(typeId == 9) {
+			return "09jiaolian.png";
+		}else if(typeId == 10) {
+			return "10pugong.png";
+		}else if(typeId == 11) {
+			return "11jishu.png";
+		}else if(typeId == 12) {
+			return "12huodong.png";
+		}else if(typeId == 13) {
+			return "13sheji.png";
+		}else if(typeId == 14) {
+			return "14website.png";
+		}else if(typeId == 15) {
+			return "15kaifa.png";
+		}else if(typeId == 16) {
+			return "16yingxiao.png";
+		}else if(typeId == 17) {
+			return "17falv.png";
+		}else if(typeId == 18) {
+			return "18daili.png";
 		}
 		return "default.png";
 	}
@@ -464,7 +488,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (null != group && group.getcGroupStatu().equals("0")) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
-					aGroup.put("groupImg",StarConstants.COM_IMG_URL+ group.getcGroupHeadImg());
+					aGroup.put("groupImg",StarConstants.GROUP_IMG_URL+ group.getcGroupHeadImg());
 					TGroupMemberExample memberExample = new TGroupMemberExample();
 					TGroupMemberExample.Criteria criteria = memberExample.createCriteria();
 					criteria.andCGroupIdEqualTo(group.getcGroupId());
@@ -561,6 +585,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 	 * 
 	 * @see io.rong.service.RongCloudService#getGroupInfo(java.lang.String)
 	 */
+	@Override
 	public Map<String, Object> getGroupInfo(String groupId) {
 		int group_id = Integer.parseInt(groupId);
 		TGroup group = tGroupMapper.selectByPrimaryKey(group_id);
@@ -575,8 +600,13 @@ public class RongCloudServiceImpl implements RongCloudService {
 			groupInfoMap.put("groupId", groupId);
 			groupInfoMap.put("groupName", group.getcGroupName());
 			groupInfoMap.put("groupOwnerId", group.getcGroupCreaterId());
-			groupInfoMap.put("groupImgUrl", group.getcGroupHeadImg());
+			groupInfoMap.put("groupImgUrl", StarConstants.GROUP_IMG_URL+group.getcGroupHeadImg());
 			groupInfoMap.put("groupSize", groupSize);
+			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(group.getcJobId()));
+			if(job!=null) {
+				groupInfoMap.put("job", job.getcJobTitle());
+			}
+			
 		}
 
 		return groupInfoMap;

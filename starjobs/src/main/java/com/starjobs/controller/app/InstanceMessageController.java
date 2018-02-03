@@ -309,7 +309,7 @@ public class InstanceMessageController {
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
 		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(userId)
-				|| StringUtils.isEmpty(groupName)) {
+				|| StringUtils.isEmpty(groupName)||StringUtils.isEmpty(jobId)) {
 			return modelMap;
 		}
 		// 验证token是否有效
