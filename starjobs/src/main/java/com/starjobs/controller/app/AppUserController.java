@@ -68,6 +68,7 @@ public class AppUserController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 返回兼职信息
@@ -114,6 +115,7 @@ public class AppUserController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 返回兼职信息
@@ -174,6 +176,7 @@ public class AppUserController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证用户是否有发布权限,userFlag必须为0
@@ -239,6 +242,7 @@ public class AppUserController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证用户是否有发布权限,userFlag必须为0

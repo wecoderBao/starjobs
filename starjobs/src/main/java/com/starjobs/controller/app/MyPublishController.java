@@ -97,6 +97,7 @@ public class MyPublishController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 
@@ -134,6 +135,7 @@ public class MyPublishController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 
@@ -171,6 +173,7 @@ public class MyPublishController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 
@@ -208,6 +211,7 @@ public class MyPublishController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, String> params = new HashMap<String, String>();

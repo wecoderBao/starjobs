@@ -62,6 +62,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -105,6 +106,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -145,6 +147,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -184,6 +187,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -223,6 +227,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -265,6 +270,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -309,6 +315,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -352,6 +359,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -393,6 +401,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -431,6 +440,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -469,6 +479,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -507,6 +518,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -544,6 +556,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -587,6 +600,7 @@ public class InstanceMessageController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		// 验证输入的验证码
@@ -626,6 +640,7 @@ public class InstanceMessageController {
 			// 验证token是否有效
 			boolean isPermitted = tokenService.checkToken(token);
 			if (!isPermitted) {
+				modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 				return modelMap;
 			}
 			// 验证输入的验证码

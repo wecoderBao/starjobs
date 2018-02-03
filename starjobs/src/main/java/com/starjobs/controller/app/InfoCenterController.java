@@ -59,6 +59,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, Object> data = infoCenterService.getUserInfo(token,phoneNum, userFlag);
@@ -98,6 +99,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, String> params = new HashMap<String, String>();
@@ -147,6 +149,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, Object> data = infoCenterService.getComInfo(token,phoneNum, userFlag);
@@ -188,6 +191,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, String> params = new HashMap<String, String>();
@@ -235,6 +239,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 		Map<String, String> params = new HashMap<String, String>();
@@ -273,6 +278,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 
@@ -308,6 +314,7 @@ public class InfoCenterController {
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
 
