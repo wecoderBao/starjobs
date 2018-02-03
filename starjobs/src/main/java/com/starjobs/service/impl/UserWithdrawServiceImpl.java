@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.starjobs.dto.UserWithdrawDto;
 import com.starjobs.mapper.TUserWithdrawMapper;
@@ -11,6 +12,7 @@ import com.starjobs.pojo.TUserWithdraw;
 import com.starjobs.pojo.TUserWithdrawExample;
 import com.starjobs.service.UserWithdrawService;
 
+@Service
 public class UserWithdrawServiceImpl implements UserWithdrawService {
 	@Autowired
 	private TUserWithdrawMapper tUserWithdrawMapper;

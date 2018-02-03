@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.starjobs.dto.UserRechargeRecordDto;
 import com.starjobs.mapper.TUserRechargeMapper;
@@ -11,6 +12,7 @@ import com.starjobs.pojo.TUserRecharge;
 import com.starjobs.pojo.TUserRechargeExample;
 import com.starjobs.service.UserRechargeService;
 
+@Service
 public class UserRechargeServiceImpl implements UserRechargeService {
 	@Autowired
 	private TUserRechargeMapper tUserRechargeMapper;
