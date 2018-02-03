@@ -144,7 +144,8 @@ public class UserServiceImpl implements UserService {
 				&& SystemUtil.USER_COM.equals(userFlag.trim())) {
 			// 查询用户是否存在，若存在则不能再注册
 			TCompanyInfo record = tCompanyInfoMapper.selectByPhone(phone);
-			if (record != null) {
+			TUserInfo recordStu = tUserInfoMapper.selectByPhone(phone);
+			if (record != null || recordStu != null) {
 				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
 				modelMap.put("message", "phone registered");
 				return modelMap;
@@ -171,7 +172,8 @@ public class UserServiceImpl implements UserService {
 				&& SystemUtil.USER_STU.equals(userFlag.trim())) {
 			// 查询用户是否存在，若存在则不能再注册
 			TUserInfo record = tUserInfoMapper.selectByPhone(phone);
-			if (record != null) {
+			TCompanyInfo recordCom = tCompanyInfoMapper.selectByPhone(phone);
+			if (record != null || recordCom != null) {
 				modelMap.put("error_code", SystemUtil.PHONE_REGISTERED);
 				modelMap.put("message", "success");
 				return modelMap;
