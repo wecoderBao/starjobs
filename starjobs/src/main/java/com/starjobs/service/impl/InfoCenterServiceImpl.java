@@ -98,8 +98,6 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	 * @see com.starjobs.service.InfoCenterService#updateUserInfo(java.util.Map)
 	 */
 	public Map<String, Object> updateUserInfo(String token, Map<String, String> params, String path) {
-		// 获取手机号
-		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
 		TUserInfo tUserInfo = tUserInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("userId")));
 		if (tUserInfo == null) {
@@ -222,8 +220,6 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 	 * java.util.Map, java.lang.String)
 	 */
 	public Map<String, Object> updateComInfo(String token, Map<String, String> params, String path) {
-		// 获取手机号
-		String phoneNum = tokenService.getPhoneNum(token);
 		// 根据手机号获取个人信息
 		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(Integer.parseInt(params.get("userid")));
 		if (tComInfo == null) {
@@ -448,5 +444,43 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		dataMap.put("jobList", jobList);
 		// dataMap.put("comInfo", data);
 		return dataMap;
+	}
+	
+	@Override
+	public Map<String, Object> getComInfo4User(String token, String phoneNum, String userFlag) {
+		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPhone(phoneNum);
+		if (tComInfo == null) {
+			return null;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("token", token);
+		data.put("userFlag", userFlag);
+		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
+		data.put("nickname", tComInfo.getcComName());
+		if (null != tComInfo.getcComAddressId()) {
+			TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
+			if (null != addr) {
+				data.put("province", addr.getcProvince());
+				data.put("city", addr.getcCity());
+				data.put("area", addr.getcTown());
+				data.put("address", addr.getcAddressDetail());// 公司地址
+			}else {
+				data.put("province", "0");
+				data.put("city", "0");
+				data.put("area", "0");
+				data.put("address", "地址不详，请和客服确认。");
+			}
+		}else{
+			data.put("province", "0");
+			data.put("city", "0");
+			data.put("area", "0");
+			data.put("address", "地址不详，请和客服确认。");
+		}
+		data.put("hasLicense", tComInfo.getcComHaslicense());
+		data.put("comDesc", tComInfo.getcComDesc());// 公司简介
+		data.put("score", tComInfo.getcComScore());
+		data.put("phone", tComInfo.getcComPhone());
+		data.put("userid", String.valueOf(tComInfo.getcComId()));
+		return data;
 	}
 }

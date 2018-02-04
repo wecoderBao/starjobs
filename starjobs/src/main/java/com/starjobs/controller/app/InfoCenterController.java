@@ -45,15 +45,15 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
-		//手机号
+		// 手机号
 		String phoneNum = request.getParameter("phone");
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)||
-				StringUtils.isEmpty(phoneNum)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)
+				|| StringUtils.isEmpty(phoneNum)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -62,7 +62,7 @@ public class InfoCenterController {
 			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
-		Map<String, Object> data = infoCenterService.getUserInfo(token,phoneNum, userFlag);
+		Map<String, Object> data = infoCenterService.getUserInfo(token, phoneNum, userFlag);
 		if (data != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
@@ -79,21 +79,22 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
-		//id
+		// id
 		String userId = request.getParameter("userId");
-//		String realPath = request.getSession().getServletContext().getRealPath("/photo/user");
-		String realPath = this.getClass().getClassLoader().getResource("/").getPath(); 
+		// String realPath =
+		// request.getSession().getServletContext().getRealPath("/photo/user");
+		String realPath = this.getClass().getClassLoader().getResource("/").getPath();
 		System.out.println("realpath:" + realPath);
-		//F:/apache-tomcat-8.0.32/webapps/starjobs/WEB-INF/classes/
+		// F:/apache-tomcat-8.0.32/webapps/starjobs/WEB-INF/classes/
 		int end = realPath.lastIndexOf("WEB-INF");
-		realPath = realPath.substring(0, end)+"photo/user";
+		realPath = realPath.substring(0, end) + "photo/user";
 		System.out.println("opath:" + realPath);
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)||
-				StringUtils.isEmpty(userId)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)
+				|| StringUtils.isEmpty(userId)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -135,15 +136,15 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
-		//手机号
+		// 手机号
 		String phoneNum = request.getParameter("phone");
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)||
-				StringUtils.isEmpty(phoneNum)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)
+				|| StringUtils.isEmpty(phoneNum)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -152,7 +153,7 @@ public class InfoCenterController {
 			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
-		Map<String, Object> data = infoCenterService.getComInfo(token,phoneNum, userFlag);
+		Map<String, Object> data = infoCenterService.getComInfo(token, phoneNum, userFlag);
 		if (data != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
@@ -171,9 +172,9 @@ public class InfoCenterController {
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
-		//用户id
+		// 用户id
 		String id = request.getParameter("userid");
-		//省市县
+		// 省市县
 		String province = request.getParameter("province");
 		String city = request.getParameter("city");
 		String town = request.getParameter("area");
@@ -184,8 +185,8 @@ public class InfoCenterController {
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) 
-				|| !SystemUtil.USER_COM.equals(userFlag) || StringUtils.isEmpty(id)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_COM.equals(userFlag)
+				|| StringUtils.isEmpty(id)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -201,12 +202,12 @@ public class InfoCenterController {
 		params.put("address", request.getParameter("address"));
 		params.put("comDesc", request.getParameter("comDesc"));
 		params.put("phone", request.getParameter("phone"));
-		
-		params.put("province",province);
+
+		params.put("province", province);
 		params.put("city", city);
 		params.put("area", town);
-		
-		params.put("userid",id);
+
+		params.put("userid", id);
 
 		Map<String, Object> data = infoCenterService.updateComInfo(token, params, realPath);
 		if (data != null) {
@@ -319,6 +320,42 @@ public class InfoCenterController {
 		}
 
 		Map<String, Object> data = infoCenterService.getJobListByComId(comId);
+		if (data != null) {
+			modelMap.put("error_code", SystemUtil.CODE_SUCC);
+			modelMap.put("message", "success");
+			data.put("token", token);
+			data.put("userFlag", userFlag);
+			modelMap.put("data", data);
+		}
+		return modelMap;
+	}
+
+	// 公司用户获取个人信息
+	@RequestMapping(value = "/user/get/com_info", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getComInfo4User(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 手机号
+		String phoneNum = request.getParameter("phone");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)
+				|| StringUtils.isEmpty(phoneNum)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+			return modelMap;
+		}
+		Map<String, Object> data = infoCenterService.getComInfo4User(token, phoneNum, userFlag);
 		if (data != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
