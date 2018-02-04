@@ -605,6 +605,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(group.getcJobId()));
 			if(job!=null) {
 				groupInfoMap.put("job", job.getcJobTitle());
+			}else {
+				groupInfoMap.put("job", "兼职信息不详");
 			}
 			
 		}

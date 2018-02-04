@@ -27,6 +27,7 @@ import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.mapper.TUserLikeComMapper;
+import com.starjobs.mapper.TUserTokenMapper;
 import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TComScore;
@@ -40,6 +41,8 @@ import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserJobApplyExample;
 import com.starjobs.pojo.TUserLikeComExample;
+import com.starjobs.pojo.TUserToken;
+import com.starjobs.pojo.TUserTokenExample;
 import com.starjobs.service.TokenService;
 import com.starjobs.service.UserService;
 import com.starjobs.sms.util.MobClient;
@@ -95,6 +98,8 @@ public class UserServiceImpl implements UserService {
 	private RongCloudService rongCloudService;
 	@Autowired
 	private RefreshJobMapper refreshJobMapper;
+	@Autowired
+	private TUserTokenMapper tUserTokenMapper;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -253,7 +258,21 @@ public class UserServiceImpl implements UserService {
 		modelMap.put("message", "fail");
 		// 用户token
 		String token = SystemUtil.generateToken(phone);
-
+		/**
+		 * 其他设备登陆的话，则之前的token失效,即删除之前的token
+		 */
+		TUserTokenExample tokenExample = new TUserTokenExample();
+		tokenExample.createCriteria().andCPhoneNumEqualTo(phone);
+		List<TUserToken> tokenList = tUserTokenMapper.selectByExample(tokenExample);
+		if(tokenList != null && tokenList.size()>0) {
+			TUserTokenExample example = new TUserTokenExample();
+			List<Integer> idList = new ArrayList<Integer>();
+			for(TUserToken aToken:tokenList) {
+				idList.add(aToken.getcId());
+			}
+			example.createCriteria().andCIdIn(idList);
+			tUserTokenMapper.deleteByExample(example);
+		}
 		if (SystemUtil.USER_COM.equals(userFlag)) {
 			// 用户为公司，验证登录操作
 			TCompanyInfo tciRecord = tCompanyInfoMapper.selectByPhone(phone);
