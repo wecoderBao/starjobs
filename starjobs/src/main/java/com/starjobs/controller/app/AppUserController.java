@@ -119,7 +119,7 @@ public class AppUserController {
 			return modelMap;
 		}
 		// 返回兼职信息
-		Map<String, Object> jobMap = userService.userGetJobDetail(jobId, userPhone);
+		Map<String, Object> jobMap = userService.userGetJobDetail(jobId, userPhone,userFlag);
 		if (jobMap == null) {
 			return modelMap;
 		}

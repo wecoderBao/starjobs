@@ -440,7 +440,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 用户查询兼职详细信息
-	public Map<String, Object> userGetJobDetail(String jobId, String userPhone) {
+	public Map<String, Object> userGetJobDetail(String jobId, String userPhone,String userFlag) {
 		int id = -1;
 		id = Integer.parseInt(jobId);
 
@@ -477,17 +477,20 @@ public class UserServiceImpl implements UserService {
 		data.put("city", jobInfo.getcJobCity());
 		data.put("area", jobInfo.getcJobArea());
 		data.put("address", jobInfo.getcJobPosition());
-		// 用户是否报名该兼职
-		TUserJobApplyExample example = new TUserJobApplyExample();
-		TUserJobApplyExample.Criteria criteria = example.createCriteria();
-		criteria.andCUserIdEqualTo(userInfo.getcUserId());
-		criteria.andCJobIdEqualTo(id);
-		int result = tUserJobApplyMapper.countByExample(example);
-		if (result > 0) {
-			data.put("applied", "1");
-		} else {
-			data.put("applied", "0");
+		if(userFlag.equals(SystemUtil.USER_STU)) {
+			// 用户是否报名该兼职
+			TUserJobApplyExample example = new TUserJobApplyExample();
+			TUserJobApplyExample.Criteria criteria = example.createCriteria();
+			criteria.andCUserIdEqualTo(userInfo.getcUserId());
+			criteria.andCJobIdEqualTo(id);
+			int result = tUserJobApplyMapper.countByExample(example);
+			if (result > 0) {
+				data.put("applied", "1");
+			} else {
+				data.put("applied", "0");
+			}
 		}
+		
 		// 报名人数
 		TUserJobApplyExample example2 = new TUserJobApplyExample();
 		TUserJobApplyExample.Criteria criteria2 = example2.createCriteria();
@@ -502,36 +505,39 @@ public class UserServiceImpl implements UserService {
 			data.put("groupId", group.getcGroupId().toString());
 		}
 		data.put("comPhone", company.getcComPhone());
-		// 是否关注公司
-		TUserLikeComExample likeExample = new TUserLikeComExample();
-		TUserLikeComExample.Criteria likeCriteria = likeExample.createCriteria();
-		likeCriteria.andComPhoneEqualTo(company.getcComPhone());
-		likeCriteria.andUserPhoneEqualTo(userPhone);
-		int likeRet = tUserLikeComMapper.countByExample(likeExample);
-		if (likeRet > 0) {
-			data.put("isLike", "1");// 关注为1
-		} else {
-			data.put("isLike", "0");// 未关注0
+		if(userFlag.equals(SystemUtil.USER_STU)) {
+			// 是否关注公司
+			TUserLikeComExample likeExample = new TUserLikeComExample();
+			TUserLikeComExample.Criteria likeCriteria = likeExample.createCriteria();
+			likeCriteria.andComPhoneEqualTo(company.getcComPhone());
+			likeCriteria.andUserPhoneEqualTo(userPhone);
+			int likeRet = tUserLikeComMapper.countByExample(likeExample);
+			if (likeRet > 0) {
+				data.put("isLike", "1");// 关注为1
+			} else {
+				data.put("isLike", "0");// 未关注0
+			}
+			// 是否为好友
+			// 将标识排序，做小右大
+			Long fid = Long.parseLong(userPhone);
+			Long tid = Long.parseLong(company.getcComPhone());
+			String cuid = userPhone;
+			String cfid = company.getcComPhone();
+			if (fid > tid) {
+				cuid = company.getcComPhone();
+				cfid = userPhone;
+			}
+			TFriendExample frExample = new TFriendExample();
+			TFriendExample.Criteria frCriteria = frExample.createCriteria();
+			frCriteria.andCFidEqualTo(cfid);
+			frCriteria.andCUidEqualTo(cuid);
+			List<TFriend> frRet = tFriendMapper.selectByExample(frExample);
+			data.put("isFriend", "0");
+			if(frRet!=null&&frRet.size() > 0){
+				data.put("isFriend", frRet.get(0).getcState());
+			}
 		}
-		// 是否为好友
-		// 将标识排序，做小右大
-		Long fid = Long.parseLong(userPhone);
-		Long tid = Long.parseLong(company.getcComPhone());
-		String cuid = userPhone;
-		String cfid = company.getcComPhone();
-		if (fid > tid) {
-			cuid = company.getcComPhone();
-			cfid = userPhone;
-		}
-		TFriendExample frExample = new TFriendExample();
-		TFriendExample.Criteria frCriteria = frExample.createCriteria();
-		frCriteria.andCFidEqualTo(cfid);
-		frCriteria.andCUidEqualTo(cuid);
-		List<TFriend> frRet = tFriendMapper.selectByExample(frExample);
-		data.put("isFriend", "0");
-		if(frRet!=null&&frRet.size() > 0){
-			data.put("isFriend", frRet.get(0).getcState());
-		}
+		
 		//公司地址
 		String comAddress = "不详";
 		TComAddress comAddr = tComAddressMapper.selectByPrimaryKey(company.getcComAddressId());
