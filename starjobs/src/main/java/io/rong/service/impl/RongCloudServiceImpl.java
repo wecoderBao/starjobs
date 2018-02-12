@@ -396,6 +396,12 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (group == null) {
 			return null;
 		}
+		TGroupMemberExample memberExample = new TGroupMemberExample();
+		memberExample.createCriteria().andCGroupIdEqualTo(Integer.parseInt(groupId)).andCGroupMemberIdEqualTo(userId);
+		int total = tGroupMemberMapper.countByExample(memberExample);
+		if(total > 0) {
+			return null;
+		}
 		try {
 			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId,
 					String.valueOf(group.getcGroupId()), groupName);
