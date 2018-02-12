@@ -11,6 +11,8 @@ public class TCompanyInfo {
 
     private String cComBalance;
 
+    private String cComAliAccount;
+
     private String cComScore;
 
     private String cComHeadImg;
@@ -19,9 +21,9 @@ public class TCompanyInfo {
 
     private String cComLicenseImg;
 
-    private String cUserState;
-
     private String cExtraBalance;
+
+    private String cUserState;
 
     private String cComHaslicense;
 
@@ -67,6 +69,14 @@ public class TCompanyInfo {
         this.cComBalance = cComBalance == null ? null : cComBalance.trim();
     }
 
+    public String getcComAliAccount() {
+        return cComAliAccount;
+    }
+
+    public void setcComAliAccount(String cComAliAccount) {
+        this.cComAliAccount = cComAliAccount == null ? null : cComAliAccount.trim();
+    }
+
     public String getcComScore() {
         return cComScore;
     }
@@ -99,20 +109,20 @@ public class TCompanyInfo {
         this.cComLicenseImg = cComLicenseImg == null ? null : cComLicenseImg.trim();
     }
 
-    public String getcUserState() {
-        return cUserState;
-    }
-
-    public void setcUserState(String cUserState) {
-        this.cUserState = cUserState == null ? null : cUserState.trim();
-    }
-
     public String getcExtraBalance() {
         return cExtraBalance;
     }
 
     public void setcExtraBalance(String cExtraBalance) {
         this.cExtraBalance = cExtraBalance == null ? null : cExtraBalance.trim();
+    }
+
+    public String getcUserState() {
+        return cUserState;
+    }
+
+    public void setcUserState(String cUserState) {
+        this.cUserState = cUserState == null ? null : cUserState.trim();
     }
 
     public String getcComHaslicense() {

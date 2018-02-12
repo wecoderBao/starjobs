@@ -7,12 +7,13 @@
     <result column="c_com_password" property="cComPassword" jdbcType="VARCHAR" />
     <result column="c_com_name" property="cComName" jdbcType="VARCHAR" />
     <result column="c_com_balance" property="cComBalance" jdbcType="VARCHAR" />
+    <result column="c_com_ali_account" property="cComAliAccount" jdbcType="VARCHAR" />
     <result column="c_com_score" property="cComScore" jdbcType="VARCHAR" />
     <result column="c_com_head_img" property="cComHeadImg" jdbcType="VARCHAR" />
     <result column="c_com_address_id" property="cComAddressId" jdbcType="INTEGER" />
     <result column="c_com_license_img" property="cComLicenseImg" jdbcType="VARCHAR" />
-    <result column="c_user_state" property="cUserState" jdbcType="VARCHAR" />
     <result column="c_extra_balance" property="cExtraBalance" jdbcType="VARCHAR" />
+    <result column="c_user_state" property="cUserState" jdbcType="VARCHAR" />
     <result column="c_com_hasLicense" property="cComHaslicense" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.starjobs.pojo.TCompanyInfo" extends="BaseResultMap" >
@@ -77,8 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_com_id, c_com_phone, c_com_password, c_com_name, c_com_balance, c_com_score, c_com_head_img, 
-    c_com_address_id, c_com_license_img, c_user_state, c_extra_balance, c_com_hasLicense
+    c_com_id, c_com_phone, c_com_password, c_com_name, c_com_balance, c_com_ali_account, 
+    c_com_score, c_com_head_img, c_com_address_id, c_com_license_img, c_extra_balance, 
+    c_user_state, c_com_hasLicense
   </sql>
   <sql id="Blob_Column_List" >
     c_com_desc
@@ -133,15 +135,15 @@
   </delete>
   <insert id="insert" parameterType="com.starjobs.pojo.TCompanyInfo" >
     insert into t_company_info (c_com_id, c_com_phone, c_com_password, 
-      c_com_name, c_com_balance, c_com_score, 
-      c_com_head_img, c_com_address_id, c_com_license_img, 
-      c_user_state, c_extra_balance, c_com_hasLicense, 
-      c_com_desc)
+      c_com_name, c_com_balance, c_com_ali_account, 
+      c_com_score, c_com_head_img, c_com_address_id, 
+      c_com_license_img, c_extra_balance, c_user_state, 
+      c_com_hasLicense, c_com_desc)
     values (#{cComId,jdbcType=INTEGER}, #{cComPhone,jdbcType=VARCHAR}, #{cComPassword,jdbcType=VARCHAR}, 
-      #{cComName,jdbcType=VARCHAR}, #{cComBalance,jdbcType=VARCHAR}, #{cComScore,jdbcType=VARCHAR}, 
-      #{cComHeadImg,jdbcType=VARCHAR}, #{cComAddressId,jdbcType=INTEGER}, #{cComLicenseImg,jdbcType=VARCHAR}, 
-      #{cUserState,jdbcType=VARCHAR}, #{cExtraBalance,jdbcType=VARCHAR}, #{cComHaslicense,jdbcType=VARCHAR}, 
-      #{cComDesc,jdbcType=LONGVARCHAR})
+      #{cComName,jdbcType=VARCHAR}, #{cComBalance,jdbcType=VARCHAR}, #{cComAliAccount,jdbcType=VARCHAR}, 
+      #{cComScore,jdbcType=VARCHAR}, #{cComHeadImg,jdbcType=VARCHAR}, #{cComAddressId,jdbcType=INTEGER}, 
+      #{cComLicenseImg,jdbcType=VARCHAR}, #{cExtraBalance,jdbcType=VARCHAR}, #{cUserState,jdbcType=VARCHAR}, 
+      #{cComHaslicense,jdbcType=VARCHAR}, #{cComDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.starjobs.pojo.TCompanyInfo" >
     insert into t_company_info
@@ -161,6 +163,9 @@
       <if test="cComBalance != null" >
         c_com_balance,
       </if>
+      <if test="cComAliAccount != null" >
+        c_com_ali_account,
+      </if>
       <if test="cComScore != null" >
         c_com_score,
       </if>
@@ -173,11 +178,11 @@
       <if test="cComLicenseImg != null" >
         c_com_license_img,
       </if>
-      <if test="cUserState != null" >
-        c_user_state,
-      </if>
       <if test="cExtraBalance != null" >
         c_extra_balance,
+      </if>
+      <if test="cUserState != null" >
+        c_user_state,
       </if>
       <if test="cComHaslicense != null" >
         c_com_hasLicense,
@@ -202,6 +207,9 @@
       <if test="cComBalance != null" >
         #{cComBalance,jdbcType=VARCHAR},
       </if>
+      <if test="cComAliAccount != null" >
+        #{cComAliAccount,jdbcType=VARCHAR},
+      </if>
       <if test="cComScore != null" >
         #{cComScore,jdbcType=VARCHAR},
       </if>
@@ -214,11 +222,11 @@
       <if test="cComLicenseImg != null" >
         #{cComLicenseImg,jdbcType=VARCHAR},
       </if>
-      <if test="cUserState != null" >
-        #{cUserState,jdbcType=VARCHAR},
-      </if>
       <if test="cExtraBalance != null" >
         #{cExtraBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserState != null" >
+        #{cUserState,jdbcType=VARCHAR},
       </if>
       <if test="cComHaslicense != null" >
         #{cComHaslicense,jdbcType=VARCHAR},
@@ -252,6 +260,9 @@
       <if test="record.cComBalance != null" >
         c_com_balance = #{record.cComBalance,jdbcType=VARCHAR},
       </if>
+      <if test="record.cComAliAccount != null" >
+        c_com_ali_account = #{record.cComAliAccount,jdbcType=VARCHAR},
+      </if>
       <if test="record.cComScore != null" >
         c_com_score = #{record.cComScore,jdbcType=VARCHAR},
       </if>
@@ -264,11 +275,11 @@
       <if test="record.cComLicenseImg != null" >
         c_com_license_img = #{record.cComLicenseImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.cUserState != null" >
-        c_user_state = #{record.cUserState,jdbcType=VARCHAR},
-      </if>
       <if test="record.cExtraBalance != null" >
         c_extra_balance = #{record.cExtraBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserState != null" >
+        c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       </if>
       <if test="record.cComHaslicense != null" >
         c_com_hasLicense = #{record.cComHaslicense,jdbcType=VARCHAR},
@@ -288,12 +299,13 @@
       c_com_password = #{record.cComPassword,jdbcType=VARCHAR},
       c_com_name = #{record.cComName,jdbcType=VARCHAR},
       c_com_balance = #{record.cComBalance,jdbcType=VARCHAR},
+      c_com_ali_account = #{record.cComAliAccount,jdbcType=VARCHAR},
       c_com_score = #{record.cComScore,jdbcType=VARCHAR},
       c_com_head_img = #{record.cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{record.cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{record.cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       c_extra_balance = #{record.cExtraBalance,jdbcType=VARCHAR},
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       c_com_hasLicense = #{record.cComHaslicense,jdbcType=VARCHAR},
       c_com_desc = #{record.cComDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -307,12 +319,13 @@
       c_com_password = #{record.cComPassword,jdbcType=VARCHAR},
       c_com_name = #{record.cComName,jdbcType=VARCHAR},
       c_com_balance = #{record.cComBalance,jdbcType=VARCHAR},
+      c_com_ali_account = #{record.cComAliAccount,jdbcType=VARCHAR},
       c_com_score = #{record.cComScore,jdbcType=VARCHAR},
       c_com_head_img = #{record.cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{record.cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{record.cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       c_extra_balance = #{record.cExtraBalance,jdbcType=VARCHAR},
+      c_user_state = #{record.cUserState,jdbcType=VARCHAR},
       c_com_hasLicense = #{record.cComHaslicense,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -333,6 +346,9 @@
       <if test="cComBalance != null" >
         c_com_balance = #{cComBalance,jdbcType=VARCHAR},
       </if>
+      <if test="cComAliAccount != null" >
+        c_com_ali_account = #{cComAliAccount,jdbcType=VARCHAR},
+      </if>
       <if test="cComScore != null" >
         c_com_score = #{cComScore,jdbcType=VARCHAR},
       </if>
@@ -345,11 +361,11 @@
       <if test="cComLicenseImg != null" >
         c_com_license_img = #{cComLicenseImg,jdbcType=VARCHAR},
       </if>
-      <if test="cUserState != null" >
-        c_user_state = #{cUserState,jdbcType=VARCHAR},
-      </if>
       <if test="cExtraBalance != null" >
         c_extra_balance = #{cExtraBalance,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserState != null" >
+        c_user_state = #{cUserState,jdbcType=VARCHAR},
       </if>
       <if test="cComHaslicense != null" >
         c_com_hasLicense = #{cComHaslicense,jdbcType=VARCHAR},
@@ -366,12 +382,13 @@
       c_com_password = #{cComPassword,jdbcType=VARCHAR},
       c_com_name = #{cComName,jdbcType=VARCHAR},
       c_com_balance = #{cComBalance,jdbcType=VARCHAR},
+      c_com_ali_account = #{cComAliAccount,jdbcType=VARCHAR},
       c_com_score = #{cComScore,jdbcType=VARCHAR},
       c_com_head_img = #{cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{cUserState,jdbcType=VARCHAR},
       c_extra_balance = #{cExtraBalance,jdbcType=VARCHAR},
+      c_user_state = #{cUserState,jdbcType=VARCHAR},
       c_com_hasLicense = #{cComHaslicense,jdbcType=VARCHAR},
       c_com_desc = #{cComDesc,jdbcType=LONGVARCHAR}
     where c_com_id = #{cComId,jdbcType=INTEGER}
@@ -382,12 +399,13 @@
       c_com_password = #{cComPassword,jdbcType=VARCHAR},
       c_com_name = #{cComName,jdbcType=VARCHAR},
       c_com_balance = #{cComBalance,jdbcType=VARCHAR},
+      c_com_ali_account = #{cComAliAccount,jdbcType=VARCHAR},
       c_com_score = #{cComScore,jdbcType=VARCHAR},
       c_com_head_img = #{cComHeadImg,jdbcType=VARCHAR},
       c_com_address_id = #{cComAddressId,jdbcType=INTEGER},
       c_com_license_img = #{cComLicenseImg,jdbcType=VARCHAR},
-      c_user_state = #{cUserState,jdbcType=VARCHAR},
       c_extra_balance = #{cExtraBalance,jdbcType=VARCHAR},
+      c_user_state = #{cUserState,jdbcType=VARCHAR},
       c_com_hasLicense = #{cComHaslicense,jdbcType=VARCHAR}
     where c_com_id = #{cComId,jdbcType=INTEGER}
   </update>

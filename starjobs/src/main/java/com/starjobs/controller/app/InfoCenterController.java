@@ -116,6 +116,7 @@ public class InfoCenterController {
 		params.put("phone", request.getParameter("phone"));
 		params.put("introduction", request.getParameter("introduction"));
 		params.put("userId", userId);
+		params.put("alipayAccount", request.getParameter("alipayAccount"));
 
 		Map<String, Object> data = infoCenterService.updateUserInfo(token, params, realPath);
 		if (data != null) {
@@ -206,7 +207,7 @@ public class InfoCenterController {
 		params.put("province", province);
 		params.put("city", city);
 		params.put("area", town);
-
+		params.put("alipayAccount", request.getParameter("alipayAccount"));
 		params.put("userid", id);
 
 		Map<String, Object> data = infoCenterService.updateComInfo(token, params, realPath);

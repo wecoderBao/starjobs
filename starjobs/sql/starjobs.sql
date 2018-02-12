@@ -69,6 +69,7 @@ CREATE TABLE `t_company_info` (
   `c_com_password` varchar(255) DEFAULT NULL COMMENT '密码',
   `c_com_name` varchar(255) DEFAULT NULL COMMENT '公司名称',
   `c_com_balance` varchar(255) DEFAULT '0' COMMENT '公司账户余额',
+  `c_com_ali_account` varchar(255) DEFAULT '0' COMMENT '支付宝账号',
   `c_com_score` varchar(255) DEFAULT '0' COMMENT '公司测评分',
   `c_com_head_img` varchar(255) DEFAULT 'default.png' COMMENT '公司头像',
   `c_com_address_id` int(255) DEFAULT NULL COMMENT '公司地址id分开省市区，详细地址',

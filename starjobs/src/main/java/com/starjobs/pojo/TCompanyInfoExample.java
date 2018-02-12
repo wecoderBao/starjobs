@@ -444,6 +444,76 @@ public class TCompanyInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andCComAliAccountIsNull() {
+            addCriterion("c_com_ali_account is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountIsNotNull() {
+            addCriterion("c_com_ali_account is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountEqualTo(String value) {
+            addCriterion("c_com_ali_account =", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountNotEqualTo(String value) {
+            addCriterion("c_com_ali_account <>", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountGreaterThan(String value) {
+            addCriterion("c_com_ali_account >", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountGreaterThanOrEqualTo(String value) {
+            addCriterion("c_com_ali_account >=", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountLessThan(String value) {
+            addCriterion("c_com_ali_account <", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountLessThanOrEqualTo(String value) {
+            addCriterion("c_com_ali_account <=", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountLike(String value) {
+            addCriterion("c_com_ali_account like", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountNotLike(String value) {
+            addCriterion("c_com_ali_account not like", value, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountIn(List<String> values) {
+            addCriterion("c_com_ali_account in", values, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountNotIn(List<String> values) {
+            addCriterion("c_com_ali_account not in", values, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountBetween(String value1, String value2) {
+            addCriterion("c_com_ali_account between", value1, value2, "cComAliAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCComAliAccountNotBetween(String value1, String value2) {
+            addCriterion("c_com_ali_account not between", value1, value2, "cComAliAccount");
+            return (Criteria) this;
+        }
+
         public Criteria andCComScoreIsNull() {
             addCriterion("c_com_score is null");
             return (Criteria) this;
@@ -714,76 +784,6 @@ public class TCompanyInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCUserStateIsNull() {
-            addCriterion("c_user_state is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateIsNotNull() {
-            addCriterion("c_user_state is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateEqualTo(String value) {
-            addCriterion("c_user_state =", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateNotEqualTo(String value) {
-            addCriterion("c_user_state <>", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateGreaterThan(String value) {
-            addCriterion("c_user_state >", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateGreaterThanOrEqualTo(String value) {
-            addCriterion("c_user_state >=", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateLessThan(String value) {
-            addCriterion("c_user_state <", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateLessThanOrEqualTo(String value) {
-            addCriterion("c_user_state <=", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateLike(String value) {
-            addCriterion("c_user_state like", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateNotLike(String value) {
-            addCriterion("c_user_state not like", value, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateIn(List<String> values) {
-            addCriterion("c_user_state in", values, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateNotIn(List<String> values) {
-            addCriterion("c_user_state not in", values, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateBetween(String value1, String value2) {
-            addCriterion("c_user_state between", value1, value2, "cUserState");
-            return (Criteria) this;
-        }
-
-        public Criteria andCUserStateNotBetween(String value1, String value2) {
-            addCriterion("c_user_state not between", value1, value2, "cUserState");
-            return (Criteria) this;
-        }
-
         public Criteria andCExtraBalanceIsNull() {
             addCriterion("c_extra_balance is null");
             return (Criteria) this;
@@ -851,6 +851,76 @@ public class TCompanyInfoExample {
 
         public Criteria andCExtraBalanceNotBetween(String value1, String value2) {
             addCriterion("c_extra_balance not between", value1, value2, "cExtraBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateIsNull() {
+            addCriterion("c_user_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateIsNotNull() {
+            addCriterion("c_user_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateEqualTo(String value) {
+            addCriterion("c_user_state =", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateNotEqualTo(String value) {
+            addCriterion("c_user_state <>", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateGreaterThan(String value) {
+            addCriterion("c_user_state >", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateGreaterThanOrEqualTo(String value) {
+            addCriterion("c_user_state >=", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateLessThan(String value) {
+            addCriterion("c_user_state <", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateLessThanOrEqualTo(String value) {
+            addCriterion("c_user_state <=", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateLike(String value) {
+            addCriterion("c_user_state like", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateNotLike(String value) {
+            addCriterion("c_user_state not like", value, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateIn(List<String> values) {
+            addCriterion("c_user_state in", values, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateNotIn(List<String> values) {
+            addCriterion("c_user_state not in", values, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateBetween(String value1, String value2) {
+            addCriterion("c_user_state between", value1, value2, "cUserState");
+            return (Criteria) this;
+        }
+
+        public Criteria andCUserStateNotBetween(String value1, String value2) {
+            addCriterion("c_user_state not between", value1, value2, "cUserState");
             return (Criteria) this;
         }
 

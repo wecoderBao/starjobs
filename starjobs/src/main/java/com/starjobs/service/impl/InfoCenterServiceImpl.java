@@ -89,6 +89,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("score", tUserInfo.getcUserScore());// 个人评分
 		data.put("introduction", tUserInfo.getcUserDesc());// 个人简介
 		data.put("userId", String.valueOf(tUserInfo.getcUserId()));
+		data.put("alipayAccount", tUserInfo.getcUserAliAccount());
 		return data;
 	}
 
@@ -150,8 +151,11 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		if (!StringUtils.isEmpty(params.get("school"))) {// 修改学校名字
 			tUserInfo.setcUserSchoolName(params.get("school"));
 		}
-		if (!StringUtils.isEmpty(params.get("introduction"))) {// 修改学校名字
+		if (!StringUtils.isEmpty(params.get("introduction"))) {// 修改介绍
 			tUserInfo.setcUserDesc(params.get("introduction"));
+		}
+		if (!StringUtils.isEmpty(params.get("alipayAccount"))) {// 修改ali账号
+			tUserInfo.setcUserDesc(params.get("alipayAccount"));
 		}
 
 		int re = tUserInfoMapper.updateByPrimaryKeySelective(tUserInfo);
@@ -209,6 +213,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		data.put("balance", tComInfo.getcComBalance());
 		data.put("extraBalance", tComInfo.getcExtraBalance());// 招聘余额
 		data.put("userid", String.valueOf(tComInfo.getcComId()));
+		data.put("alipayAccount", tComInfo.getcComAliAccount());
 		return data;
 	}
 
@@ -293,6 +298,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 
 		if (!StringUtils.isEmpty(params.get("comDesc"))) {// 修改性别
 			tComInfo.setcComDesc(params.get("comDesc"));
+		}
+		if (!StringUtils.isEmpty(params.get("alipayAccount"))) {// 修改性别
+			tComInfo.setcComAliAccount(params.get("alipayAccount"));
 		}
 
 		int re = tCompanyInfoMapper.updateByPrimaryKeySelective(tComInfo);
@@ -401,6 +409,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				jobMap.put("workDate", job.getcJobWorkDate());
 				jobMap.put("workTime", job.getcJobWorkTime());
 				jobMap.put("salary", job.getcJobSalary());
+				jobMap.put("publishTime", String.valueOf(job.getcJobPublishDate().getTime()));
 				jobList.add(jobMap);
 			}
 		}
