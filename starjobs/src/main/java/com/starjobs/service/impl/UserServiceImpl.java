@@ -450,10 +450,7 @@ public class UserServiceImpl implements UserService {
 		if (null == jobInfo) {
 			return modelMap;
 		}
-		TUserInfo userInfo = tUserInfoMapper.selectByPhone(userPhone);
-		if (userInfo == null) {
-			return modelMap;
-		}
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("jobType",String.valueOf(jobInfo.getcJobTypeId()));
 		data.put("comId", jobInfo.getcComId());
@@ -478,6 +475,10 @@ public class UserServiceImpl implements UserService {
 		data.put("area", jobInfo.getcJobArea());
 		data.put("address", jobInfo.getcJobPosition());
 		if(userFlag.equals(SystemUtil.USER_STU)) {
+			TUserInfo userInfo = tUserInfoMapper.selectByPhone(userPhone);
+			if (userInfo == null) {
+				return modelMap;
+			}
 			// 用户是否报名该兼职
 			TUserJobApplyExample example = new TUserJobApplyExample();
 			TUserJobApplyExample.Criteria criteria = example.createCriteria();
