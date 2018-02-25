@@ -33,9 +33,9 @@ import com.starjobs.sys.SystemUtil;
 @Controller
 public class CityInfoController {
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	CityInfoService cityInfoService;
+	private CityInfoService cityInfoService;
 
 	// 获取省级信息
 	@RequestMapping(value = "/user/get/province_info", method = RequestMethod.POST)

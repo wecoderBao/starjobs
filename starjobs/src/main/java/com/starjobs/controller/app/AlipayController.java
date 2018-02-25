@@ -9,12 +9,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -35,10 +38,13 @@ import com.starjobs.common.pay.util.StringUtil;
 import com.starjobs.common.pay.util.WebUtil;
 import com.starjobs.model.pay.JsonResult;
 import com.starjobs.model.pay.ResponseData;
+import com.starjobs.service.TokenService;
+import com.starjobs.sys.SystemUtil;
 
 @Controller
-@RequestMapping("/order")
 public class AlipayController {
+	@Autowired
+	private TokenService tokenService;
 
 	private static final Logger logger = LoggerFactory.getLogger(AlipayController.class);
 
@@ -92,18 +98,35 @@ public class AlipayController {
 		WebUtil.response(response, WebUtil.packJsonp(callback, JSON.toJSONString(
 				new JsonResult(1, "订单获取成功", new ResponseData(null, payMap)), SerializerFeatureUtil.FEATURES)));
 	}
-	
+
 	/**
 	 * app支付订单
+	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/orderString", method = RequestMethod.POST)
-	public String getOrderString(@RequestParam(required = false, defaultValue = "0") Double cashnum) {
-		//实例化客户端
+	@RequestMapping(value = "app/pay/orderString", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getOrderString(@RequestParam(required = false, defaultValue = "0") Double cashnum,
+			@RequestParam String token, @RequestParam String userFlag) {
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(4);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+			return modelMap;
+		}
+
+		// 实例化客户端
 		AlipayClient alipayClient = AliPayConfig.getAlipayClient();
-		//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+		// 实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
 		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-		//SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+		// SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
 		AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 		model.setBody("我是测试数据");
 		model.setSubject("App支付测试Java");
@@ -121,49 +144,61 @@ public class AlipayController {
 		request.setNotifyUrl(AliPayConfig.NOTIFY_URL);
 		String orderString = "";
 		try {
-		        //这里和普通的接口调用不同，使用的是sdkExecute
-		        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-		        System.out.println(response.getBody());//就是orderString 可以直接给客户端请求，无需再做处理。
-		        orderString = response.getBody();
-		    } catch (AlipayApiException e) {
-		        e.printStackTrace();
+			// 这里和普通的接口调用不同，使用的是sdkExecute
+			AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+			System.out.println(response.getBody());// 就是orderString 可以直接给客户端请求，无需再做处理。
+			orderString = response.getBody();
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
 		}
-		return orderString;
+		// 返回结果
+		Map<String, Object> dataMap = new HashMap<String, Object>(16);
+		dataMap.put("token", token);
+		dataMap.put("userFlag", userFlag);
+		dataMap.put("orderString", orderString);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		modelMap.put("data", dataMap);
+
+		return modelMap;
 	}
 
 	/**
 	 * app 异步通知
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(value = "app/pay/notify", method = RequestMethod.POST)
 	public void appOrderPayNotify(HttpServletRequest request, HttpServletResponse response) {
-		if ("TRADE_SUCCESS".equals(request.getParameter("trade_status")) || "TRADE_FINISHED".equals(request.getParameter("trade_status"))) {
-			//获取支付宝POST过来反馈信息
-			Map<String,String> params = new HashMap<String,String>();
+		if ("TRADE_SUCCESS".equals(request.getParameter("trade_status"))
+				|| "TRADE_FINISHED".equals(request.getParameter("trade_status"))) {
+			// 获取支付宝POST过来反馈信息
+			Map<String, String> params = new HashMap<String, String>();
 			Map requestParams = request.getParameterMap();
 			for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-			    String name = (String) iter.next();
-			    String[] values = (String[]) requestParams.get(name);
-			    String valueStr = "";
-			    for (int i = 0; i < values.length; i++) {
-			        valueStr = (i == values.length - 1) ? valueStr + values[i]
-			                    : valueStr + values[i] + ",";
-			  	}
-			    //乱码解决，这段代码在出现乱码时使用。
-				//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+				String name = (String) iter.next();
+				String[] values = (String[]) requestParams.get(name);
+				String valueStr = "";
+				for (int i = 0; i < values.length; i++) {
+					valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+				}
+				// 乱码解决，这段代码在出现乱码时使用。
+				// valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
 				params.put(name, valueStr);
 			}
-			//切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
-			//boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
+			// 切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
+			// boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String
+			// publicKey, String charset, String sign_type)
 			boolean flag = false;
 			try {
-				flag = AlipaySignature.rsaCheckV1(params, AliPayConfig.ALIPAY_PUBLIC_KEY, AliPayConfig.ALIPAY_CHARSET,"RSA2");
+				flag = AlipaySignature.rsaCheckV1(params, AliPayConfig.ALIPAY_PUBLIC_KEY, AliPayConfig.ALIPAY_CHARSET,
+						"RSA2");
 			} catch (AlipayApiException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if (flag) {
 				// TODO 验签成功后
 				// 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
@@ -173,13 +208,13 @@ public class AlipayController {
 				 */
 				String out_trade_no = request.getParameter("out_trade_no");
 				String app_id = request.getParameter("app_id");
-				
+
 				double total_amount = Double.valueOf(request.getParameter("total_amount"));
-				
+
 				/**
 				 * 用户账户金额增加
 				 */
-				
+
 				/**
 				 * star公司账户金额增加
 				 */
@@ -188,6 +223,7 @@ public class AlipayController {
 			}
 		}
 	}
+
 	/**
 	 * 
 	 * @param request
@@ -261,9 +297,10 @@ public class AlipayController {
 		// 3、校验通知中的seller_id（或者seller_email)
 		// 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email），
 		// 4、验证app_id是否为该商户本身。上述1、2、3、4有任何一个验证不通过，则表明本次通知是异常通知，务必忽略。
-		//在上述验证通过后商户必须根据支付宝不同类型的业务通知，正确的进行不同的业务处理，并且过滤重复的通知结果数据。
-		//在支付宝的业务通知中，只有交易通知状态为TRADE_SUCCESS或TRADE_FINISHED时，支付宝才会认定为买家付款成功。
-		if ("TRADE_SUCCESS".equals(request.getParameter("trade_status")) || "TRADE_FINISHED".equals(request.getParameter("trade_status"))) {
+		// 在上述验证通过后商户必须根据支付宝不同类型的业务通知，正确的进行不同的业务处理，并且过滤重复的通知结果数据。
+		// 在支付宝的业务通知中，只有交易通知状态为TRADE_SUCCESS或TRADE_FINISHED时，支付宝才会认定为买家付款成功。
+		if ("TRADE_SUCCESS".equals(request.getParameter("trade_status"))
+				|| "TRADE_FINISHED".equals(request.getParameter("trade_status"))) {
 			Enumeration<?> pNames = request.getParameterNames();
 			Map<String, String> param = new HashMap<String, String>();
 			try {
@@ -283,9 +320,9 @@ public class AlipayController {
 					 */
 					String out_trade_no = request.getParameter("out_trade_no");
 					String app_id = request.getParameter("app_id");
-					
+
 					double total_amount = Double.valueOf(request.getParameter("total_amount"));
-					
+
 					/**
 					 * 用户账户金额增加
 					 */
