@@ -155,7 +155,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			tUserInfo.setcUserDesc(params.get("introduction"));
 		}
 		if (!StringUtils.isEmpty(params.get("alipayAccount"))) {// 修改ali账号
-			tUserInfo.setcUserDesc(params.get("alipayAccount"));
+			tUserInfo.setcUserAliAccount(params.get("alipayAccount"));
 		}
 
 		int re = tUserInfoMapper.updateByPrimaryKeySelective(tUserInfo);

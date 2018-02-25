@@ -309,6 +309,11 @@ public class UserServiceImpl implements UserService {
 				data.put("balance", tciRecord.getcComBalance());
 				data.put("extraBalance", tciRecord.getcExtraBalance());// 招聘余额
 				data.put("userid", String.valueOf(tciRecord.getcComId()));
+				if(null == tciRecord.getcComAliAccount() || "".equals(tciRecord.getcComAliAccount())) {
+					data.put("alipayAccount", "");
+				}else {
+					data.put("alipayAccount", tciRecord.getcComAliAccount());
+				}
 				
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
@@ -349,6 +354,12 @@ public class UserServiceImpl implements UserService {
 				data.put("doneTimes", tuiRecord.getcUserDonetimes());// 兼职次数
 				data.put("score", tuiRecord.getcUserScore());// 个人评分
 				data.put("introduction", tuiRecord.getcUserDesc());// 个人简介
+				
+				if(null == tuiRecord.getcUserAliAccount() || "".equals(tuiRecord.getcUserAliAccount())) {
+					data.put("alipayAccount", "");
+				}else {
+					data.put("alipayAccount", tuiRecord.getcUserAliAccount());
+				}
 
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
