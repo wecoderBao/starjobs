@@ -37,4 +37,12 @@ public class StarConstants {
 	 * token失效时间
 	 */
 	public static final long TOKEN_EXPIRE_TIME = 3600000L;
+	/**
+	 * 消费用途1发布，2推广，3刷新，4充值，5，提现
+	 */
+	public static final int COST_TYPE_PUBLISH = 1;
+	public static final int COST_TYPE_RECOMMEND = 2;
+	public static final int COST_TYPE_REFRESH = 3;
+	public static final int COST_TYPE_RECHARGE = 4;
+	public static final int COST_TYPE_WITHDRAW = 5;
 }

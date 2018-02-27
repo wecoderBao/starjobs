@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.starjobs.common.StarConstants;
+import com.starjobs.mapper.BalanceHistoryMapper;
 import com.starjobs.mapper.RefreshJobMapper;
 import com.starjobs.mapper.TComAddressMapper;
 import com.starjobs.mapper.TComScoreMapper;
@@ -28,6 +29,7 @@ import com.starjobs.mapper.TUserInfoMapper;
 import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.mapper.TUserLikeComMapper;
 import com.starjobs.mapper.TUserTokenMapper;
+import com.starjobs.pojo.BalanceHistory;
 import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TComScore;
@@ -100,6 +102,8 @@ public class UserServiceImpl implements UserService {
 	private RefreshJobMapper refreshJobMapper;
 	@Autowired
 	private TUserTokenMapper tUserTokenMapper;
+	@Autowired
+	private BalanceHistoryMapper balanceHistoryMapper;
 
 	// 向短信验证平台发送验证请求
 	private String sendVerifyCode(String phone, String code, String appFlag) {
@@ -644,6 +648,16 @@ public class UserServiceImpl implements UserService {
 		refreshJob.setRefreshType(1);
 		refreshJob.setJobId(jobInfo.getcJobId());
 		refreshJobMapper.insertSelective(refreshJob);
+		/**
+		 * 记录消费历史
+		 */
+		BalanceHistory balanceHistory = new BalanceHistory();
+		balanceHistory.setCost(new BigDecimal(10));
+		balanceHistory.setCostType(StarConstants.COST_TYPE_PUBLISH);
+		balanceHistory.setCreateTime(new Date());
+		balanceHistory.setPhone(comInfo.getcComPhone());
+		balanceHistoryMapper.insertSelective(balanceHistory);
+		
 		resultMap.put("code", "200");
 		resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
 		return resultMap;

@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.starjobs.common.StarConstants;
+import com.starjobs.mapper.BalanceHistoryMapper;
 import com.starjobs.mapper.RefreshJobMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TLocationMapper;
+import com.starjobs.pojo.BalanceHistory;
 import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
@@ -40,6 +42,8 @@ public class MyPublishServiceImpl implements MyPublishService {
 	private TCompanyInfoMapper tCompanyInfoMapper;
 	@Autowired
 	private RefreshJobMapper refreshJobMapper;
+	@Autowired
+	private BalanceHistoryMapper balanceHistoryMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.starjobs.service.MyPublishService#recommendJob(int)
@@ -68,6 +72,15 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJob.setJobId(jobId);
 		refreshJob.setRefreshType(2);
 		refreshJobMapper.insertSelective(refreshJob);
+		/**
+		 * 记录消费历史
+		 */
+		BalanceHistory balanceHistory = new BalanceHistory();
+		balanceHistory.setCost(new BigDecimal(10));
+		balanceHistory.setCostType(StarConstants.COST_TYPE_RECOMMEND);
+		balanceHistory.setCreateTime(new Date());
+		balanceHistory.setPhone(comInfo.getcComPhone());
+		balanceHistoryMapper.insertSelective(balanceHistory);
 		
 		resultMap.put("code", "200");
 		return resultMap;
@@ -111,6 +124,15 @@ public class MyPublishServiceImpl implements MyPublishService {
 		refreshJob.setRefreshType(3);
 		refreshJob.setJobId(jobId);
 		refreshJobMapper.insertSelective(refreshJob);
+		/**
+		 * 记录消费历史
+		 */
+		BalanceHistory balanceHistory = new BalanceHistory();
+		balanceHistory.setCost(new BigDecimal(10));
+		balanceHistory.setCostType(StarConstants.COST_TYPE_REFRESH);
+		balanceHistory.setCreateTime(new Date());
+		balanceHistory.setPhone(comInfo.getcComPhone());
+		balanceHistoryMapper.insertSelective(balanceHistory);
 		
 		resultMap.put("code", "200");
 		return resultMap;
