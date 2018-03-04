@@ -163,6 +163,35 @@ public class AlipayController {
 		return modelMap;
 	}
 
+	@RequestMapping(value = "user/get/tradeNO", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> appGetTradeNO(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 用户手机号
+		String phone = request.getParameter("phone");
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(4);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)||StringUtils.isEmpty(phone)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+			return modelMap;
+		}
+		Map<String, Object> resultMap = new HashMap<String, Object>(4);
+		resultMap.put("tradeNo", "" + SystemUtil.generateTradeNO());
+		resultMap.put("kPrivateKey", AliPayConfig.APP_PRIVATE_KEY);
+		modelMap.put("data", resultMap);
+		return modelMap;
+	}
+
 	/**
 	 * app 异步通知
 	 * 
