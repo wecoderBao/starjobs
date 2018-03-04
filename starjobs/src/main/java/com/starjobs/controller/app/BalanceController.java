@@ -49,6 +49,8 @@ public class BalanceController {
 		}
 		List<BalanceHistoryDto> dtoList = balanceHistoryService.getBalanceHistoryList(phone);
 		Map<String,Object> resultMap = new HashMap<String,Object>(4);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
 		resultMap.put("recordList", dtoList);
