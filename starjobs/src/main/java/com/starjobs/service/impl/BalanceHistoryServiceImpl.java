@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.starjobs.dto.BalanceHistoryDto;
 import com.starjobs.mapper.BalanceHistoryMapper;
@@ -11,6 +12,7 @@ import com.starjobs.pojo.BalanceHistory;
 import com.starjobs.pojo.BalanceHistoryExample;
 import com.starjobs.service.BalanceHistoryService;
 
+@Service
 public class BalanceHistoryServiceImpl implements BalanceHistoryService {
 	@Autowired
 	private BalanceHistoryMapper balanceHistoryMapper;

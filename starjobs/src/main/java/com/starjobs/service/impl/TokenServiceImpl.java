@@ -43,25 +43,27 @@ public class TokenServiceImpl implements TokenService {
 
 	// 校验token
 	public boolean checkToken(String token) {
-		// 更据token值查询token
-		TUserToken record = tUserTokenMapper.selectByTokenValue(token);
-		if (record == null) {
-			return false;
-		}
-		//token失效
-		if(record.getcCreateTime() == null) {
-			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
-			return false;
-		}
-		boolean expireFlag = (new Date()).getTime() - record.getcCreateTime().getTime() > StarConstants.TOKEN_EXPIRE_TIME;
-		if(expireFlag) {
-			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
-			return false;
-		}
-		//更新token时间
-		record.setcCreateTime(new Date());
-		tUserTokenMapper.updateByPrimaryKeySelective(record);
+		//暂时去掉失效检测
 		return true;
+//		// 更据token值查询token
+//		TUserToken record = tUserTokenMapper.selectByTokenValue(token);
+//		if (record == null) {
+//			return false;
+//		}
+//		//token失效
+//		if(record.getcCreateTime() == null) {
+//			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
+//			return false;
+//		}
+//		boolean expireFlag = (new Date()).getTime() - record.getcCreateTime().getTime() > StarConstants.TOKEN_EXPIRE_TIME;
+//		if(expireFlag) {
+//			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
+//			return false;
+//		}
+//		//更新token时间
+//		record.setcCreateTime(new Date());
+//		tUserTokenMapper.updateByPrimaryKeySelective(record);
+//		return true;
 	}
 
 	// 获取用户手机号

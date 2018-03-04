@@ -10,7 +10,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.starjobs.dto.BalanceHistoryDto;
 import com.starjobs.service.BalanceHistoryService;
@@ -25,7 +27,8 @@ public class BalanceController {
 	@Autowired
 	private TokenService tokenService;
 	
-	@RequestMapping(value="/user/cost/history")
+	@RequestMapping(value="/user/cost/history", method =  RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> getCostHistory(@RequestParam String phone, HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
@@ -35,7 +38,7 @@ public class BalanceController {
 		Map<String, Object> modelMap = new HashMap<String, Object>(4);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || !SystemUtil.USER_STU.equals(userFlag)) {
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)) {
 			return modelMap;
 		}
 		// 验证token是否有效
