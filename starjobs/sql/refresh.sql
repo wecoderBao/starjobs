@@ -52,3 +52,6 @@ create table charge_activity(
 	activity_desc varchar(200) default '' comment '活动描述'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='充值活动表';
 
+insert into charge_activity(id,cashnum,activity_desc)
+values(1,'100','100送10'),(2,'200','200送30'),(3,'500','500送80'),
+	(4,'1000','1000送200'),(5,'2000','2000送500'),(6,'5000','5000送1500');
