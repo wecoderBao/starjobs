@@ -672,13 +672,24 @@ public class RongCloudServiceImpl implements RongCloudService {
 			for (TFriend tf : leftList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcFid());
 				if (info != null) {// 好友
-					Map<String, Object> fr = new HashMap<String, Object>(3);
+					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
+				}else {
+					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcFid());
+					if(null != comInfo) {
+						Map<String, Object> fr = new HashMap<String, Object>(4);
+						fr.put("friendName", comInfo.getcComName());
+						fr.put("friendPicUrl",StarConstants.COM_IMG_URL+ comInfo.getcComHeadImg());
+						fr.put("friendPhoneNum", comInfo.getcComPhone());
+						fr.put("state", tf.getcState());
+						friendList.add(fr);
+					}
 				}
+				
 			}
 		}
 
@@ -688,12 +699,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 			for (TFriend tf : rightList) {
 				TUserInfo info = tUserInfoMapper.selectByPhone(tf.getcUid());
 				if (info != null) {// 好友
-					Map<String, Object> fr = new HashMap<String, Object>(3);
+					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
 					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
+				}else {
+					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcUid());
+					if(null != comInfo) {
+						Map<String, Object> fr = new HashMap<String, Object>(4);
+						fr.put("friendName", comInfo.getcComName());
+						fr.put("friendPicUrl",StarConstants.COM_IMG_URL+ comInfo.getcComHeadImg());
+						fr.put("friendPhoneNum", comInfo.getcComPhone());
+						fr.put("state", tf.getcState());
+						friendList.add(fr);
+					}
 				}
 			}
 		}

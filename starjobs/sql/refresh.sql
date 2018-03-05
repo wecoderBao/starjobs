@@ -32,3 +32,14 @@ create table balance_history(
 	trade_no varchar(200) default null comment '订单编号',
 	phone varchar(200) default null comment '用户手机号'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='余额变动历史表';
+
+drop table if exists order_form;
+create table order_form(
+	id int(11) not null auto_increment primary key,
+	create_time datetime comment '创建时间',
+	cashnum decimal(18,2) default '0.00' comment '金额',
+	phone varchar(200) default null comment '用户手机号',
+	trade_no varchar(200) default null comment '订单编号',
+	status varchar(200) default "0" comment '订单状态',
+	activity_flag varchar(200) default '0' comment'活动标志，0 没有活动'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='订单表';
