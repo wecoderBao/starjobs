@@ -309,7 +309,7 @@ public class InstanceMessageController {
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
 		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(userId)
-				|| StringUtils.isEmpty(groupName)||StringUtils.isEmpty(jobId)) {
+				|| StringUtils.isEmpty(groupName) || StringUtils.isEmpty(jobId)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -604,7 +604,7 @@ public class InstanceMessageController {
 			return modelMap;
 		}
 		// 验证输入的验证码
-		Map<String, Object> resultMap = rongCloudService.quitGroup(userId,groupId);
+		Map<String, Object> resultMap = rongCloudService.quitGroup(userId, groupId);
 		if (resultMap == null) {
 
 			return modelMap;
@@ -615,47 +615,46 @@ public class InstanceMessageController {
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");
 
+		return modelMap;
+	}
+
+	// 获取关系列表请求
+	@RequestMapping(value = "/cloud/get/relationships", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getRelationships(HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// phoneNum
+		String phoneNum = request.getParameter("phoneNum");
+
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(phoneNum)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+			return modelMap;
+		}
+		// 验证输入的验证码
+		Map<String, Object> resultMap = rongCloudService.getRelations(phoneNum);
+		if (resultMap == null) {
+			modelMap.put("error_code", SystemUtil.FRIEND_NOT_FOUND);
+			modelMap.put("message", "friend not found");
+			return modelMap;
+		}
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		modelMap.put("data", resultMap);
 
 		return modelMap;
 	}
-	
-	// 获取关系列表请求
-		@RequestMapping(value = "/cloud/get/relationships", method = RequestMethod.POST)
-		@ResponseBody
-		public Map<String, Object> getRelationships(HttpServletRequest request) {
-			// 获取token
-			String token = request.getParameter("token");
-			// 用户类别标记
-			String userFlag = request.getParameter("userFlag");
-			// phoneNum
-			String phoneNum = request.getParameter("phoneNum");
-
-			// 返回json容器
-			Map<String, Object> modelMap = new HashMap<String, Object>(3);
-			modelMap.put("error_code", SystemUtil.CODE_FAIL);
-			modelMap.put("message", "fail");
-			if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(phoneNum)) {
-				return modelMap;
-			}
-			// 验证token是否有效
-			boolean isPermitted = tokenService.checkToken(token);
-			if (!isPermitted) {
-				modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
-				return modelMap;
-			}
-			// 验证输入的验证码
-			Map<String, Object> resultMap = rongCloudService.getRelations(phoneNum);
-			if (resultMap == null) {
-				modelMap.put("error_code", SystemUtil.FRIEND_NOT_FOUND);
-				modelMap.put("message", "friend not found");
-				return modelMap;
-			}
-			resultMap.put("token", token);
-			resultMap.put("userFlag", userFlag);
-			modelMap.put("error_code", SystemUtil.CODE_SUCC);
-			modelMap.put("message", "success");
-			modelMap.put("data", resultMap);
-
-			return modelMap;
-		}
 }
