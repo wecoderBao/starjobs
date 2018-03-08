@@ -2,6 +2,7 @@ package com.starjobs.controller.app;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
 import com.starjobs.common.AliPayConfig;
@@ -32,16 +34,22 @@ public class AlipayTransferController {
 		// private_key","json","GBK","alipay_public_key","RSA2");
 		AlipayClient alipayClient = AliPayConfig.getAlipayClient();
 		AlipayFundTransToaccountTransferRequest payRequest = new AlipayFundTransToaccountTransferRequest();
-		payRequest.setBizContent("{" +
-				"\"out_biz_no\":\"3142321423432\"," +
-				"\"payee_type\":\"ALIPAY_LOGONID\"," +
-				"\"payee_account\":\"18827090361\"," +
-				"\"amount\":\"0.01\"," +
-				"\"payer_show_name\":\"star转账\"," +
-				//payee_real_name不为空则检测名字是否与账号中的实名一致
-//				"\"payee_real_name\":\"张三\"," +
-				"\"remark\":\"转账备注\"" +
-				"}");
+		AlipayFundTransToaccountTransferModel transferModel = new AlipayFundTransToaccountTransferModel();
+		transferModel.setAmount("0.1");
+		transferModel.setOutBizNo(""+UUID.randomUUID());
+		transferModel.setPayeeType("ALIPAY_LOGONID");
+		transferModel.setPayeeAccount("18827090361");
+		payRequest.setBizModel(transferModel);
+//		payRequest.setBizContent("{" +
+//				"\"out_biz_no\":\"3142321423432\"," +
+//				"\"payee_type\":\"ALIPAY_LOGONID\"," +
+//				"\"payee_account\":\"18827090361\"," +
+//				"\"amount\":\"0.1\"," +
+//				"\"payer_show_name\":\"star转账\"," +
+//				//payee_real_name不为空则检测名字是否与账号中的实名一致
+////				"\"payee_real_name\":\"张三\"," +
+//				"\"remark\":\"转账备注\"" +
+//				"}");
 		AlipayFundTransToaccountTransferResponse response = new AlipayFundTransToaccountTransferResponse();
 		try {
 			response = alipayClient.execute(payRequest);
