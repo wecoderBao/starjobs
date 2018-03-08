@@ -4,7 +4,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 
 public class AliPayConfig {
-	private static final String ALIPAY_SERVER_URL = "http://openapi.alipaydev.com/gateway.do";
+	private static final String ALIPAY_SERVER_URL = "https://openapi.alipay.com/gateway.do";
 	private static final String ALIPAY_APPID = "2018021302192188";
 	/**
 	 * 应用私钥
