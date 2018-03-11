@@ -28,7 +28,7 @@ create table balance_history(
 	id int(11) not null auto_increment primary key,
 	create_time datetime comment '创建时间',
 	cost decimal(18,2) default '0.00' comment'费用',
-	cost_type tinyint(2) unsigned default '1' comment'消费类型，1发布，2推广，3刷新，4充值，5，提现',
+	cost_type tinyint(2) unsigned default '1' comment'消费类型，1发布，2推广，3刷新，4充值，5，提现，6，充到招聘余额',
 	trade_no varchar(200) default null comment '订单编号',
 	phone varchar(200) default null comment '用户手机号'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='余额变动历史表';

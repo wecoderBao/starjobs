@@ -45,4 +45,5 @@ public class StarConstants {
 	public static final int COST_TYPE_REFRESH = 3;
 	public static final int COST_TYPE_RECHARGE = 4;
 	public static final int COST_TYPE_WITHDRAW = 5;
+	public static final int COST_TYPE_CHARGE_EXTRA_BALANCE = 6;
 }
