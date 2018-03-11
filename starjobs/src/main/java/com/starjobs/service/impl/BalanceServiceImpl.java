@@ -43,5 +43,16 @@ public class BalanceServiceImpl implements BalanceService {
 		}
 		return null;
 	}
-
+	@Override
+	public Map<String, Object> getExtraBalance(String phone) {
+		// TODO Auto-generated method stub
+		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phone);
+		if(null == comInfo) {
+			return null;
+		}else {
+			Map<String, Object> resultMap = new HashMap<String, Object>(4);
+			resultMap.put("extraBalance", StringUtils.isEmpty(comInfo.getcComBalance())?"0":comInfo.getcExtraBalance());
+			return resultMap;
+		}
+	}
 }

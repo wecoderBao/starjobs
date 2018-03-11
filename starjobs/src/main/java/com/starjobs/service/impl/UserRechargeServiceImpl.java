@@ -70,6 +70,7 @@ public class UserRechargeServiceImpl implements UserRechargeService {
 		Map<String,Object> resultMap = new HashMap<String,Object>(4);
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
+		modelMap.put("data", resultMap);
 		if(balance.compareTo(cashnum) < 0) {
 			modelMap.put("error_code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			modelMap.put("message", "余额不足");

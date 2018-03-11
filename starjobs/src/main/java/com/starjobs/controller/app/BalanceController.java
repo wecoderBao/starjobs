@@ -92,4 +92,36 @@ public class BalanceController {
 		modelMap.put("data", resultMap);
 		return modelMap;
 	}
+	@RequestMapping(value="/com/get/extraBalance", method =  RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getExtraBalance(@RequestParam String phone, HttpServletRequest request) {
+		// 获取token
+		String token = request.getParameter("token");
+		// 用户类别标记
+		String userFlag = request.getParameter("userFlag");
+		// 返回json容器
+		Map<String, Object> modelMap = new HashMap<String, Object>(4);
+		modelMap.put("error_code", SystemUtil.CODE_FAIL);
+		modelMap.put("message", "fail");
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)|| !SystemUtil.USER_COM.equals(userFlag)) {
+			return modelMap;
+		}
+		// 验证token是否有效
+		boolean isPermitted = tokenService.checkToken(token);
+		if (!isPermitted) {
+			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+			return modelMap;
+		}
+		
+		Map<String,Object> resultMap = balanceService.getExtraBalance(phone);
+		if(null == resultMap) {
+			return modelMap;
+		}
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
+		modelMap.put("message", "success");
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
+		modelMap.put("data", resultMap);
+		return modelMap;
+	}
 }
