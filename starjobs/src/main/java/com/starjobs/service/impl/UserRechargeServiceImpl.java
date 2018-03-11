@@ -76,8 +76,8 @@ public class UserRechargeServiceImpl implements UserRechargeService {
 			modelMap.put("message", "余额不足");
 			return modelMap;
 		}else {
-			balance.subtract(cashnum);
-			extraBalance.add(getCashnumByActivityId(activityId));
+			balance = balance.subtract(cashnum);
+			extraBalance = extraBalance.add(getCashnumByActivityId(activityId));
 			/**
 			 * 更新记录
 			 */
