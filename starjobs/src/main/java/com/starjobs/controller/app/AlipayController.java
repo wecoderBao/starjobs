@@ -188,6 +188,8 @@ public class AlipayController {
 		Map<String, Object> resultMap = new HashMap<String, Object>(4);
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");
+		resultMap.put("token", token);
+		resultMap.put("userFlag", userFlag);
 		resultMap.put("tradeNo", "" + SystemUtil.generateTradeNO());
 		resultMap.put("kPrivateKey", AliPayConfig.APP_PRIVATE_KEY);
 		modelMap.put("data", resultMap);
