@@ -30,7 +30,7 @@ public class BalanceHistoryServiceImpl implements BalanceHistoryService {
 				dto.setCost(his.getCost());
 				dto.setCostType(his.getCostType());
 				dto.setCreateTime(his.getCreateTime().getTime());
-				dto.setTradeNo(his.getTradeNo());
+				dto.setTradeNo(his.getTradeNo()==null?"":his.getTradeNo());
 				dtoList.add(dto);
 			}
 		}

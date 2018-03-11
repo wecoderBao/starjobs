@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.starjobs.dto.UserRechargeRecordDto;
 import com.starjobs.service.TokenService;
@@ -26,6 +27,7 @@ public class UserRechargeController {
 	private TokenService tokenService;
 	
 	@RequestMapping(value="/user/recharge/record")
+	@ResponseBody
 	public Map<String, Object> getUserRechargeRecord(@RequestParam Integer userId, HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
@@ -58,6 +60,7 @@ public class UserRechargeController {
 	 * 充值招聘余额
 	 */
 	@RequestMapping(value="/company/charge/extraBalance")
+	@ResponseBody
 	public Map<String, Object> chargeExtraBalance(@RequestParam Integer activityId, HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
