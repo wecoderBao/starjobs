@@ -18,12 +18,14 @@ import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TLocationMapper;
 import com.starjobs.mapper.TUserInfoMapper;
+import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.mapper.TUserTokenMapper;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
+import com.starjobs.pojo.TUserJobApplyExample;
 import com.starjobs.pojo.TUserToken;
 import com.starjobs.service.InfoCenterService;
 import com.starjobs.service.TokenService;
@@ -44,19 +46,21 @@ import com.starjobs.sys.SystemUtil;
 public class InfoCenterServiceImpl implements InfoCenterService {
 
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	TUserInfoMapper tUserInfoMapper;
+	private TUserInfoMapper tUserInfoMapper;
 	@Autowired
-	TUserTokenMapper tUserTokenMapper;
+	private TUserTokenMapper tUserTokenMapper;
 	@Autowired
-	TCompanyInfoMapper tCompanyInfoMapper;
+	private TCompanyInfoMapper tCompanyInfoMapper;
 	@Autowired
-	TComAddressMapper tComAddressMapper;
+	private TComAddressMapper tComAddressMapper;
 	@Autowired
-	TJobInfoMapper tJobInfoMapper;
+	private TJobInfoMapper tJobInfoMapper;
 	@Autowired
-	TLocationMapper tLocationMapper;
+	private TLocationMapper tLocationMapper;
+	@Autowired
+	private TUserJobApplyMapper tUserJobApplyMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -402,6 +406,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				jobMap.put("city", job.getcJobCity());
 				jobMap.put("area", job.getcJobArea());
 				jobMap.put("address", job.getcJobPosition());
+				jobMap.put("jobState", job.getcJobState());
 				TLocation loc = tLocationMapper.selectByPrimaryKey(job.getcJobLocationId());
 				jobMap.put("locationX", loc.getcLocationLatitude());
 				jobMap.put("locationY", loc.getcLocationLongitude());
@@ -440,6 +445,12 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				jobMap.put("comImg", imgPath);
 				jobMap.put("area", job.getcJobArea());
 				jobMap.put("publishTime", job.getcJobPublishDate().toString());
+				jobMap.put("jobState", job.getcJobState());
+				jobMap.put("totalPerson", String.valueOf(job.getcJobTotalPerson()));
+				TUserJobApplyExample applyExample = new TUserJobApplyExample();
+				applyExample.or().andCJobIdEqualTo(job.getcJobId());
+				int realTotalPerson =  tUserJobApplyMapper.countByExample(applyExample);
+				jobMap.put("realTotalPerson", String.valueOf(realTotalPerson));
 				TLocation loc = tLocationMapper.selectByPrimaryKey(job.getcJobLocationId());
 				jobMap.put("locationX", loc.getcLocationLatitude());
 				jobMap.put("locationY", loc.getcLocationLongitude());
