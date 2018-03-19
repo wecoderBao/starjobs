@@ -62,6 +62,7 @@ public class MyPublishServiceImpl implements MyPublishService {
 		comInfo.setcComBalance(String.valueOf(balance));
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
+		tJobInfoMapper.updateByPrimaryKey(jobInfo);
 		/**
 		 * 记录操作
 		 */
@@ -91,8 +92,12 @@ public class MyPublishServiceImpl implements MyPublishService {
 	 */
 	public Map<String, Object> deleteJob(int jobId) {
 		Map<String,Object> resultMap = new HashMap<String,Object>(16);
-		tJobInfoMapper.deleteByPrimaryKey(jobId);
-		return resultMap;
+		int result = tJobInfoMapper.deleteByPrimaryKey(jobId);
+		if(result == 1) {
+			return resultMap;
+		}else {
+			return null;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -113,6 +118,7 @@ public class MyPublishServiceImpl implements MyPublishService {
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		Date now = new Date();
 		jobInfo.setcJobPublishDate(now);
+		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.updateByPrimaryKey(jobInfo);
 		/**
 		 * 记录操作

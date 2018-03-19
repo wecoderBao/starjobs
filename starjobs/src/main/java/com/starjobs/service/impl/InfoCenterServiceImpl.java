@@ -444,7 +444,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 				jobMap.put("jobId", String.valueOf(job.getcJobId()));
 				jobMap.put("comImg", imgPath);
 				jobMap.put("area", job.getcJobArea());
-				jobMap.put("publishTime", job.getcJobPublishDate().toString());
+				jobMap.put("publishTime", String.valueOf(job.getcJobPublishDate().getTime()));
 				jobMap.put("jobState", job.getcJobState());
 				jobMap.put("totalPerson", String.valueOf(job.getcJobTotalPerson()));
 				TUserJobApplyExample applyExample = new TUserJobApplyExample();
