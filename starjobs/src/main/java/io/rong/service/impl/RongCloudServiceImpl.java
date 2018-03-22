@@ -455,8 +455,9 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (groupDismissResult != null && groupDismissResult.getCode() == 200) {
 				// 对群记录进行修改
 				// todo
-				group.setcGroupStatu("1");// 群组失效
-				tGroupMapper.updateByPrimaryKey(group);// 更新群组信息
+//				group.setcGroupStatu("1");// 群组失效
+				// 删除群组信息
+				tGroupMapper.deleteByPrimaryKey(group.getcGroupId());
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -466,7 +467,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
 						1);
-
+				//删除群组对应的兼职记录
+				tJobInfoMapper.deleteByPrimaryKey(Integer.valueOf(group.getcJobId()));
 				return result;
 			}
 		} catch (Exception e) {
