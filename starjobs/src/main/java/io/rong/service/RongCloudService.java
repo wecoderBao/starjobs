@@ -26,6 +26,15 @@ public interface RongCloudService {
 	Map<String,Object> deleteFriend(String fromUserId,String toUserId);
 	
 	Map<String,Object> createGroup(String userId,String groupName,String jobId);
+	/**
+	 * 创建群组带上群成员
+	 * <p>一句话描述：
+	 * <p>return type:Map<String,Object></p>
+	 * <p>method name:createGroupWithMembers</p>
+	 * @author:bao
+	 * @date:2018年4月1日下午2:55:31
+	 */
+	Map<String,Object> createGroupWithMembers(String userId,String groupName,String jobId,String members);
 	
 	Map<String,Object> joinGroup(String userId,String groupId, String groupName);
 	

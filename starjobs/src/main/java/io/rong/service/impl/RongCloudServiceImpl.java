@@ -4,6 +4,7 @@
 package io.rong.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -224,7 +225,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (null != userInfo) {
 			resultMap.put("friendName", userInfo.getcUserNickname());
-			resultMap.put("friendPicUrl", StarConstants.USER_IMG_URL+userInfo.getcUserImg());
+			resultMap.put("friendPicUrl", StarConstants.USER_IMG_URL + userInfo.getcUserImg());
 			resultMap.put("friendPhoneNum", userInfo.getcUserPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -233,7 +234,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phoneNum.trim());
 		if (null != comInfo) {
 			resultMap.put("friendName", comInfo.getcComName());
-			resultMap.put("friendPicUrl", StarConstants.COM_IMG_URL+comInfo.getcComHeadImg());
+			resultMap.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
 			resultMap.put("friendPhoneNum", comInfo.getcComPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -253,7 +254,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL+info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				}
@@ -268,7 +269,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(3);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL+info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				}
@@ -289,12 +290,12 @@ public class RongCloudServiceImpl implements RongCloudService {
 		String[] groupCreateUserId = { userId };
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-//			TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
-//			String comHeadImg = comInfo.getcComHeadImg();
-//			comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
+			// TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+			// String comHeadImg = comInfo.getcComHeadImg();
+			// comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
 			String groupHeadImg = "";
 			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(jobId));
-			if(null == job) {
+			if (null == job) {
 				return null;
 			}
 			groupHeadImg = getGroupHeadImgByType(job.getcJobTypeId());
@@ -340,46 +341,135 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		return null;
 	}
+
+	public Map<String, Object> createGroupWithMembers(String userId, String groupName, String jobId, String members) {
+		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
+		// 群组成员
+		String[] groupMember = members.split(",");
+		List<String> groupMembers = new ArrayList<String>(Arrays.asList(groupMember));
+		groupMembers.add(userId);
+		String[] groupCreateUserId = (String[]) groupMembers.toArray();
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			// TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+			// String comHeadImg = comInfo.getcComHeadImg();
+			// comHeadImg = (comHeadImg==null?"default.png":comHeadImg);
+			String groupHeadImg = "";
+			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(jobId));
+			if (null == job) {
+				return null;
+			}
+			groupHeadImg = getGroupHeadImgByType(job.getcJobTypeId());
+			// 保存群组
+			TGroup group = new TGroup();
+			group.setcGroupCreaterId(userId);
+			group.setcGroupHeadImg(groupHeadImg);
+			group.setcGroupName(groupName);
+			group.setcGroupStatu("1");
+			group.setcJobId(jobId);
+			tGroupMapper.insertSelective(group);
+			// 保存群主
+			TGroupMember member = new TGroupMember();
+			member.setcGroupId(group.getcGroupId());// 所在群组id
+			member.setcGroupMemberId(userId);// 成员手机号
+			member.setcGroupMemberIdentity("0");// 群主标识
+			tGroupMemberMapper.insertSelective(member);
+			// 保存群成员
+			for (String phone : groupMember) {
+				TGroupMember aMember = new TGroupMember();
+				aMember.setcGroupId(group.getcGroupId());// 所在群组id
+				aMember.setcGroupMemberId(phone);// 成员手机号
+				member.setcGroupMemberIdentity("1");// 群主标识
+				tGroupMemberMapper.insertSelective(member);
+			}
+			CodeSuccessResult groupCreateResult = rongCloud.group.create(groupCreateUserId,
+					String.valueOf(group.getcGroupId()), groupName);
+			System.out.println("--" + groupCreateResult.toString());
+			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
+
+				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> data = new HashMap<String, Object>();
+				data.put("operatorNickname", userId);
+				data.put("targetGroupName", groupName);
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Create", data, "创建群组：" + groupName,
+						"创建群组：" + groupName);
+				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
+						messagePublishGroupToGroupId, groupMessage, "创建群组：" + groupName,
+						"{\"pushData\":\"" + "创建群组：" + groupName + "\"}", 1, 1, 1);
+				System.out.println("--2--" + messagePublishGroupResult.toString());
+				// 向群成员发送消息
+				String[] msgPublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				Map<String, Object> dataMap = new HashMap<String, Object>();
+				String[] targetUserIds = groupMember;
+				dataMap.put("targetUserIds", targetUserIds);
+				dataMap.put("operatorNickname", userId);
+				StringBuilder builder = new StringBuilder();
+				for(String phone : groupMember){
+					TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
+					if(null!=userInfo){
+						builder.append(userInfo.getcUserNickname()+" ");
+					}
+				}
+				GroupNtfMessage groupMsg = new GroupNtfMessage(userId, "Add", dataMap,
+						builder.toString()+ " 加入群组", builder.toString() + " 加入群组");
+				rongCloud.message.publishGroup(userId, msgPublishGroupToGroupId, groupMsg,
+						"加入群组：" + groupName, "{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
+
+				if (messagePublishGroupResult.getCode() == 200) {
+					group.setcGroupStatu("0");// 创建成功群组激活
+					tGroupMapper.updateByPrimaryKey(group);
+					result.put("code", "200");
+					return result;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	private String getGroupHeadImgByType(Integer typeId) {
-		if(typeId == null) {
+		if (typeId == null) {
 			return "default.png";
-		}else if(typeId == 2) {
+		} else if (typeId == 2) {
 			return "02daogou.png";
-		}else if(typeId == 3) {
+		} else if (typeId == 3) {
 			return "03server.png";
-		}else if(typeId == 4) {
+		} else if (typeId == 4) {
 			return "04teacher.png";
-		}else if(typeId == 5) {
+		} else if (typeId == 5) {
 			return "05fadan.png";
-		}else if(typeId == 6) {
+		} else if (typeId == 6) {
 			return "06wenyuan.png";
-		}else if(typeId == 7) {
+		} else if (typeId == 7) {
 			return "07huawu.png";
-		}else if(typeId == 8) {
+		} else if (typeId == 8) {
 			return "08liyi.png";
-		}else if(typeId == 9) {
+		} else if (typeId == 9) {
 			return "09jiaolian.png";
-		}else if(typeId == 10) {
+		} else if (typeId == 10) {
 			return "10pugong.png";
-		}else if(typeId == 11) {
+		} else if (typeId == 11) {
 			return "11jishu.png";
-		}else if(typeId == 12) {
+		} else if (typeId == 12) {
 			return "12huodong.png";
-		}else if(typeId == 13) {
+		} else if (typeId == 13) {
 			return "13sheji.png";
-		}else if(typeId == 14) {
+		} else if (typeId == 14) {
 			return "14website.png";
-		}else if(typeId == 15) {
+		} else if (typeId == 15) {
 			return "15kaifa.png";
-		}else if(typeId == 16) {
+		} else if (typeId == 16) {
 			return "16yingxiao.png";
-		}else if(typeId == 17) {
+		} else if (typeId == 17) {
 			return "17falv.png";
-		}else if(typeId == 18) {
+		} else if (typeId == 18) {
 			return "18daili.png";
 		}
 		return "default.png";
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -399,7 +489,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		TGroupMemberExample memberExample = new TGroupMemberExample();
 		memberExample.createCriteria().andCGroupIdEqualTo(Integer.parseInt(groupId)).andCGroupMemberIdEqualTo(userId);
 		int total = tGroupMemberMapper.countByExample(memberExample);
-		if(total > 0) {
+		if (total > 0) {
 			return null;
 		}
 		try {
@@ -421,8 +511,8 @@ public class RongCloudServiceImpl implements RongCloudService {
 				data.put("targetUserIds", targetUserIds);
 				data.put("operatorNickname", userId);
 				TUserInfo userInfo = tUserInfoMapper.selectByPhone(userId);
-				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Add", data, userInfo.getcUserNickname()+" 加入群组",
-						userInfo.getcUserNickname()+" 加入群组");
+				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Add", data,
+						userInfo.getcUserNickname() + " 加入群组", userInfo.getcUserNickname() + " 加入群组");
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "加入群组：" + groupName,
 						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
@@ -455,7 +545,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (groupDismissResult != null && groupDismissResult.getCode() == 200) {
 				// 对群记录进行修改
 				// todo
-//				group.setcGroupStatu("1");// 群组失效
+				// group.setcGroupStatu("1");// 群组失效
 				// 删除群组信息
 				tGroupMapper.deleteByPrimaryKey(group.getcGroupId());
 				result.put("code", "200");
@@ -467,7 +557,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
 						1);
-				//删除群组对应的兼职记录
+				// 删除群组对应的兼职记录
 				tJobInfoMapper.deleteByPrimaryKey(Integer.valueOf(group.getcJobId()));
 				return result;
 			}
@@ -496,7 +586,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (null != group && group.getcGroupStatu().equals("0")) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
-					aGroup.put("groupImg",StarConstants.GROUP_IMG_URL+ group.getcGroupHeadImg());
+					aGroup.put("groupImg", StarConstants.GROUP_IMG_URL + group.getcGroupHeadImg());
 					TGroupMemberExample memberExample = new TGroupMemberExample();
 					TGroupMemberExample.Criteria criteria = memberExample.createCriteria();
 					criteria.andCGroupIdEqualTo(group.getcGroupId());
@@ -526,7 +616,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TCompanyInfo info = tCompanyInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcComName());
-					aMember.put("memberImg",StarConstants.COM_IMG_URL+ info.getcComHeadImg());
+					aMember.put("memberImg", StarConstants.COM_IMG_URL + info.getcComHeadImg());
 					aMember.put("memberId", info.getcComPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
@@ -535,7 +625,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcUserNickname());
-					aMember.put("memberImg", StarConstants.USER_IMG_URL+info.getcUserImg());
+					aMember.put("memberImg", StarConstants.USER_IMG_URL + info.getcUserImg());
 					aMember.put("memberId", info.getcUserPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
@@ -608,15 +698,15 @@ public class RongCloudServiceImpl implements RongCloudService {
 			groupInfoMap.put("groupId", groupId);
 			groupInfoMap.put("groupName", group.getcGroupName());
 			groupInfoMap.put("groupOwnerId", group.getcGroupCreaterId());
-			groupInfoMap.put("groupImgUrl", StarConstants.GROUP_IMG_URL+group.getcGroupHeadImg());
+			groupInfoMap.put("groupImgUrl", StarConstants.GROUP_IMG_URL + group.getcGroupHeadImg());
 			groupInfoMap.put("groupSize", groupSize);
 			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(group.getcJobId()));
-			if(job!=null) {
+			if (job != null) {
 				groupInfoMap.put("job", job.getcJobDesc());
-			}else {
+			} else {
 				groupInfoMap.put("job", "兼职信息不详");
 			}
-			
+
 		}
 
 		return groupInfoMap;
@@ -676,22 +766,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
-				}else {
+				} else {
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcFid());
-					if(null != comInfo) {
+					if (null != comInfo) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl",StarConstants.COM_IMG_URL+ comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						fr.put("state", tf.getcState());
 						friendList.add(fr);
 					}
 				}
-				
+
 			}
 		}
 
@@ -703,16 +793,16 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl",StarConstants.USER_IMG_URL+ info.getcUserImg());
+					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
-				}else {
+				} else {
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcUid());
-					if(null != comInfo) {
+					if (null != comInfo) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl",StarConstants.COM_IMG_URL+ comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						fr.put("state", tf.getcState());
 						friendList.add(fr);
