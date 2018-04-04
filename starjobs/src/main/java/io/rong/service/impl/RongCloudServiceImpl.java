@@ -319,8 +319,12 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (groupCreateResult != null && groupCreateResult.getCode() == 200) {
 
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+				if(null==comInfo){
+					return null;
+				}
 				Map<String, Object> data = new HashMap<String, Object>();
-				data.put("operatorNickname", userId);
+				data.put("operatorNickname", comInfo.getcComName());
 				data.put("targetGroupName", groupName);
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Create", data, "创建群组：" + groupName,
 						"创建群组：" + groupName);
@@ -506,11 +510,15 @@ public class RongCloudServiceImpl implements RongCloudService {
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
-				data.put("operatorNickname", userId);
+				TUserInfo userInfo = tUserInfoMapper.selectByPhone(userId);
+				if(null==userInfo){
+					return null;
+				}
+				data.put("operatorNickname", userInfo.getcUserNickname());
 				String[] targetUserIds = { userId };
 				data.put("targetUserIds", targetUserIds);
-				data.put("operatorNickname", userId);
-				TUserInfo userInfo = tUserInfoMapper.selectByPhone(userId);
+				String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
+				data.put("targetUserDisplayNames", targetUserDisplayNames);
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Add", data,
 						userInfo.getcUserNickname() + " 加入群组", userInfo.getcUserNickname() + " 加入群组");
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
@@ -551,7 +559,11 @@ public class RongCloudServiceImpl implements RongCloudService {
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
-				data.put("operatorNickname", userId);
+				TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
+				if(null==comInfo){
+					return null;
+				}
+				data.put("operatorNickname", comInfo.getcComName());
 				String pushTip = "群组：" + group.getcGroupName() + "解散了";
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Dismiss", data, pushTip, pushTip);
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
@@ -738,12 +750,18 @@ public class RongCloudServiceImpl implements RongCloudService {
 				// 删除数据库中的群成员记录
 				tGroupMemberMapper.deleteByGroupIdAndUserId(Integer.parseInt(groupId), userId);
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
+				TUserInfo userInfo = tUserInfoMapper.selectByPhone(userId);
+				if(null==userInfo){
+					return null;
+				}
 				Map<String, Object> data = new HashMap<String, Object>();
-				data.put("operatorNickname", userId);
-				String[] targetUserIds = { userId, group.getcGroupCreaterId() };
+				data.put("operatorNickname", userInfo.getcUserNickname());
+				String[] targetUserIds = { userId};
 				data.put("targetUserIds", targetUserIds);
-				data.put("targetUserDisplayNames", groupQuitUserId);
+				String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
+				data.put("targetUserDisplayNames", targetUserDisplayNames);
 				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Quit", data, "退出群组", "退出群组");
+				
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "退出群组", "{\"pushData\":\"" + "退出群组\"}", 1, 1, 1);
 				return resultMap;
