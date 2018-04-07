@@ -31,7 +31,7 @@ import com.starjobs.pojo.TUserInfo;
 import io.rong.RongCloud;
 import io.rong.messages.ContactNtfMessage;
 import io.rong.messages.GroupNtfMessage;
-import io.rong.messages.TxtMessage;
+import io.rong.messages.InfoNtfMessage;
 import io.rong.models.CodeSuccessResult;
 import io.rong.models.TokenResult;
 import io.rong.service.RongCloudService;
@@ -542,7 +542,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				data.put("targetUserDisplayNames", targetUserDisplayNames);
 //				GroupNtfMessage groupMessage = new GroupNtfMessage(null, "Add", data,
 //						userInfo.getcUserNickname() + " 加入群组", userInfo.getcUserNickname() + " 加入群组");
-				TxtMessage txtMessage = new TxtMessage(userInfo.getcUserNickname()+" 加入群组", userInfo.getcUserNickname()+" 加入群组");
+				InfoNtfMessage txtMessage = new InfoNtfMessage(userInfo.getcUserNickname()+" 加入群组", userInfo.getcUserNickname()+" 加入群组");
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, txtMessage, "加入群组：" + groupName,
 						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
