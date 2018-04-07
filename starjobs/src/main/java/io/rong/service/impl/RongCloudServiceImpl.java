@@ -532,12 +532,12 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if(null==userInfo){
 					return null;
 				}
-				data.put("operatorNickname", userInfo.getcUserNickname());
+//				data.put("operatorNickname", userInfo.getcUserNickname());
 				String[] targetUserIds = { userId };
 				data.put("targetUserIds", targetUserIds);
 				String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
 				data.put("targetUserDisplayNames", targetUserDisplayNames);
-				GroupNtfMessage groupMessage = new GroupNtfMessage(userId, "Add", data,
+				GroupNtfMessage groupMessage = new GroupNtfMessage(null, "Add", data,
 						userInfo.getcUserNickname() + " 加入群组", userInfo.getcUserNickname() + " 加入群组");
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, "加入群组：" + groupName,
