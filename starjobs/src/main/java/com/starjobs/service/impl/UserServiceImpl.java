@@ -632,7 +632,7 @@ public class UserServiceImpl implements UserService {
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.insertSelective(jobInfo);
 		
-		rongCloudService.createGroup(comInfo.getcComPhone(),jobInfo.getcJobTitle(),String.valueOf(jobInfo.getcJobId()));
+		Map<String, Object> result = rongCloudService.createGroup(comInfo.getcComPhone(),jobInfo.getcJobTitle(),String.valueOf(jobInfo.getcJobId()));
 		
 		balance -=10;
 		comInfo.setcComBalance(String.valueOf(balance));
@@ -658,8 +658,12 @@ public class UserServiceImpl implements UserService {
 		balanceHistory.setPhone(comInfo.getcComPhone());
 		balanceHistoryMapper.insertSelective(balanceHistory);
 		
-		resultMap.put("code", "200");
-		resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
+		if(null!=result){
+			resultMap.put("code", "200");
+			resultMap.put("jobId", String.valueOf(jobInfo.getcJobId()));
+			resultMap.put("groupId", result.get("groupId"));
+			resultMap.put("groupHeadImg", result.get("groupHeadImg"));
+		}
 		return resultMap;
 	}
 }
