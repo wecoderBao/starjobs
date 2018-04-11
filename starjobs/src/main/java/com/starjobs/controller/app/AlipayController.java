@@ -1,5 +1,6 @@
 package com.starjobs.controller.app;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -36,8 +37,15 @@ import com.starjobs.common.pay.util.PayUtil;
 import com.starjobs.common.pay.util.SerializerFeatureUtil;
 import com.starjobs.common.pay.util.StringUtil;
 import com.starjobs.common.pay.util.WebUtil;
+import com.starjobs.mapper.TCompanyInfoMapper;
+import com.starjobs.mapper.TUserInfoMapper;
+import com.starjobs.mapper.TUserRechargeMapper;
 import com.starjobs.model.pay.JsonResult;
 import com.starjobs.model.pay.ResponseData;
+import com.starjobs.pojo.TCompanyInfo;
+import com.starjobs.pojo.TUserInfo;
+import com.starjobs.pojo.TUserRecharge;
+import com.starjobs.pojo.TUserRechargeExample;
 import com.starjobs.service.TokenService;
 import com.starjobs.sys.SystemUtil;
 
@@ -45,6 +53,12 @@ import com.starjobs.sys.SystemUtil;
 public class AlipayController {
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private TUserRechargeMapper tUserRechargeMapper;
+	@Autowired
+	private TUserInfoMapper tUserInfoMapper;
+	@Autowired
+	private TCompanyInfoMapper tCompanyInfoMapper;
 
 	private static final Logger logger = LoggerFactory.getLogger(AlipayController.class);
 
@@ -133,7 +147,12 @@ public class AlipayController {
 		/**
 		 * 订单编号
 		 */
-		model.setOutTradeNo("test001");
+		String tradeNo = SystemUtil.generateTradeNO();
+		/**
+		 * 充值金额
+		 */
+		cashnum = 0.01;
+		model.setOutTradeNo(tradeNo);
 		model.setTimeoutExpress("30m");
 		model.setTotalAmount("0.01");
 		model.setProductCode("QUICK_MSECURITY_PAY");
@@ -148,6 +167,22 @@ public class AlipayController {
 			AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
 			System.out.println(response.getBody());// 就是orderString 可以直接给客户端请求，无需再做处理。
 			orderString = response.getBody();
+			if(!"".equals(orderString)){
+				//添加订单记录
+				String phone = tokenService.getPhoneNum(token);
+				TUserRecharge recharge = new TUserRecharge();
+				recharge.setCreateTime(new Date());
+				BigDecimal rechargeMoney = new BigDecimal(cashnum);
+				recharge.setRechargeMoney(rechargeMoney);
+				//充值记录设置为生成状态
+				recharge.setStatus(0);
+				recharge.setTradeno(tradeNo);
+				recharge.setUserPhone(phone);
+				tUserRechargeMapper.insert(recharge);
+				
+			}else{
+				return modelMap;
+			}
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
@@ -243,14 +278,48 @@ public class AlipayController {
 				String app_id = request.getParameter("app_id");
 
 				double total_amount = Double.valueOf(request.getParameter("total_amount"));
-
+				BigDecimal chargeMoney = new BigDecimal(total_amount);
 				/**
 				 * 用户账户金额增加
 				 */
-
+				//根据订单号查找订单记录
+				TUserRechargeExample rechargeExample = new TUserRechargeExample();
+				rechargeExample.createCriteria().andTradenoEqualTo(out_trade_no);
+				TUserRecharge recharge = tUserRechargeMapper.selectByExample(rechargeExample).get(0);
+				if(null==out_trade_no || "".equals(out_trade_no)||null == recharge){
+					return;
+				}
+				//获取用户手机号
+				String phone = recharge.getUserPhone();
+				TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
+				if(null != userInfo){
+					String balance = userInfo.getcUserBalance();
+					if(null==balance || "".equals(balance)){
+						balance = "0";
+					}
+					BigDecimal realBalance = new BigDecimal(balance);
+					realBalance = realBalance.add(chargeMoney);
+					userInfo.setcUserBalance(realBalance.toString());
+					tUserInfoMapper.insert(userInfo);
+				}else{
+					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phone);
+					if(null!=comInfo){
+						String balance = comInfo.getcComBalance();
+						if(null==balance || "".equals(balance)){
+							balance = "0";
+						}
+						BigDecimal realBalance = new BigDecimal(balance);
+						realBalance = realBalance.add(chargeMoney);
+						userInfo.setcUserBalance(realBalance.toString());
+						tCompanyInfoMapper.insert(comInfo);
+					}
+				}
 				/**
-				 * star公司账户金额增加
+				 * 修改充值记录状态
 				 */
+				recharge.setStatus(1);
+				tUserRechargeMapper.updateByPrimaryKey(recharge);
+
 			} else {
 				// TODO 验签失败则记录异常日志，并在response中返回failure.
 			}

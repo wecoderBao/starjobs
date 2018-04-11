@@ -209,13 +209,12 @@ DROP TABLE IF EXISTS `t_user_recharge`;
 
 CREATE TABLE `t_user_recharge` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录表id	主键',
-  `user_id` int(11) DEFAULT NULL COMMENT '用户ID	外键',
+  `user_phone` varchar(255) DEFAULT NULL COMMENT '用户手机号',
   `recharge_money` decimal(18,2) DEFAULT NULL COMMENT '充值金额',
   `create_time` datetime DEFAULT NULL COMMENT '充值日期',
-  `balance` decimal(18,2) DEFAULT NULL COMMENT '充值后用户余额',
-  PRIMARY KEY (`id`),
-  KEY `fk_c_user_i` (`user_id`),
-  CONSTRAINT `fk_c_user_i` FOREIGN KEY (`user_id`) REFERENCES `t_user_info` (`c_user_id`)
+  `tradeNo` varchar(255) DEFAULT NULL COMMENT '订单号',
+   status int default 0 comment '充值记录状态0生成，1操作完成',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
