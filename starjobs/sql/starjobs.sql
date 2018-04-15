@@ -293,7 +293,8 @@ CREATE TABLE `t_group_member` (
   `c_group_member_identity` varchar(255) DEFAULT NULL COMMENT '群组成员身份标识0群主1成员',
    primary key (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-DROP TABLE IF EXISTS `t_group_member`;
+
+DROP TABLE IF EXISTS `t_com_score`;
 
 CREATE TABLE `t_com_score` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',

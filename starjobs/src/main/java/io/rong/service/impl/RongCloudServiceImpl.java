@@ -576,7 +576,10 @@ public class RongCloudServiceImpl implements RongCloudService {
 				// 对群记录进行修改
 				// todo
 				// group.setcGroupStatu("1");// 群组失效
-				// 删除群组信息
+				// 删除群组信息,把群成员也删除
+				TGroupMemberExample memberExample = new TGroupMemberExample();
+				memberExample.or().andCGroupIdEqualTo(group.getcGroupId());
+				tGroupMemberMapper.deleteByExample(memberExample);
 				tGroupMapper.deleteByPrimaryKey(group.getcGroupId());
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
