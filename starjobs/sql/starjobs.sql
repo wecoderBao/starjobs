@@ -212,8 +212,9 @@ CREATE TABLE `t_user_recharge` (
   `user_phone` varchar(255) DEFAULT NULL COMMENT '用户手机号',
   `recharge_money` decimal(18,2) DEFAULT NULL COMMENT '充值金额',
   `create_time` datetime DEFAULT NULL COMMENT '充值日期',
-  `tradeNo` varchar(255) DEFAULT NULL COMMENT '订单号',
+  `trade_no` varchar(255) DEFAULT NULL COMMENT '订单号',
    status int default 0 comment '充值记录状态0生成，1操作完成',
+`balance` decimal(18,2) DEFAULT NULL COMMENT '充值后余额',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -12,9 +12,11 @@ public class TUserRecharge {
 
     private Date createTime;
 
-    private String tradeno;
+    private String tradeNo;
 
     private Integer status;
+
+    private BigDecimal balance;
 
     public Integer getId() {
         return id;
@@ -48,12 +50,12 @@ public class TUserRecharge {
         this.createTime = createTime;
     }
 
-    public String getTradeno() {
-        return tradeno;
+    public String getTradeNo() {
+        return tradeNo;
     }
 
-    public void setTradeno(String tradeno) {
-        this.tradeno = tradeno == null ? null : tradeno.trim();
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo == null ? null : tradeNo.trim();
     }
 
     public Integer getStatus() {
@@ -62,5 +64,13 @@ public class TUserRecharge {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

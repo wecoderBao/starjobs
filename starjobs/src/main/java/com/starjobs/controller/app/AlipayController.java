@@ -176,7 +176,7 @@ public class AlipayController {
 				recharge.setRechargeMoney(rechargeMoney);
 				//充值记录设置为生成状态
 				recharge.setStatus(0);
-				recharge.setTradeno(tradeNo);
+				recharge.setTradeNo(tradeNo);
 				recharge.setUserPhone(phone);
 				tUserRechargeMapper.insert(recharge);
 				
@@ -284,7 +284,7 @@ public class AlipayController {
 				 */
 				//根据订单号查找订单记录
 				TUserRechargeExample rechargeExample = new TUserRechargeExample();
-				rechargeExample.createCriteria().andTradenoEqualTo(out_trade_no);
+				rechargeExample.createCriteria().andTradeNoEqualTo(out_trade_no);
 				TUserRecharge recharge = tUserRechargeMapper.selectByExample(rechargeExample).get(0);
 				if(null==out_trade_no || "".equals(out_trade_no)||null == recharge){
 					return;

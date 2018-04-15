@@ -36,10 +36,10 @@ public class UserRechargeServiceImpl implements UserRechargeService {
 	private BalanceHistoryMapper balanceHistoryMapper;
 
 	@Override
-	public List<UserRechargeRecordDto> getUserRechargeRecord(int userId) {
+	public List<UserRechargeRecordDto> getUserRechargeRecord(String phone) {
 		List<UserRechargeRecordDto> dtoList = new ArrayList<UserRechargeRecordDto>();
 		TUserRechargeExample example = new TUserRechargeExample();
-		example.or().andUserIdEqualTo(userId);
+		example.or().andUserPhoneEqualTo(phone);
 		example.setOrderByClause("create_time Desc");
 		List<TUserRecharge> rechargeList = tUserRechargeMapper.selectByExample(example);
 		if(null != rechargeList) {

@@ -28,7 +28,7 @@ public class UserRechargeController {
 	
 	@RequestMapping(value="/user/recharge/record")
 	@ResponseBody
-	public Map<String, Object> getUserRechargeRecord(@RequestParam Integer userId, HttpServletRequest request) {
+	public Map<String, Object> getUserRechargeRecord(@RequestParam String phone, HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
 		// 用户类别标记
@@ -46,7 +46,7 @@ public class UserRechargeController {
 			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
 			return modelMap;
 		}
-		List<UserRechargeRecordDto> dtoList = userRechargeService.getUserRechargeRecord(userId);
+		List<UserRechargeRecordDto> dtoList = userRechargeService.getUserRechargeRecord(phone);
 		Map<String,Object> resultMap = new HashMap<String,Object>(4);
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");

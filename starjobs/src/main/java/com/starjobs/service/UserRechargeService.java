@@ -9,10 +9,10 @@ public interface UserRechargeService {
 
 	/**
 	 * 获取充值记录
-	 * @param userId
+	 * @param phone
 	 * @return
 	 */
-	List<UserRechargeRecordDto> getUserRechargeRecord(int userId);
+	List<UserRechargeRecordDto> getUserRechargeRecord(String phone);
 	
 	/**
 	 * 公司用户充值招聘余额
