@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.starjobs.common.ImageUtil;
+import com.starjobs.common.StarConstants;
 import com.starjobs.mapper.TComAddressMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TJobInfoMapper;
@@ -23,6 +24,7 @@ import com.starjobs.mapper.TUserTokenMapper;
 import com.starjobs.pojo.TComAddress;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
+import com.starjobs.pojo.TJobInfoExample;
 import com.starjobs.pojo.TLocation;
 import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserJobApplyExample;
@@ -387,7 +389,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 
 		///
-		List<TJobInfo> jobs = tJobInfoMapper.selectByComId(com_id);
+		TJobInfoExample jobInfoExample = new TJobInfoExample();
+		jobInfoExample.or().andCComIdEqualTo(com_id).andCJobStateNotEqualTo(StarConstants.JOB_DELETE);
+		List<TJobInfo> jobs = tJobInfoMapper.selectByExample(jobInfoExample);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<Map<String, String>> jobList = new ArrayList<Map<String, String>>();
 
@@ -432,7 +436,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			imgPath = SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg();
 		}
 		///
-		List<TJobInfo> jobs = tJobInfoMapper.selectByComId(com_id);
+		TJobInfoExample jobInfoExample = new TJobInfoExample();
+		jobInfoExample.or().andCComIdEqualTo(com_id).andCJobStateNotEqualTo(StarConstants.JOB_DELETE);
+		List<TJobInfo> jobs = tJobInfoMapper.selectByExample(jobInfoExample);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<Map<String, String>> jobList = new ArrayList<Map<String, String>>();
 

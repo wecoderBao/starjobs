@@ -17,11 +17,13 @@ import com.starjobs.mapper.RefreshJobMapper;
 import com.starjobs.mapper.TCompanyInfoMapper;
 import com.starjobs.mapper.TJobInfoMapper;
 import com.starjobs.mapper.TLocationMapper;
+import com.starjobs.mapper.TUserJobApplyMapper;
 import com.starjobs.pojo.BalanceHistory;
 import com.starjobs.pojo.RefreshJob;
 import com.starjobs.pojo.TCompanyInfo;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TLocation;
+import com.starjobs.pojo.TUserJobApplyExample;
 import com.starjobs.service.MyPublishService;
 import com.starjobs.sys.SystemUtil;
 
@@ -44,6 +46,8 @@ public class MyPublishServiceImpl implements MyPublishService {
 	private RefreshJobMapper refreshJobMapper;
 	@Autowired
 	private BalanceHistoryMapper balanceHistoryMapper;
+	@Autowired
+	private TUserJobApplyMapper tUserJobApplyMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.starjobs.service.MyPublishService#recommendJob(int)
@@ -92,12 +96,16 @@ public class MyPublishServiceImpl implements MyPublishService {
 	 */
 	public Map<String, Object> deleteJob(int jobId) {
 		Map<String,Object> resultMap = new HashMap<String,Object>(16);
-		int result = tJobInfoMapper.deleteByPrimaryKey(jobId);
-		if(result == 1) {
+		/**
+		 * 将兼职的状态改为删除
+		 */
+		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
+		if(null == jobInfo){
 			return resultMap;
-		}else {
-			return null;
 		}
+		jobInfo.setcJobState(StarConstants.JOB_DELETE);
+		tJobInfoMapper.updateByPrimaryKey(jobInfo);
+		return resultMap;
 	}
 
 	/* (non-Javadoc)

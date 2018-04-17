@@ -271,6 +271,7 @@ public class AlipayController {
 				// TODO 验签成功后
 				// 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
 				logger.info("订单支付成功：" + JSON.toJSONString(params));
+				System.out.println("zhifu: "+JSON.toJSONString(params));
 				/**
 				 * 验证out_trade_no
 				 */
@@ -300,7 +301,7 @@ public class AlipayController {
 					BigDecimal realBalance = new BigDecimal(balance);
 					realBalance = realBalance.add(chargeMoney);
 					userInfo.setcUserBalance(realBalance.toString());
-					tUserInfoMapper.insert(userInfo);
+					tUserInfoMapper.updateByPrimaryKey(userInfo);
 				}else{
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phone);
 					if(null!=comInfo){
@@ -311,7 +312,7 @@ public class AlipayController {
 						BigDecimal realBalance = new BigDecimal(balance);
 						realBalance = realBalance.add(chargeMoney);
 						userInfo.setcUserBalance(realBalance.toString());
-						tCompanyInfoMapper.insert(comInfo);
+						tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 					}
 				}
 				/**

@@ -27,6 +27,8 @@ public class StarConstants {
 	public static final String JOB_STOP = "1";
 	//审核
 	public static final String JOB_VERIFY = "2";
+	//删除
+	public static final String JOB_DELETE = "3";
 	
 	/**
 	 * 用户申请最大上限
