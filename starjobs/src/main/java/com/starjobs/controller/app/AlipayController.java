@@ -293,15 +293,23 @@ public class AlipayController {
 				//获取用户手机号
 				String phone = recharge.getUserPhone();
 				TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
+				BigDecimal realBalance;
 				if(null != userInfo){
 					String balance = userInfo.getcUserBalance();
 					if(null==balance || "".equals(balance)){
 						balance = "0";
 					}
-					BigDecimal realBalance = new BigDecimal(balance);
+					realBalance = new BigDecimal(balance);
 					realBalance = realBalance.add(chargeMoney);
+					realBalance.setScale(2, BigDecimal.ROUND_HALF_UP); 
 					userInfo.setcUserBalance(realBalance.toString());
 					tUserInfoMapper.updateByPrimaryKey(userInfo);
+					/**
+					 * 修改充值记录状态
+					 */
+					recharge.setStatus(1);
+					recharge.setBalance(realBalance);
+					tUserRechargeMapper.updateByPrimaryKey(recharge);
 				}else{
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phone);
 					if(null!=comInfo){
@@ -309,18 +317,19 @@ public class AlipayController {
 						if(null==balance || "".equals(balance)){
 							balance = "0";
 						}
-						BigDecimal realBalance = new BigDecimal(balance);
+						realBalance = new BigDecimal(balance);
 						realBalance = realBalance.add(chargeMoney);
-						userInfo.setcUserBalance(realBalance.toString());
+						realBalance.setScale(2, BigDecimal.ROUND_HALF_UP); 
+						comInfo.setcComBalance(realBalance.toString());
 						tCompanyInfoMapper.updateByPrimaryKey(comInfo);
+						/**
+						 * 修改充值记录状态
+						 */
+						recharge.setStatus(1);
+						recharge.setBalance(realBalance);
+						tUserRechargeMapper.updateByPrimaryKey(recharge);
 					}
 				}
-				/**
-				 * 修改充值记录状态
-				 */
-				recharge.setStatus(1);
-				tUserRechargeMapper.updateByPrimaryKey(recharge);
-
 			} else {
 				// TODO 验签失败则记录异常日志，并在response中返回failure.
 			}
@@ -440,5 +449,4 @@ public class AlipayController {
 			}
 		}
 	}
-
 }
