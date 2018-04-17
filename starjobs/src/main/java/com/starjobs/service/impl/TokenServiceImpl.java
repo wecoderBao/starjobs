@@ -44,12 +44,13 @@ public class TokenServiceImpl implements TokenService {
 	// 校验token
 	public boolean checkToken(String token) {
 		//暂时去掉失效检测
+//		return true;
+		// 更据token值查询token
+		TUserToken record = tUserTokenMapper.selectByTokenValue(token);
+		if (record == null) {
+			return false;
+		}
 		return true;
-//		// 更据token值查询token
-//		TUserToken record = tUserTokenMapper.selectByTokenValue(token);
-//		if (record == null) {
-//			return false;
-//		}
 //		//token失效
 //		if(record.getcCreateTime() == null) {
 //			tUserTokenMapper.deleteByPrimaryKey(record.getcId());
