@@ -158,6 +158,9 @@ public class MyPublishServiceImpl implements MyPublishService {
 	public Map<String, Object> stopJob(int jobId) {
 		Map<String,Object> resultMap = new HashMap<String,Object>(16);
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
+		if(jobInfo == null){
+			return null;
+		}
 		jobInfo.setcJobState(StarConstants.JOB_STOP);
 		tJobInfoMapper.updateByPrimaryKey(jobInfo);
 		return resultMap;

@@ -34,7 +34,7 @@ import com.starjobs.sys.SystemUtil;
 public class MyPublishController {
 
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
 	private MyPublishService myPublishService;
 
