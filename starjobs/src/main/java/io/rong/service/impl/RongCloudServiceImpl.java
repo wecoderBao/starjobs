@@ -595,7 +595,14 @@ public class RongCloudServiceImpl implements RongCloudService {
 						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
 						1);
 				// 删除群组对应的兼职记录
-				tJobInfoMapper.deleteByPrimaryKey(Integer.valueOf(group.getcJobId()));
+				/**
+				 * 将兼职的状态改为删除
+				 */
+				TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(Integer.valueOf(group.getcJobId()));
+				if(null != jobInfo){
+					jobInfo.setcJobState(StarConstants.JOB_DELETE);
+					tJobInfoMapper.updateByPrimaryKey(jobInfo);
+				}
 				return result;
 			}
 		} catch (Exception e) {

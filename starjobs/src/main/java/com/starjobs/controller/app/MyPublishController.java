@@ -38,8 +38,8 @@ public class MyPublishController {
 	@Autowired
 	private MyPublishService myPublishService;
 
-	// 推广兼职，即停止的兼职信息重新招聘
-	@RequestMapping(value = "/com/recommend/job", method = RequestMethod.POST)
+	// 点击停止按钮，jobState为0
+	@RequestMapping(value = "/com/stop/job", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> recommendJob(HttpServletRequest request) {
 		// 获取token
@@ -152,8 +152,8 @@ public class MyPublishController {
 		return modelMap;
 	}
 
-	// 停止招聘
-	@RequestMapping(value = "/com/stop/job", method = RequestMethod.POST)
+	// 点击推广，状态为1
+	@RequestMapping(value = "/com/recommend/job", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> stopJob(HttpServletRequest request) {
 		// 获取token
