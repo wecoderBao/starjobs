@@ -796,7 +796,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 					String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
 					data.put("targetUserDisplayNames", targetUserDisplayNames);
 					GroupNtfMessage groupMessage = new GroupNtfMessage(phone, "Quit", data, "退出群组", "退出群组");
-					//
+					// 
 					CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(phone,
 							messagePublishGroupToGroupId, groupMessage, "退出群组", "{\"pushData\":\"" + "退出群组\"}", 1, 1, 1);
 				}
