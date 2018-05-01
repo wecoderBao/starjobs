@@ -259,9 +259,9 @@ public class RongCloudServiceImpl implements RongCloudService {
 					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
-				}else{
+				} else {
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcFid());
-					if(comInfo!=null && "2".equals(tf.getcState())){
+					if (comInfo != null && "2".equals(tf.getcState())) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
 						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
@@ -283,9 +283,9 @@ public class RongCloudServiceImpl implements RongCloudService {
 					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
-				}else{
+				} else {
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(tf.getcUid());
-					if(comInfo!=null && "2".equals(tf.getcState())){
+					if (comInfo != null && "2".equals(tf.getcState())) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
 						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
@@ -340,7 +340,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
-				if(null==comInfo){
+				if (null == comInfo) {
 					return null;
 				}
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -430,16 +430,16 @@ public class RongCloudServiceImpl implements RongCloudService {
 				dataMap.put("targetUserIds", targetUserIds);
 				dataMap.put("operatorNickname", userId);
 				StringBuilder builder = new StringBuilder();
-				for(String phone : groupMember){
+				for (String phone : groupMember) {
 					TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
-					if(null!=userInfo){
-						builder.append(userInfo.getcUserNickname()+" ");
+					if (null != userInfo) {
+						builder.append(userInfo.getcUserNickname() + " ");
 					}
 				}
-				GroupNtfMessage groupMsg = new GroupNtfMessage(userId, "Add", dataMap,
-						builder.toString()+ " 加入群组", builder.toString() + " 加入群组");
-				rongCloud.message.publishGroup(userId, msgPublishGroupToGroupId, groupMsg,
-						"加入群组：" + groupName, "{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
+				GroupNtfMessage groupMsg = new GroupNtfMessage(userId, "Add", dataMap, builder.toString() + " 加入群组",
+						builder.toString() + " 加入群组");
+				rongCloud.message.publishGroup(userId, msgPublishGroupToGroupId, groupMsg, "加入群组：" + groupName,
+						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
 
 				if (messagePublishGroupResult.getCode() == 200) {
 					group.setcGroupStatu("0");// 创建成功群组激活
@@ -512,19 +512,22 @@ public class RongCloudServiceImpl implements RongCloudService {
 		if (group == null) {
 			return null;
 		}
-		TGroupMemberExample memberExample = new TGroupMemberExample();
-		memberExample.createCriteria().andCGroupIdEqualTo(Integer.parseInt(groupId)).andCGroupMemberIdEqualTo(userId);
-		int total = tGroupMemberMapper.countByExample(memberExample);
-		if (total > 0) {
-			return null;
+		for (String phone : groupJoinUserId) {
+			TGroupMemberExample memberExample = new TGroupMemberExample();
+			memberExample.createCriteria().andCGroupIdEqualTo(Integer.parseInt(groupId))
+					.andCGroupMemberIdEqualTo(phone);
+			int total = tGroupMemberMapper.countByExample(memberExample);
+			if (total > 0) {
+				return null;
+			}
 		}
 		try {
 			CodeSuccessResult groupJoinResult = rongCloud.group.join(groupJoinUserId,
 					String.valueOf(group.getcGroupId()), groupName);
 			if (groupJoinResult != null && groupJoinResult.getCode() == 200) {
 				// 添加群成员记录
-				//多人加入
-				for(String phone : groupJoinUserId){
+				// 多人加入
+				for (String phone : groupJoinUserId) {
 					TGroupMember member = new TGroupMember();
 					member.setcGroupId(Integer.parseInt(groupId));// 所在群组id
 					member.setcGroupMemberId(phone);// 成员手机号
@@ -534,21 +537,21 @@ public class RongCloudServiceImpl implements RongCloudService {
 				result.put("code", "200");
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
-				TUserInfo userInfo = tUserInfoMapper.selectByPhone(userId);
-				if(null==userInfo){
-					return null;
+				for (String phone : groupJoinUserId) {
+					TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
+					if (null == userInfo) {
+						continue;
+					}
+					String[] targetUserIds = { phone };
+					data.put("targetUserIds", targetUserIds);
+					String[] targetUserDisplayNames = { userInfo.getcUserNickname() };
+					data.put("targetUserDisplayNames", targetUserDisplayNames);
+					InfoNtfMessage txtMessage = new InfoNtfMessage(userInfo.getcUserNickname() + " 加入群组",
+							userInfo.getcUserNickname() + " 加入群组");
+					CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(phone,
+							messagePublishGroupToGroupId, txtMessage, "加入群组：" + groupName,
+							"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
 				}
-//				data.put("operatorNickname", userInfo.getcUserNickname());
-				String[] targetUserIds = { userId };
-				data.put("targetUserIds", targetUserIds);
-				String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
-				data.put("targetUserDisplayNames", targetUserDisplayNames);
-//				GroupNtfMessage groupMessage = new GroupNtfMessage(null, "Add", data,
-//						userInfo.getcUserNickname() + " 加入群组", userInfo.getcUserNickname() + " 加入群组");
-				InfoNtfMessage txtMessage = new InfoNtfMessage(userInfo.getcUserNickname()+" 加入群组", userInfo.getcUserNickname()+" 加入群组");
-				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
-						messagePublishGroupToGroupId, txtMessage, "加入群组：" + groupName,
-						"{\"pushData\":\"" + "加入群组：" + groupName + "\"}", 1, 1, 1);
 				return result;
 			}
 		} catch (Exception e) {
@@ -588,7 +591,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 				Map<String, Object> data = new HashMap<String, Object>();
 				TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(userId);
-				if(null==comInfo){
+				if (null == comInfo) {
 					return null;
 				}
 				data.put("operatorNickname", comInfo.getcComName());
@@ -597,12 +600,12 @@ public class RongCloudServiceImpl implements RongCloudService {
 				CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(userId,
 						messagePublishGroupToGroupId, groupMessage, pushTip, "{\"pushData\":\"" + pushTip + "\"}", 1, 1,
 						1);
-				// 删除群组对应的兼职记录
-				/**
-				 * 将兼职的状态改为删除
-				 */
+						// 删除群组对应的兼职记录
+						/**
+						 * 将兼职的状态改为删除
+						 */
 				TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(Integer.valueOf(group.getcJobId()));
-				if(null != jobInfo){
+				if (null != jobInfo) {
 					jobInfo.setcJobState(StarConstants.JOB_DELETE);
 					tJobInfoMapper.updateByPrimaryKey(jobInfo);
 				}
@@ -769,7 +772,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		// 退出群组方法（将用户从群中移除，不再接收该群组的消息.）
 		RongCloud rongCloud = RongCloud.getInstance(RongConstants.RONG_APP_KEY, RongConstants.RONG_APP_SECRET);
 
-		String[] groupQuitUserId = { userId };
+		String[] groupQuitUserId = userId.split(";");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		TGroup group = tGroupMapper.selectByPrimaryKey(Integer.parseInt(groupId));
 		if (group == null) {
@@ -782,24 +785,25 @@ public class RongCloudServiceImpl implements RongCloudService {
 			CodeSuccessResult groupQuitResult = rongCloud.group.quit(groupQuitUserId, groupId);
 			if (groupQuitResult.getCode() == 200) {
 				resultMap.put("code", "200");
-				for(String phone : groupQuitUserId){
+				for (String phone : groupQuitUserId) {
 					// 删除数据库中的群成员记录
 					tGroupMemberMapper.deleteByGroupIdAndUserId(Integer.parseInt(groupId), phone);
 					String[] messagePublishGroupToGroupId = { String.valueOf(group.getcGroupId()) };
 					TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
-					if(null==userInfo){
+					if (null == userInfo) {
 						return null;
 					}
 					Map<String, Object> data = new HashMap<String, Object>();
 					data.put("operatorNickname", userInfo.getcUserNickname());
-					String[] targetUserIds = { phone};
+					String[] targetUserIds = { phone };
 					data.put("targetUserIds", targetUserIds);
-					String[] targetUserDisplayNames = {userInfo.getcUserNickname()};
+					String[] targetUserDisplayNames = { userInfo.getcUserNickname() };
 					data.put("targetUserDisplayNames", targetUserDisplayNames);
 					GroupNtfMessage groupMessage = new GroupNtfMessage(phone, "Quit", data, "退出群组", "退出群组");
-					// 
+					//
 					CodeSuccessResult messagePublishGroupResult = rongCloud.message.publishGroup(phone,
-							messagePublishGroupToGroupId, groupMessage, "退出群组", "{\"pushData\":\"" + "退出群组\"}", 1, 1, 1);
+							messagePublishGroupToGroupId, groupMessage, "退出群组", "{\"pushData\":\"" + "退出群组\"}", 1, 1,
+							1);
 				}
 				return resultMap;
 			}
@@ -868,28 +872,30 @@ public class RongCloudServiceImpl implements RongCloudService {
 		result.put("relationList", friendList);
 		return result;
 	}
-	//群支付
-	public Map<String,Object> payGroup(String groupOwnerPhone, String memberPhone, String cashnum){
+
+	// 群支付
+	public Map<String, Object> payGroup(String groupOwnerPhone, String memberPhone, String cashnum) {
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(groupOwnerPhone);
-		if(null == comInfo){
+		if (null == comInfo) {
 			return null;
 		}
-		Map<String,Object> resultMap = new HashMap<String,Object>(16);
+		Map<String, Object> resultMap = new HashMap<String, Object>(16);
 		double balance = Double.parseDouble(comInfo.getcComBalance());
 		double payMoney = Double.parseDouble(cashnum);
 		String[] memberPhones = memberPhone.split(",");
-		if(balance < payMoney*memberPhones.length){
+		if (balance < payMoney * memberPhones.length) {
 			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
-		balance -=payMoney*memberPhones.length;
+		balance -= payMoney * memberPhones.length;
 		comInfo.setcComBalance(String.valueOf(balance));
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
-		//成群成员付款
-		for(String phone : memberPhones){
+		// 成群成员付款
+		for (String phone : memberPhones) {
 			TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
-			if(null!=userInfo){
-				double userBalance = userInfo.getcUserBalance()==null?0:Double.valueOf(userInfo.getcUserBalance());
+			if (null != userInfo) {
+				double userBalance = userInfo.getcUserBalance() == null ? 0
+						: Double.valueOf(userInfo.getcUserBalance());
 				userBalance += payMoney;
 				userInfo.setcUserBalance(String.valueOf(userBalance));
 				tUserInfoMapper.updateByPrimaryKey(userInfo);
