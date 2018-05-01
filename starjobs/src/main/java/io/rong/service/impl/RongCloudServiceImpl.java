@@ -27,6 +27,7 @@ import com.starjobs.pojo.TGroupMember;
 import com.starjobs.pojo.TGroupMemberExample;
 import com.starjobs.pojo.TJobInfo;
 import com.starjobs.pojo.TUserInfo;
+import com.starjobs.sys.SystemUtil;
 
 import io.rong.RongCloud;
 import io.rong.messages.ContactNtfMessage;
@@ -866,5 +867,34 @@ public class RongCloudServiceImpl implements RongCloudService {
 		}
 		result.put("relationList", friendList);
 		return result;
+	}
+	//群支付
+	public Map<String,Object> payGroup(String groupOwnerPhone, String memberPhone, String cashnum){
+		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(groupOwnerPhone);
+		if(null == comInfo){
+			return null;
+		}
+		Map<String,Object> resultMap = new HashMap<String,Object>(16);
+		double balance = Double.parseDouble(comInfo.getcComBalance());
+		double payMoney = Double.parseDouble(cashnum);
+		String[] memberPhones = memberPhone.split(",");
+		if(balance < payMoney*memberPhones.length){
+			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
+			return resultMap;
+		}
+		balance -=payMoney*memberPhones.length;
+		comInfo.setcComBalance(String.valueOf(balance));
+		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
+		//成群成员付款
+		for(String phone : memberPhones){
+			TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
+			if(null!=userInfo){
+				double userBalance = userInfo.getcUserBalance()==null?0:Double.valueOf(userInfo.getcUserBalance());
+				userBalance += payMoney;
+				userInfo.setcUserBalance(String.valueOf(userBalance));
+				tUserInfoMapper.updateByPrimaryKey(userInfo);
+			}
+		}
+		return resultMap;
 	}
 }

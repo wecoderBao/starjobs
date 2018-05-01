@@ -50,4 +50,6 @@ public interface RongCloudService {
 	
 	Map<String,Object> quitGroup(String userId, String groupId);
 	Map<String,Object> getRelations(String phoneNum);
+	
+	Map<String,Object> payGroup(String groupOwnerPhone, String memberPhone, String cashnum);
 }
