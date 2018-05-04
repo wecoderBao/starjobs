@@ -588,7 +588,8 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		double balance = Double.parseDouble(comInfo.getcComBalance());
-		if(balance < 10){
+		double extraBalance = comInfo.getcExtraBalance()==null?0:Double.parseDouble(comInfo.getcExtraBalance());
+		if(extraBalance<10 && balance < 10){
 			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
@@ -633,9 +634,14 @@ public class UserServiceImpl implements UserService {
 		tJobInfoMapper.insertSelective(jobInfo);
 		
 		Map<String, Object> result = rongCloudService.createGroup(comInfo.getcComPhone(),jobInfo.getcJobTitle(),String.valueOf(jobInfo.getcJobId()));
+		if(extraBalance >=10){
+			extraBalance -=10;
+			comInfo.setcExtraBalance(String.valueOf(extraBalance));
+		}else{
+			balance -=10;
+			comInfo.setcComBalance(String.valueOf(balance));
+		}
 		
-		balance -=10;
-		comInfo.setcComBalance(String.valueOf(balance));
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		/**
