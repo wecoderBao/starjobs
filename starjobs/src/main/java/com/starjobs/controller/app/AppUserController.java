@@ -34,11 +34,11 @@ import com.starjobs.sys.SystemUtil;
 @Controller
 public class AppUserController {
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	JobService jobService;
+	private JobService jobService;
 
 	// 用户获取兼职信息列表
 	@RequestMapping(value = "/user/get/job_info", method = RequestMethod.POST)

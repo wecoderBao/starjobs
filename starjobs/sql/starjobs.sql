@@ -304,6 +304,17 @@ CREATE TABLE `t_com_score` (
    primary key (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `t_system`;
+
+CREATE TABLE `t_system` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT NULL  COMMENT '键',
+  `value` varchar(255) DEFAULT NULL COMMENT '值',
+  `extra_desc` varchar(255) DEFAULT NULL COMMENT '描述',
+   primary key (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into t_system(name,value) values('ios_version', '1.0.0'),('android_version','1.0.0');
+
 /*Data for the table `t_withdraw_verify` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
