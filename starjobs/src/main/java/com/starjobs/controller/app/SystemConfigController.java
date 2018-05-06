@@ -67,6 +67,8 @@ public class SystemConfigController {
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
 		modelMap.put("data", resultMap);
+		modelMap.put("message", "success");
+		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 
 		return modelMap;
 	}
