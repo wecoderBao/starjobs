@@ -29,13 +29,14 @@ public class SystemConfigServiceImpl implements SystemConfigService{
 	 * @see com.starjobs.service.SystemConfigService#getConfigs()
 	 */
 	@Override
-	public Map<String, Object> getConfigs() {
+	public Map<String, Object> getConfigs(String platform) {
 		TSystemExample example = new TSystemExample();
-		example.or();
+		example.or().andNameEqualTo(platform);
 		List<TSystem> configs = tSystemMapper.selectByExample(example);
 		Map<String, Object> result = new HashMap<String,Object>(16);
 		for(TSystem item : configs){
-			result.put(item.getName(), item.getValue());
+			result.put("version", item.getValue());
+			result.put("download_url", item.getExtraDesc());
 		}
 		return result;
 	}

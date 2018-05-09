@@ -12,6 +12,6 @@ import java.util.Map;
  * @date:2018年5月6日下午7:20:43
  */
 public interface SystemConfigService {
-	public Map<String, Object> getConfigs( );
+	public Map<String, Object> getConfigs(String platform );
 
 }
