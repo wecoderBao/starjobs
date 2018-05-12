@@ -41,23 +41,14 @@ public class SystemConfigController {
 	@RequestMapping(value = "/user/get/config", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getConfigs(HttpServletRequest request) {
-		// 获取token
-		String token = request.getParameter("token");
-		// 用户类别标记
-		String userFlag = request.getParameter("userFlag");
+		
 		String platform = request.getParameter("platform");
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)|| StringUtils.isEmpty(platform)) {
-			return modelMap;
-		}
-		// 验证token是否有效
-		boolean isPermitted = tokenService.checkToken(token);
-		if (!isPermitted) {
-			modelMap.put("error_code", SystemUtil.CODE_TOKEN_EXPIRE);
+		if (StringUtils.isEmpty(platform)) {
 			return modelMap;
 		}
 		// 返回配置信息
@@ -65,8 +56,6 @@ public class SystemConfigController {
 		if (resultMap == null) {
 			return modelMap;
 		}
-		resultMap.put("token", token);
-		resultMap.put("userFlag", userFlag);
 		modelMap.put("data", resultMap);
 		modelMap.put("message", "success");
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
