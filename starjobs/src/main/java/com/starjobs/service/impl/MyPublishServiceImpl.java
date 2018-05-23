@@ -57,13 +57,19 @@ public class MyPublishServiceImpl implements MyPublishService {
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
 		double balance = Double.parseDouble(comInfo.getcComBalance());
-		
-		if(balance < 10){
+		double extraBalance = comInfo.getcExtraBalance()==null?0:Double.parseDouble(comInfo.getcExtraBalance());
+		if(extraBalance<10 && balance < 10){
 			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
-		balance -=10;
-		comInfo.setcComBalance(String.valueOf(balance));
+		
+		if(extraBalance >=10){
+			extraBalance -=10;
+			comInfo.setcExtraBalance(String.valueOf(extraBalance));
+		}else{
+			balance -=10;
+			comInfo.setcComBalance(String.valueOf(balance));
+		}
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		jobInfo.setcJobState(StarConstants.JOB_KEEPING);
 		tJobInfoMapper.updateByPrimaryKey(jobInfo);
@@ -116,13 +122,19 @@ public class MyPublishServiceImpl implements MyPublishService {
 		TJobInfo jobInfo = tJobInfoMapper.selectByPrimaryKey(jobId);
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
 		double balance = Double.parseDouble(comInfo.getcComBalance());
-		
-		if(balance < 10){
+		double extraBalance = comInfo.getcExtraBalance()==null?0:Double.parseDouble(comInfo.getcExtraBalance());
+		if(extraBalance<10 && balance < 10){
 			resultMap.put("code", SystemUtil.CODE_NOT_ENOUGH_BALANCE);
 			return resultMap;
 		}
-		balance -=10;
-		comInfo.setcComBalance(String.valueOf(balance));
+		
+		if(extraBalance >=10){
+			extraBalance -=10;
+			comInfo.setcExtraBalance(String.valueOf(extraBalance));
+		}else{
+			balance -=10;
+			comInfo.setcComBalance(String.valueOf(balance));
+		}
 		tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 		Date now = new Date();
 		jobInfo.setcJobPublishDate(now);
