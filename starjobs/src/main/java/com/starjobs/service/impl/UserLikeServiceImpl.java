@@ -50,10 +50,16 @@ public class UserLikeServiceImpl implements UserLikeService {
 	 * @see com.starjobs.service.UserLikeService#likeCompany(java.lang.String, java.lang.String)
 	 */
 	public Map<String, Object> likeCompany(String userPhone, String comPhone) {
-		TUserLikeCom record = new TUserLikeCom();
-		record.setComPhone(comPhone);
-		record.setUserPhone(userPhone);
-		tUserLikeComMapper.insertSelective(record);
+		TUserLikeComExample ex = new TUserLikeComExample();
+		TUserLikeComExample.Criteria ct = ex.createCriteria();
+		ct.andUserPhoneEqualTo(userPhone).andComPhoneEqualTo(comPhone);
+		List<TUserLikeCom> list = tUserLikeComMapper.selectByExample(ex);
+		if(list==null || list.size()==0){
+			TUserLikeCom record = new TUserLikeCom();
+			record.setComPhone(comPhone);
+			record.setUserPhone(userPhone);
+			tUserLikeComMapper.insertSelective(record);	
+		}
 		
 		Map<String,Object> dataMap= new HashMap<String,Object>();
 		List<Map<String,String>> userLikeList = new ArrayList<Map<String,String>>();

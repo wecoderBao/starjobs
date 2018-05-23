@@ -227,7 +227,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (null != userInfo) {
 			resultMap.put("friendName", userInfo.getcUserNickname());
-			resultMap.put("friendPicUrl", StarConstants.USER_IMG_URL + userInfo.getcUserImg());
+			resultMap.put("friendPicUrl", userInfo.getcUserImg());
 			resultMap.put("friendPhoneNum", userInfo.getcUserPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -236,7 +236,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 		TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phoneNum.trim());
 		if (null != comInfo) {
 			resultMap.put("friendName", comInfo.getcComName());
-			resultMap.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
+			resultMap.put("friendPicUrl", comInfo.getcComHeadImg());
 			resultMap.put("friendPhoneNum", comInfo.getcComPhone());
 			resultMap.put("state", state);
 			return resultMap;
@@ -256,7 +256,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && "2".equals(tf.getcState())) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
+					fr.put("friendPicUrl", info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				} else {
@@ -264,7 +264,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 					if (comInfo != null && "2".equals(tf.getcState())) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						friendList.add(fr);
 					}
@@ -280,7 +280,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null && tf.getcState().equals("2")) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
+					fr.put("friendPicUrl", info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					friendList.add(fr);
 				} else {
@@ -288,7 +288,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 					if (comInfo != null && "2".equals(tf.getcState())) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						friendList.add(fr);
 					}
@@ -318,7 +318,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (null == job) {
 				return null;
 			}
-			groupHeadImg = getGroupHeadImgByType(job.getcJobTypeId());
+			groupHeadImg = StarConstants.GROUP_IMG_URL+getGroupHeadImgByType(job.getcJobTypeId());
 			// 保存群组
 			TGroup group = new TGroup();
 			group.setcGroupCreaterId(userId);
@@ -385,7 +385,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			if (null == job) {
 				return null;
 			}
-			groupHeadImg = getGroupHeadImgByType(job.getcJobTypeId());
+			groupHeadImg = StarConstants.GROUP_IMG_URL+getGroupHeadImgByType(job.getcJobTypeId());
 			// 保存群组
 			TGroup group = new TGroup();
 			group.setcGroupCreaterId(userId);
@@ -636,7 +636,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (null != group && group.getcGroupStatu().equals("0")) {
 					aGroup.put("groupName", group.getcGroupName());
 					aGroup.put("groupId", String.valueOf(group.getcGroupId()));
-					aGroup.put("groupImg", StarConstants.GROUP_IMG_URL + group.getcGroupHeadImg());
+					aGroup.put("groupImg", group.getcGroupHeadImg());
 					TGroupMemberExample memberExample = new TGroupMemberExample();
 					TGroupMemberExample.Criteria criteria = memberExample.createCriteria();
 					criteria.andCGroupIdEqualTo(group.getcGroupId());
@@ -666,7 +666,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TCompanyInfo info = tCompanyInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcComName());
-					aMember.put("memberImg", StarConstants.COM_IMG_URL + info.getcComHeadImg());
+					aMember.put("memberImg", info.getcComHeadImg());
 					aMember.put("memberId", info.getcComPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
@@ -675,7 +675,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				TUserInfo info = tUserInfoMapper.selectByPhone(member.getcGroupMemberId());
 				if (info != null) {
 					aMember.put("memberName", info.getcUserNickname());
-					aMember.put("memberImg", StarConstants.USER_IMG_URL + info.getcUserImg());
+					aMember.put("memberImg", info.getcUserImg());
 					aMember.put("memberId", info.getcUserPhone());
 					aMember.put("memberIdentity", member.getcGroupMemberIdentity());
 					memberList.add(aMember);
@@ -748,7 +748,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 			groupInfoMap.put("groupId", groupId);
 			groupInfoMap.put("groupName", group.getcGroupName());
 			groupInfoMap.put("groupOwnerId", group.getcGroupCreaterId());
-			groupInfoMap.put("groupImgUrl", StarConstants.GROUP_IMG_URL + group.getcGroupHeadImg());
+			groupInfoMap.put("groupImgUrl",  group.getcGroupHeadImg());
 			groupInfoMap.put("groupSize", groupSize);
 			TJobInfo job = tJobInfoMapper.selectByPrimaryKey(Integer.parseInt(group.getcJobId()));
 			if (job != null) {
@@ -825,7 +825,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
+					fr.put("friendPicUrl", info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
@@ -834,7 +834,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 					if (null != comInfo) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						fr.put("state", tf.getcState());
 						friendList.add(fr);

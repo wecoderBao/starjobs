@@ -81,14 +81,7 @@ public class InfoCenterController {
 		String userFlag = request.getParameter("userFlag");
 		// id
 		String userId = request.getParameter("userId");
-		// String realPath =
-		// request.getSession().getServletContext().getRealPath("/photo/user");
-		String realPath = this.getClass().getClassLoader().getResource("/").getPath();
-		System.out.println("realpath:" + realPath);
-		// F:/apache-tomcat-8.0.32/webapps/starjobs/WEB-INF/classes/
-		int end = realPath.lastIndexOf("WEB-INF");
-		realPath = realPath.substring(0, end) + "photo/user";
-		System.out.println("opath:" + realPath);
+		
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
@@ -105,7 +98,7 @@ public class InfoCenterController {
 		}
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("headImg", request.getParameter("headImg"));
-		params.put("imgFormat", request.getParameter("imgFormat"));
+//		params.put("imgFormat", request.getParameter("imgFormat"));
 		params.put("nickname", request.getParameter("nickname"));
 		params.put("username", request.getParameter("username"));
 		params.put("gender", request.getParameter("gender"));
@@ -118,7 +111,7 @@ public class InfoCenterController {
 		params.put("userId", userId);
 		params.put("alipayAccount", request.getParameter("alipayAccount"));
 
-		Map<String, Object> data = infoCenterService.updateUserInfo(token, params, realPath);
+		Map<String, Object> data = infoCenterService.updateUserInfo(token, params, "");
 		if (data != null) {
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
 			modelMap.put("message", "success");
@@ -198,7 +191,6 @@ public class InfoCenterController {
 		}
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("headImg", request.getParameter("headImg"));
-		params.put("imgFormat", request.getParameter("imgFormat"));
 		params.put("nickname", request.getParameter("nickname"));
 		params.put("address", request.getParameter("address"));
 		params.put("comDesc", request.getParameter("comDesc"));

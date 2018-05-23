@@ -168,9 +168,9 @@ public class UserServiceImpl implements UserService {
 			tciRecord.setcExtraBalance("0");
 			tciRecord.setcComHaslicense("0");
 			tciRecord.setcComScore("5");
-			tciRecord.setcComHeadImg("default.png");
+			tciRecord.setcComHeadImg(SystemUtil.APP_SERVER_URL + "/photo/com/" +"default.png");
 			tciRecord.setcUserState("1");
-			tciRecord.setcComLicenseImg("default.png");
+			tciRecord.setcComLicenseImg(SystemUtil.APP_SERVER_URL + "/photo/com/" +"default.png");
 			
 			tCompanyInfoMapper.insertSelective(tciRecord);
 			modelMap.put("error_code", SystemUtil.CODE_SUCC);
@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService {
 			tuiRecord.setcUserEduState("0");
 			tuiRecord.setcUserGender("男");
 			tuiRecord.setcUserHeight("180cm");
-			tuiRecord.setcUserImg("default.png");
+			tuiRecord.setcUserImg(SystemUtil.APP_SERVER_URL + "/photo/user/" +"default.png");
 			tuiRecord.setcUserSchoolName("未知");
 			tuiRecord.setcUserScore("5");
 			tuiRecord.setcUserState("0");
@@ -285,7 +285,7 @@ public class UserServiceImpl implements UserService {
 				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("token", token);
 				data.put("userFlag", userFlag);
-				data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tciRecord.getcComHeadImg());// 图片url
+				data.put("headImgUrl", tciRecord.getcComHeadImg());// 图片url
 				data.put("nickname", tciRecord.getcComName());
 				if (null != tciRecord.getcComAddressId()) {
 					TComAddress addr = tComAddressMapper.selectByPrimaryKey(tciRecord.getcComAddressId());
@@ -345,7 +345,7 @@ public class UserServiceImpl implements UserService {
 				data.put("phone", tuiRecord.getcUserPhone());
 				data.put("balance", tuiRecord.getcUserBalance());
 				data.put("userFlag", SystemUtil.USER_STU);
-				data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/user/" + tuiRecord.getcUserImg());// 图片url
+				data.put("headImgUrl",  tuiRecord.getcUserImg());// 图片url
 				
 				data.put("username", tuiRecord.getcUsername());
 				data.put("gender", tuiRecord.getcUserGender());
@@ -470,7 +470,7 @@ public class UserServiceImpl implements UserService {
 		data.put("jobType",String.valueOf(jobInfo.getcJobTypeId()));
 		data.put("comId", jobInfo.getcComId());
 		TCompanyInfo company = tCompanyInfoMapper.selectByPrimaryKey(jobInfo.getcComId());
-		data.put("comImg", StarConstants.COM_IMG_URL + company.getcComHeadImg());
+		data.put("comImg", company.getcComHeadImg());
 		data.put("comName", company.getcComName());
 		data.put("publishTime", jobInfo.getcJobPublishDate());
 		data.put("jobId", jobInfo.getcJobId());

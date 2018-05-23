@@ -19,6 +19,7 @@ public class StarConstants {
 	public static final String USER_IMG_URL="http://starjobs.duapp.com/photo/user/";
 	public static final String COM_IMG_URL="http://starjobs.duapp.com/photo/com/";
 	public static final String GROUP_IMG_URL="http://starjobs.duapp.com/photo/group/";
+	public static final String QINIU_BASE_URL="http://p8r0lg17y.bkt.clouddn.com/";
 	
 	//兼职信息状态
 	//发布中

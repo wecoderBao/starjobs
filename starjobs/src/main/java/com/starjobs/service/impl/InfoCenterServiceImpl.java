@@ -81,7 +81,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/user/" + tUserInfo.getcUserImg());// 图片url
+		data.put("headImgUrl", tUserInfo.getcUserImg());// 图片url
 		data.put("nickName", tUserInfo.getcUserNickname());
 		data.put("username", tUserInfo.getcUsername());
 		data.put("gender", tUserInfo.getcUserGender());
@@ -127,14 +127,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		// 修改头像
 		String headImg = params.get("headImg");
-		String imgFormat = params.get("imgFormat");
 
-		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
-			headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
-			if (!StringUtils.isEmpty(resp)) {
-				tUserInfo.setcUserImg(resp);
-			}
+		if (!StringUtils.isEmpty(headImg)) {
+			tUserInfo.setcUserImg(StarConstants.QINIU_BASE_URL+headImg);
 		}
 		if (!StringUtils.isEmpty(params.get("nickname"))) {// 修改昵称
 			tUserInfo.setcUserNickname(params.get("nickname"));
@@ -191,7 +186,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
+		data.put("headImgUrl",  tComInfo.getcComHeadImg());// 图片url
 		data.put("nickname", tComInfo.getcComName());
 		if (null != tComInfo.getcComAddressId()) {
 			TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
@@ -253,16 +248,9 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		}
 		// 修改头像
 		String headImg = params.get("headImg");
-		String imgFormat = params.get("imgFormat");
 
-		if (!StringUtils.isEmpty(headImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
-			System.out.println("----------------write pic----------------------");
-			headImg = headImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-			String resp = ImageUtil.saveStr2Photo(path, headImg, imgFormat);
-			if (!StringUtils.isEmpty(resp)) {
-				System.out.println("----------------write pic name----------------------");
-				tComInfo.setcComHeadImg(resp);
-			}
+		if (!StringUtils.isEmpty(headImg)) {
+			tComInfo.setcComHeadImg(StarConstants.QINIU_BASE_URL+headImg);
 		}
 		if (!StringUtils.isEmpty(params.get("nickname"))) {// 修改公司名称
 			tComInfo.setcComName(params.get("nickname"));
@@ -334,24 +322,18 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 			return null;
 		}
 
-		// 修改头像
+		// 修改图片
 		String certificateImg = params.get("certificateImg");
-		String imgFormat = params.get("imgFormat");
 
-		if (!StringUtils.isEmpty(certificateImg) && !StringUtils.isEmpty(ImageUtil.photoFormat(imgFormat))) {
-			certificateImg = certificateImg.replaceAll(" ", "+");// base64字符串中加号被替换成空格，这里替换回来
-			String resp = ImageUtil.saveStr2Photo(path, certificateImg, imgFormat);
-			if (!StringUtils.isEmpty(resp)) {
-				tComInfo.setcComLicenseImg(resp);
-			}
+		if (!StringUtils.isEmpty(certificateImg)) {
+			tComInfo.setcComLicenseImg(StarConstants.QINIU_BASE_URL+certificateImg);
 		}
 
 		int re = tCompanyInfoMapper.updateByPrimaryKeySelective(tComInfo);
 		if (re == 1) {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("token", token);
-			data.put("certificateImgUrl",
-					SystemUtil.APP_SERVER_URL + "/photo/certificate/" + tComInfo.getcComLicenseImg());
+			data.put("certificateImgUrl", tComInfo.getcComLicenseImg());
 			return data;
 		}
 		return null;
@@ -370,7 +352,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(com_id);
 		Map<String, Object> data = new HashMap<String, Object>();
 		if (tComInfo != null) {
-			data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
+			data.put("headImgUrl", tComInfo.getcComHeadImg());// 图片url
 			data.put("comName", tComInfo.getcComName());
 			if (null != tComInfo.getcComAddressId()) {
 				TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
@@ -433,7 +415,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		TCompanyInfo tComInfo = tCompanyInfoMapper.selectByPrimaryKey(com_id);
 		String imgPath = "";
 		if (tComInfo != null) {
-			imgPath = SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg();
+			imgPath = tComInfo.getcComHeadImg();
 		}
 		///
 		TJobInfoExample jobInfoExample = new TJobInfoExample();
@@ -481,7 +463,7 @@ public class InfoCenterServiceImpl implements InfoCenterService {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("token", token);
 		data.put("userFlag", userFlag);
-		data.put("headImgUrl", SystemUtil.APP_SERVER_URL + "/photo/com/" + tComInfo.getcComHeadImg());// 图片url
+		data.put("headImgUrl", tComInfo.getcComHeadImg());// 图片url
 		data.put("nickname", tComInfo.getcComName());
 		if (null != tComInfo.getcComAddressId()) {
 			TComAddress addr = tComAddressMapper.selectByPrimaryKey(tComInfo.getcComAddressId());
