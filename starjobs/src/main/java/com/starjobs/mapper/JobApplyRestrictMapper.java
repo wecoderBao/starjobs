@@ -30,5 +30,5 @@ public interface JobApplyRestrictMapper {
     /**
      * 查询当天申请记录数
      */
-    int queryUserRecordTotalByDay();
+    int queryUserRecordTotalByDay(Integer id);
 }

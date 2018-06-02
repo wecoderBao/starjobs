@@ -23,6 +23,7 @@ import com.starjobs.pojo.TUserInfo;
 import com.starjobs.pojo.TUserJobApply;
 import com.starjobs.pojo.TUserJobApplyExample;
 import com.starjobs.service.JobApplyService;
+import com.starjobs.sys.SystemUtil;
 
 import io.rong.service.RongCloudService;
 
@@ -66,9 +67,11 @@ public class JobApplyServiceImpl implements JobApplyService {
 		/**
 		 * 判断用户一天内是否有两次申请记录
 		 */
-		int total = jobApplyRestrictMapper.queryUserRecordTotalByDay();
+		int total = jobApplyRestrictMapper.queryUserRecordTotalByDay(userInfo.getcUserId());
 		if(total >= StarConstants.USER_APPLY_JOB_MAX_TIMES) {
-			return null;
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
+			return result;
 		}
 		
 		TUserJobApply jobApply = new TUserJobApply();
@@ -119,6 +122,15 @@ public class JobApplyServiceImpl implements JobApplyService {
 		TUserInfo userInfo = tUserInfoMapper.selectByPhone(userPhone);
 		if (userInfo == null) {
 			return null;
+		}
+		/**
+		 * 判断用户一天内是否有两次申请记录
+		 */
+		int total = jobApplyRestrictMapper.queryUserRecordTotalByDay(userInfo.getcUserId());
+		if(total >= StarConstants.USER_APPLY_JOB_MAX_TIMES) {
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
+			return result;
 		}
 		TUserJobApply jobApply = new TUserJobApply();
 		jobApply.setcApplyState(StarConstants.APPLY_STATE_NOT_CHECK);

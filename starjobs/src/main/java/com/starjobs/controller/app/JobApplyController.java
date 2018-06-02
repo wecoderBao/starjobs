@@ -34,9 +34,9 @@ import com.starjobs.sys.SystemUtil;
 @Controller
 public class JobApplyController {
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	JobApplyService jobApplyService;
+	private JobApplyService jobApplyService;
 
 	// 用户申请兼职
 	@RequestMapping(value = "/user/apply/job", method = RequestMethod.POST)
@@ -69,11 +69,16 @@ public class JobApplyController {
 		Map<String, Object> result = jobApplyService.applyJob(userPhone, jobId, applyDesc);
 		// 发布成功
 		if (result != null) {
-			modelMap.put("error_code", SystemUtil.CODE_SUCC);
-			modelMap.put("message", "success");
-			result.put("token", token);
-			result.put("userFlag", SystemUtil.USER_COM);
-			modelMap.put("data", result);
+			if(result.get("code")!=null){
+				modelMap.put("error_code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
+				modelMap.put("message", "申请次数已达上限");
+			}else{
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+				result.put("token", token);
+				result.put("userFlag", SystemUtil.USER_COM);
+				modelMap.put("data", result);
+			}
 		}
 
 		return modelMap;
@@ -110,11 +115,16 @@ public class JobApplyController {
 		Map<String, Object> result = jobApplyService.applyJobAndJoinGroup(userPhone, jobId, applyDesc);
 		// 发布成功
 		if (result != null) {
-			modelMap.put("error_code", SystemUtil.CODE_SUCC);
-			modelMap.put("message", "success");
-			result.put("token", token);
-			result.put("userFlag", SystemUtil.USER_COM);
-			modelMap.put("data", result);
+			if(result.get("code")!=null){
+				modelMap.put("error_code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
+				modelMap.put("message", "申请次数已达上限");
+			}else{
+				modelMap.put("error_code", SystemUtil.CODE_SUCC);
+				modelMap.put("message", "success");
+				result.put("token", token);
+				result.put("userFlag", SystemUtil.USER_COM);
+				modelMap.put("data", result);
+			}
 		}
 
 		return modelMap;
