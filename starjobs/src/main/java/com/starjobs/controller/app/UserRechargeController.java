@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.starjobs.common.AESUtil;
+import com.starjobs.common.RSAUtil;
 import com.starjobs.dto.UserRechargeRecordDto;
 import com.starjobs.service.TokenService;
 import com.starjobs.service.UserRechargeService;
@@ -61,12 +63,26 @@ public class UserRechargeController {
 	 */
 	@RequestMapping(value="/company/charge/extraBalance")
 	@ResponseBody
-	public Map<String, Object> chargeExtraBalance(@RequestParam Integer activityId, HttpServletRequest request) {
+	public Map<String, Object> chargeExtraBalance(HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
 		// 用户类别标记
 		String userFlag = request.getParameter("userFlag");
 		String phone = request.getParameter("phone");
+		String activityId = request.getParameter("activityId");
+		String key = request.getParameter("key");
+		Integer actId = -1;
+		//对参数解密
+		try{
+			key = RSAUtil.privateDecrypt(key);
+			token = AESUtil.decryptAES(token, key);
+			userFlag = AESUtil.decryptAES(userFlag, key);
+			phone = AESUtil.decryptAES(phone, key);
+			activityId = AESUtil.decryptAES(activityId, key);
+			actId = Integer.parseInt(activityId);
+		}catch(Exception e){
+			token = null;
+		}
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(4);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
@@ -75,6 +91,7 @@ public class UserRechargeController {
 				|| StringUtils.isEmpty(phone)) {
 			return modelMap;
 		}
+		
 		// 验证token是否有效
 		boolean isPermitted = tokenService.checkToken(token);
 		if (!isPermitted) {
@@ -86,7 +103,7 @@ public class UserRechargeController {
 			return modelMap;
 		}
 		
-		Map<String,Object> resultMap = userRechargeService.chargeExtraBalance(activityId, phone,token,userFlag);
+		Map<String,Object> resultMap = userRechargeService.chargeExtraBalance(actId, phone,token,userFlag);
 	
 		return resultMap;
 	}

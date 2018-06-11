@@ -33,9 +33,9 @@ import com.starjobs.sys.SystemUtil;
 @Controller
 public class InfoCenterController {
 	@Autowired
-	TokenService tokenService;
+	private TokenService tokenService;
 	@Autowired
-	InfoCenterService infoCenterService;
+	private InfoCenterService infoCenterService;
 
 	// 普通用户获取个人信息
 	@RequestMapping(value = "/user/get/user_info", method = RequestMethod.POST)

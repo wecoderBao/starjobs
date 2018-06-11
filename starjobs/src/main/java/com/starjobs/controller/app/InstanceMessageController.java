@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.starjobs.common.AESUtil;
+import com.starjobs.common.RSAUtil;
 import com.starjobs.service.TokenService;
 import com.starjobs.sys.SystemUtil;
 
@@ -717,6 +719,18 @@ public class InstanceMessageController {
 		String cashnum = request.getParameter("cashnum");
 		//groupOwnerPhone
 		String groupOwnerPhone = request.getParameter("groupOwnerPhone");
+		String key = request.getParameter("key");
+		//对参数解密
+		try{
+			key = RSAUtil.privateDecrypt(key);
+			token = AESUtil.decryptAES(token, key);
+			userFlag = AESUtil.decryptAES(userFlag, key);
+			memberPhone = AESUtil.decryptAES(memberPhone, key);
+			cashnum = AESUtil.decryptAES(cashnum, key);
+			groupOwnerPhone = AESUtil.decryptAES(groupOwnerPhone, key);
+		}catch(Exception e){
+			token = null;
+		}
 
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
