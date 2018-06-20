@@ -315,6 +315,18 @@ CREATE TABLE `t_system` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 insert into t_system(name,value) values('ios_version', '1.0.0'),('android_version','1.0.0');
 
+
+drop table if exists t_feedback;
+create table t_feedback(
+	id int(11) primary key auto_increment comment '主键',
+	phone varchar(255) default null comment '用户手机号',
+	pic_one varchar(255) default null comment '截图1',
+	pic_tow varchar(255) default null comment '截图2',
+	pic_three varchar(255) default null comment '截图3',
+	content varchar(255) default null comment '反馈内容',
+	create_time datetime default null comment '创建时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Data for the table `t_withdraw_verify` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
