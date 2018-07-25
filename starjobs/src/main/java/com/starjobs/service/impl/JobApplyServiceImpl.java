@@ -73,7 +73,14 @@ public class JobApplyServiceImpl implements JobApplyService {
 			result.put("code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
 			return result;
 		}
-		
+		TUserJobApplyExample example = new TUserJobApplyExample();
+		example.createCriteria().andCUserIdEqualTo(userInfo.getcUserId()).andCJobIdEqualTo(jobId);
+		List<TUserJobApply> oldApplyList = tUserJobApplyMapper.selectByExample(example);
+		if(oldApplyList!=null && oldApplyList.size()>0){
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("code", SystemUtil.USER_APPLied_JOB);
+			return result;
+		}
 		TUserJobApply jobApply = new TUserJobApply();
 		jobApply.setcApplyState(StarConstants.APPLY_STATE_NOT_CHECK);
 		jobApply.setcJobId(jobId);
@@ -132,20 +139,37 @@ public class JobApplyServiceImpl implements JobApplyService {
 			result.put("code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
 			return result;
 		}
+		TUserJobApplyExample example = new TUserJobApplyExample();
+		example.createCriteria().andCUserIdEqualTo(userInfo.getcUserId()).andCJobIdEqualTo(jobId);
+		List<TUserJobApply> oldApplyList = tUserJobApplyMapper.selectByExample(example);
+		if(oldApplyList!=null && oldApplyList.size()>0){
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("code", SystemUtil.USER_APPLied_JOB);
+			return result;
+		}
 		TUserJobApply jobApply = new TUserJobApply();
 		jobApply.setcApplyState(StarConstants.APPLY_STATE_NOT_CHECK);
 		jobApply.setcJobId(jobId);
 		jobApply.setcApplyTime(new Date());
 		jobApply.setcUserId(userInfo.getcUserId());
-		jobApply.setcApplyDesc(applyDesc);
-		tUserJobApplyMapper.insertSelective(jobApply);
+		jobApply.setcApplyDesc(applyDesc);		
+		/**
+		 * 添加申请记录
+		 */
+		JobApplyRestrict applyRestrict = new JobApplyRestrict();
+		applyRestrict.setCreateTime(new Date());
+		applyRestrict.setJobId(jobId);
+		applyRestrict.setUserId(userInfo.getcUserId());
 		
 		//加入群组
 		TGroup group = tGroupMapper.selectByJobId(String.valueOf(jobId));
 		String groupId = String.valueOf(group.getcGroupId());
 		String groupName = group.getcGroupName();
 		Map<String, Object> result2Map = rongCloudService.joinGroup(userPhone, groupId, groupName);
-		
+		if(result2Map!=null){
+			tUserJobApplyMapper.insertSelective(jobApply);
+			jobApplyRestrictMapper.insertSelective(applyRestrict);
+		}
 		return result2Map;
 	}
 

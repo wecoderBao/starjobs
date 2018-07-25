@@ -63,6 +63,10 @@ public class SystemUtil {
 	public static final String FRIEND_NOT_FOUND = "600";
 	//用户申请兼职次数已满
 	public static final String USER_APPLY_JOB_REACH_MAX = "800";
+	/**
+	 * 用户已经申请该职位
+	 */
+	public static final String USER_APPLied_JOB = "801";
 
 	// 生成token
 	public static String generateToken(String phone) {

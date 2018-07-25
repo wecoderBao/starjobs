@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.starjobs.common.StarConstants;
 import com.starjobs.service.JobApplyService;
 import com.starjobs.service.TokenService;
 import com.starjobs.sys.SystemUtil;
@@ -115,9 +116,12 @@ public class JobApplyController {
 		Map<String, Object> result = jobApplyService.applyJobAndJoinGroup(userPhone, jobId, applyDesc);
 		// 发布成功
 		if (result != null) {
-			if(result.get("code")!=null){
+			if(SystemUtil.USER_APPLY_JOB_REACH_MAX.equals(result.get("code"))){
 				modelMap.put("error_code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
 				modelMap.put("message", "申请次数已达上限");
+			}else if(SystemUtil.USER_APPLied_JOB.equals(result.get("code"))){
+				modelMap.put("error_code", SystemUtil.USER_APPLY_JOB_REACH_MAX);
+				modelMap.put("message", "用户已经申请该职位");
 			}else{
 				modelMap.put("error_code", SystemUtil.CODE_SUCC);
 				modelMap.put("message", "success");
