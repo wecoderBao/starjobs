@@ -57,7 +57,7 @@ public class SystemUtil {
 	//响应码700，用户没有发布权限
 	public static final String NO_PUBLISH = "700";
 	//项目url
-	public static final String APP_SERVER_URL = "http://starjobs.duapp.com";
+	public static final String APP_SERVER_URL = "http://starjobs.bceapp.com";
 	
 	//好友未找到
 	public static final String FRIEND_NOT_FOUND = "600";
