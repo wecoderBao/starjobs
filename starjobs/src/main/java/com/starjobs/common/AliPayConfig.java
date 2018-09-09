@@ -21,7 +21,7 @@ public class AliPayConfig {
 	/**
 	 * 异步通知接口
 	 */
-    public static final String NOTIFY_URL="http://starjobs.duapp.com/app/pay/notify";
+    public static final String NOTIFY_URL="http://starjobs.bceapp.com/app/pay/notify";
 
 	private static AlipayClient alipayClient;
 

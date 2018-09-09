@@ -709,7 +709,7 @@ public class InstanceMessageController {
 	// 群支付
 	@RequestMapping(value = "/com/pay/group", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> pagGroup(HttpServletRequest request) {
+	public Map<String, Object> payGroup(HttpServletRequest request) {
 		// 获取token
 		String token = request.getParameter("token");
 		// 用户类别标记
@@ -717,18 +717,18 @@ public class InstanceMessageController {
 		// memberPhone
 		String memberPhone = request.getParameter("memberPhone");
 		String cashnum = request.getParameter("cashnum");
-		//groupOwnerPhone
+		// groupOwnerPhone
 		String groupOwnerPhone = request.getParameter("groupOwnerPhone");
 		String key = request.getParameter("key");
-		//对参数解密
-		try{
+		// 对参数解密
+		try {
 			key = RSAUtil.privateDecrypt(key);
 			token = AESUtil.decryptAES(token, key);
 			userFlag = AESUtil.decryptAES(userFlag, key);
 			memberPhone = AESUtil.decryptAES(memberPhone, key);
 			cashnum = AESUtil.decryptAES(cashnum, key);
 			groupOwnerPhone = AESUtil.decryptAES(groupOwnerPhone, key);
-		}catch(Exception e){
+		} catch (Exception e) {
 			token = null;
 		}
 
@@ -737,7 +737,7 @@ public class InstanceMessageController {
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
 		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(memberPhone)
-				|| StringUtils.isEmpty(cashnum)|| StringUtils.isEmpty(groupOwnerPhone)) {
+				|| StringUtils.isEmpty(cashnum) || StringUtils.isEmpty(groupOwnerPhone)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -751,6 +751,15 @@ public class InstanceMessageController {
 		if (resultMap == null) {
 			return modelMap;
 		}
+		String aesKey = RSAUtil.publicEncrypt(AESUtil.IV_STRING);
+		// 加密
+		try {
+			token = AESUtil.encryptAES(token, AESUtil.IV_STRING);
+			userFlag = AESUtil.encryptAES(userFlag, AESUtil.IV_STRING);
+		} catch (Exception e) {
+			return modelMap;
+		}
+		resultMap.put("key",aesKey);
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);

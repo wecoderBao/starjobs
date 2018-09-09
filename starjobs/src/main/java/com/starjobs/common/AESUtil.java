@@ -20,7 +20,7 @@ import java.util.Base64;
  * @date:2018年6月2日上午10:47:10
  */
 public class AESUtil {
-	private static final String IV_STRING = "16-Bytes--String";
+	public static final String IV_STRING = "16-Bytes--String";
 
     public static String encryptAES(String content, String key)
             throws InvalidKeyException, NoSuchAlgorithmException,

@@ -1,12 +1,19 @@
 package com.starjobs.controller.app;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +37,9 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.starjobs.common.AESUtil;
 import com.starjobs.common.AliPayConfig;
+import com.starjobs.common.RSAUtil;
 import com.starjobs.common.pay.util.AlipayUtil;
 import com.starjobs.common.pay.util.DatetimeUtil;
 import com.starjobs.common.pay.util.PayUtil;
@@ -165,22 +174,23 @@ public class AlipayController {
 		try {
 			// 这里和普通的接口调用不同，使用的是sdkExecute
 			AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-			System.out.println(response.getBody());// 就是orderString 可以直接给客户端请求，无需再做处理。
+			System.out.println(response.getBody());// 就是orderString
+													// 可以直接给客户端请求，无需再做处理。
 			orderString = response.getBody();
-			if(!"".equals(orderString)){
-				//添加订单记录
+			if (!"".equals(orderString)) {
+				// 添加订单记录
 				String phone = tokenService.getPhoneNum(token);
 				TUserRecharge recharge = new TUserRecharge();
 				recharge.setCreateTime(new Date());
 				BigDecimal rechargeMoney = new BigDecimal(cashnum);
 				recharge.setRechargeMoney(rechargeMoney);
-				//充值记录设置为生成状态
+				// 充值记录设置为生成状态
 				recharge.setStatus(0);
 				recharge.setTradeNo(tradeNo);
 				recharge.setUserPhone(phone);
 				tUserRechargeMapper.insert(recharge);
-				
-			}else{
+
+			} else {
 				return modelMap;
 			}
 		} catch (AlipayApiException e) {
@@ -207,11 +217,21 @@ public class AlipayController {
 		String userFlag = request.getParameter("userFlag");
 		// 用户手机号
 		String phone = request.getParameter("phone");
+		String key = request.getParameter("key");
 		// 返回json容器
 		Map<String, Object> modelMap = new HashMap<String, Object>(4);
 		modelMap.put("error_code", SystemUtil.CODE_FAIL);
 		modelMap.put("message", "fail");
-		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag)||StringUtils.isEmpty(phone)) {
+		// 对参数解密
+		try {
+			key = RSAUtil.privateDecrypt(key);
+			token = AESUtil.decryptAES(token, key);
+			userFlag = AESUtil.decryptAES(userFlag, key);
+			phone = AESUtil.decryptAES(phone, key);
+		} catch (Exception e) {
+			token = null;
+		}
+		if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userFlag) || StringUtils.isEmpty(phone)) {
 			return modelMap;
 		}
 		// 验证token是否有效
@@ -221,12 +241,25 @@ public class AlipayController {
 			return modelMap;
 		}
 		Map<String, Object> resultMap = new HashMap<String, Object>(4);
+		String aesKey = RSAUtil.publicEncrypt(AESUtil.IV_STRING);
+		String tradeNO = "";
+		String kPrivateKey = "";
+		//加密
+		try {
+			token = AESUtil.encryptAES(token, AESUtil.IV_STRING);
+			userFlag = AESUtil.encryptAES(userFlag, AESUtil.IV_STRING);
+			tradeNO = AESUtil.encryptAES(SystemUtil.generateTradeNO(), AESUtil.IV_STRING);
+			kPrivateKey = AESUtil.encryptAES(AliPayConfig.APP_PRIVATE_KEY, AESUtil.IV_STRING);
+		}catch (Exception e) {
+			return modelMap;
+		}
 		modelMap.put("error_code", SystemUtil.CODE_SUCC);
 		modelMap.put("message", "success");
 		resultMap.put("token", token);
 		resultMap.put("userFlag", userFlag);
-		resultMap.put("tradeNo", "" + SystemUtil.generateTradeNO());
-		resultMap.put("kPrivateKey", AliPayConfig.APP_PRIVATE_KEY);
+		resultMap.put("tradeNO", tradeNO);
+		resultMap.put("kPrivateKey", kPrivateKey);
+		resultMap.put("key", aesKey);
 		modelMap.put("data", resultMap);
 		return modelMap;
 	}
@@ -252,11 +285,13 @@ public class AlipayController {
 					valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
 				}
 				// 乱码解决，这段代码在出现乱码时使用。
-				// valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+				// valueStr = new String(valueStr.getBytes("ISO-8859-1"),
+				// "utf-8");
 				params.put(name, valueStr);
 			}
 			// 切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
-			// boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String
+			// boolean AlipaySignature.rsaCheckV1(Map<String, String> params,
+			// String
 			// publicKey, String charset, String sign_type)
 			boolean flag = false;
 			try {
@@ -271,7 +306,7 @@ public class AlipayController {
 				// TODO 验签成功后
 				// 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
 				logger.info("订单支付成功：" + JSON.toJSONString(params));
-				System.out.println("zhifu: "+JSON.toJSONString(params));
+				System.out.println("zhifu: " + JSON.toJSONString(params));
 				/**
 				 * 验证out_trade_no
 				 */
@@ -283,25 +318,25 @@ public class AlipayController {
 				/**
 				 * 用户账户金额增加
 				 */
-				//根据订单号查找订单记录
+				// 根据订单号查找订单记录
 				TUserRechargeExample rechargeExample = new TUserRechargeExample();
 				rechargeExample.createCriteria().andTradeNoEqualTo(out_trade_no);
 				TUserRecharge recharge = tUserRechargeMapper.selectByExample(rechargeExample).get(0);
-				if(null==out_trade_no || "".equals(out_trade_no)||null == recharge){
+				if (null == out_trade_no || "".equals(out_trade_no) || null == recharge) {
 					return;
 				}
-				//获取用户手机号
+				// 获取用户手机号
 				String phone = recharge.getUserPhone();
 				TUserInfo userInfo = tUserInfoMapper.selectByPhone(phone);
 				BigDecimal realBalance;
-				if(null != userInfo){
+				if (null != userInfo) {
 					String balance = userInfo.getcUserBalance();
-					if(null==balance || "".equals(balance)){
+					if (null == balance || "".equals(balance)) {
 						balance = "0";
 					}
 					realBalance = new BigDecimal(balance);
 					realBalance = realBalance.add(chargeMoney);
-					realBalance.setScale(2, BigDecimal.ROUND_HALF_UP); 
+					realBalance.setScale(2, BigDecimal.ROUND_HALF_UP);
 					userInfo.setcUserBalance(realBalance.toString());
 					tUserInfoMapper.updateByPrimaryKey(userInfo);
 					/**
@@ -310,16 +345,16 @@ public class AlipayController {
 					recharge.setStatus(1);
 					recharge.setBalance(realBalance);
 					tUserRechargeMapper.updateByPrimaryKey(recharge);
-				}else{
+				} else {
 					TCompanyInfo comInfo = tCompanyInfoMapper.selectByPhone(phone);
-					if(null!=comInfo){
+					if (null != comInfo) {
 						String balance = comInfo.getcComBalance();
-						if(null==balance || "".equals(balance)){
+						if (null == balance || "".equals(balance)) {
 							balance = "0";
 						}
 						realBalance = new BigDecimal(balance);
 						realBalance = realBalance.add(chargeMoney);
-						realBalance.setScale(2, BigDecimal.ROUND_HALF_UP); 
+						realBalance.setScale(2, BigDecimal.ROUND_HALF_UP);
 						comInfo.setcComBalance(realBalance.toString());
 						tCompanyInfoMapper.updateByPrimaryKey(comInfo);
 						/**
@@ -386,8 +421,10 @@ public class AlipayController {
 
 		if (flag) {
 			// 订单查询成功
-			WebUtil.response(response, WebUtil.packJsonp(callback, JSON.toJSONString(
-					new JsonResult(1, "订单查询成功", new ResponseData(null, restmap)), SerializerFeatureUtil.FEATURES)));
+			WebUtil.response(response,
+					WebUtil.packJsonp(callback,
+							JSON.toJSONString(new JsonResult(1, "订单查询成功", new ResponseData(null, restmap)),
+									SerializerFeatureUtil.FEATURES)));
 		} else { // 订单查询失败
 			WebUtil.response(response, WebUtil.packJsonp(callback, JSON
 					.toJSONString(new JsonResult(-1, "订单查询失败", new ResponseData()), SerializerFeatureUtil.FEATURES)));
