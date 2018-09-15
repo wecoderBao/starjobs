@@ -54,6 +54,21 @@ public class RSAUtil {
 			+ "CFUxJ+EEu8csnU8UhP/k62Nvcr37DwJAcQ5I+xzY0WKXd+kazEvmPlRf5c17Y5xm"
 			+ "G0qb5sqSiUS00k91TqAtbwQzaRdJOP8H0y0XwbPjObNiGo8n9yjuZQJBAN612K+d"
 			+ "Rysb5FuBJWwosfz86dkrdfI7cQoaSu0f3SSHBPl+SZ7s3cjwsrXEMLnAdLoLkdOH" + "qRfE4vHmaFelNrQ=";
+//	private static final String PRIVATE_KEY = "MIICxjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQICqHoXm4gUHwCAggA"
+//				+"MBQGCCqGSIb3DQMHBAi249W4RVw15gSCAoC0mMEtS0/PWw2T5qaDKX3C6PHCkw/q"
+//+"A1iY1zfsequdRzq9SPsI4+Vg2WuX0D/ugCnW0SCAKm02rUwQPtuXIExPVtvIBhsJ"
+//+"MTBgMNsm6fTEOFehyvU6EmZ0m3NuAesNqIfrP+lqi71rNMJacxz7q4sfBctnVKNa"
+//+"kZtwzeGQUFKn4KU/QfE0RxBwtgjPczSSbU6iJoHSEHv6r/dsudsrbTKSvkwYuZPU"
+//+"HXghQ1BrarwSqughXmf5Bgbn3QHso/aigUn3jePvR7LQmWhbGGLPpVbp2gDRXLFu"
+//+"42Iyh+WIoJ2/k9Y4GGLC5s6WaYZAhrog/OjzInhgMxygmpuzBj9CloU9b+CxC4vd"
+//+"jGlZGDkR3xW7zH3a0H78oSoU/MWaEuoka1kcBCTuMlMkBLVsbJT7KzWHHuy/qpMW"
+//+"OMDNo2TEOEzcRgewuleb4ZmlmwwRVbsQOk8uu6QlwffqJKT/075kZHrRDuQeH8j8"
+//+"NE76/ZGaA7QheVFkk1TKisrHmXFx+4BC373ci5q1CDGocj6M8VPDKAWhtdDTV5Pi"
+//+"wnXEp3pChV0YY8RiHKUXy4XATmqtnN5EuZ5scpP3QohVxUMRpAnXtmyEoiB2dDPd"
+//+"y58lczDLeJtBnWKXba4AQ+DwBNkFN2uQT6Knvzxz7XUE40hKgb8wex7EkW7SZznq"
+//+"pkbOmavIcrCwau4n/5zSG7tlGkkwuMxcFwxUoYBMa11DmQjwt4XPjvKiTFTNEI8S"
+//+"76JqxZEIJU3WimKUsMNQWFD5IhLB49viooJGbl47UGZWWcpXN/cXGm0q0HezZpr3"
+//+"Q4d/UKV467ZZEgvbRYr6XzH4r7ViwjdAtpRYMxWrDLk2HFUxmUpMsHsO";
 
 	public static Map<String, String> createKeys(int keySize) {
 		KeyPairGenerator kpg;
@@ -222,8 +237,11 @@ public class RSAUtil {
 			RSAPublicKey publicKey = RSAUtil.getPublicKey(PUBLIC_KEY);
 			Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-			return Base64.encodeBase64URLSafeString(rsaSplitCodec(cipher, Cipher.ENCRYPT_MODE, data.getBytes(CHARSET),
-					publicKey.getModulus().bitLength()));
+			byte[] result = cipher.doFinal(data.getBytes(CHARSET));
+//			return Base64.encodeBase64URLSafeString(rsaSplitCodec(cipher, Cipher.ENCRYPT_MODE, data.getBytes(CHARSET),
+//					publicKey.getModulus().bitLength()));
+			Base64 b64 = new Base64();
+			return  b64.encodeToString(result);
 		} catch (Exception e) {
 			throw new RuntimeException("加密字符串[" + data + "]时遇到异常", e);
 		}
@@ -280,14 +298,13 @@ public class RSAUtil {
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("公钥加密——私钥解密");
-		String str = "站在大明门前守卫的禁卫军，事先没有接到\n" + "有关的命令，但看到大批盛装的官员来临，也就\n" + "以为确系举行大典，因而未加询问。进大明门即\n"
-				+ "为皇城。文武百官看到端门午门之前气氛平静，\n" + "城楼上下也无朝会的迹象，既无几案，站队点名\n" + "的御史和御前侍卫“大汉将军”也不见踪影，不免\n"
-				+ "心中揣测，互相询问：所谓午朝是否讹传？";
+		String str = "123456";
 		System.out.println("\r明文：\r\n" + str);
-		System.out.println("\r明文大小：\r\n" + str.getBytes().length);
+		
 		String encodedData = RSAUtil.publicEncrypt(str);
 		System.out.println("密文：\r\n" + encodedData);
-		encodedData = "ZnXXRS2FTbsJyd15HkggO+tOlNMwQez12U4iIbm17zdapAEElu0E44AWqNQ8wmM/fsI0v+xYgEO3Ps93L+EGXCYUseHBcgVwkGA/7/devVbCUsRbjGzQGBH6ca6sXs3idN0Mpi8JIepxqxtM8hXZHa8F180ktQ8qvo1ATXsQs/k=";
+//		encodedData = "ZnXXRS2FTbsJyd15HkggO+tOlNMwQez12U4iIbm17zdapAEElu0E44AWqNQ8wmM/fsI0v+xYgEO3Ps93L+EGXCYUseHBcgVwkGA/7/devVbCUsRbjGzQGBH6ca6sXs3idN0Mpi8JIepxqxtM8hXZHa8F180ktQ8qvo1ATXsQs/k=";
+		encodedData = "LaxMelPqMUngpZ1WiFPb59TO9gvarsr_-njr0SEo74LgJ24T98QYHYoRPYwN9lRVjIREfTOYKZeYRI1N21-3dlGBUGvxPZx53ryaflvD0hFC64SWPgi_FVBcyeGfaPWomBtlwJffa6THa_jEqkUYMymtMYBWOcBAFsQ9AD6OLQ0";
 		String decodedData = RSAUtil.privateDecrypt(encodedData);
 		System.out.println("解密后文字: \r\n" + decodedData);
 
