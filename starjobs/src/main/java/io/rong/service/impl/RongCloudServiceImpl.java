@@ -852,7 +852,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 				if (info != null) {// 好友
 					Map<String, Object> fr = new HashMap<String, Object>(4);
 					fr.put("friendName", info.getcUserNickname());
-					fr.put("friendPicUrl", StarConstants.USER_IMG_URL + info.getcUserImg());
+					fr.put("friendPicUrl",  info.getcUserImg());
 					fr.put("friendPhoneNum", info.getcUserPhone());
 					fr.put("state", tf.getcState());
 					friendList.add(fr);
@@ -861,7 +861,7 @@ public class RongCloudServiceImpl implements RongCloudService {
 					if (null != comInfo) {
 						Map<String, Object> fr = new HashMap<String, Object>(4);
 						fr.put("friendName", comInfo.getcComName());
-						fr.put("friendPicUrl", StarConstants.COM_IMG_URL + comInfo.getcComHeadImg());
+						fr.put("friendPicUrl", comInfo.getcComHeadImg());
 						fr.put("friendPhoneNum", comInfo.getcComPhone());
 						fr.put("state", tf.getcState());
 						friendList.add(fr);
